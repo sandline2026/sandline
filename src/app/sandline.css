@@ -314,3 +314,10 @@ body{
 .sandline-page .checkout-summary{
   background:var(--foam); border-radius:16px; padding:30px; height:fit-content;
 }
+
+.sandline-page nav{
+  background: rgba(246, 239, 227, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding-bottom: 20px;
+}
