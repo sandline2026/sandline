@@ -1,10 +1,11 @@
+import type { ReactElement } from "react";
 import { createClient } from "@/../utils/supabase/server";
 import { cookies } from "next/headers";
 import AddToCartButton from "@/components/AddToCartButton";
 import CartLink from "@/components/CartLink";
 import "../sandline.css";
 
-const collectionArt: Record<string, JSX.Element> = {
+const collectionArt: Record<string, React.ReactElement> = {
   honeymoon: (
     <svg viewBox="0 0 200 260" fill="none">
       <path d="M100 20 L70 60 L60 240 L140 240 L130 60 Z" fill="#0E4B4A" opacity="0.9" />
