@@ -1,4 +1,3 @@
-import type { ReactElement } from "react";
 import { createClient } from "@/../utils/supabase/server";
 import { cookies } from "next/headers";
 import AddToCartButton from "@/components/AddToCartButton";
@@ -68,23 +67,40 @@ export default async function Shop() {
 
       {products && products.length > 0 ? (
         <div className="shop-grid">
-          {products.map((product) => (
-            <div className="collection-card" key={product.id}>
-              <span className="price-tag">${product.selling_price_usd}</span>
-              <div className="art">
-                {collectionArt[product.collection] || collectionArt.beach_party}
+          {products.map((product) => {
+            const hasPhoto = product.images && product.images.length > 0;
+            return (
+              <div className="collection-card" key={product.id}>
+                <span className="price-tag">${product.selling_price_usd}</span>
+                <div className="art">
+                  {hasPhoto ? (
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        position: "absolute",
+                        inset: 0,
+                      }}
+                    />
+                  ) : (
+                    collectionArt[product.collection] || collectionArt.beach_party
+                  )}
+                </div>
+                <div className="label">
+                  <div className="eyebrow">{collectionLabel[product.collection] || "Sandline"}</div>
+                  <h3>{product.name}</h3>
+                  <AddToCartButton
+                    id={product.id}
+                    name={product.name}
+                    price={product.selling_price_usd}
+                  />
+                </div>
               </div>
-              <div className="label">
-                <div className="eyebrow">{collectionLabel[product.collection] || "Sandline"}</div>
-                <h3>{product.name}</h3>
-                <AddToCartButton
-                  id={product.id}
-                  name={product.name}
-                  price={product.selling_price_usd}
-                />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <p className="empty-state">No products yet — add some from the Supabase Table Editor.</p>
