@@ -7,7 +7,6 @@ import "../sandline.css";
 
 export default function CheckoutPage() {
   const { items, subtotal, clearCart } = useCart();
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,7 +27,6 @@ export default function CheckoutPage() {
     const supabase = createClient();
 
     try {
-      // 1. Find or create customer
       let customerId: string;
       const { data: existingCustomer } = await supabase
         .from("customers")
@@ -57,7 +55,6 @@ export default function CheckoutPage() {
         customerId = newCustomer.id;
       }
 
-      // 2. Create order
       const orderNumber = "SL-" + Date.now().toString().slice(-8);
       const { data: order, error: orderError } = await supabase
         .from("orders")
@@ -76,7 +73,6 @@ export default function CheckoutPage() {
 
       if (orderError) throw orderError;
 
-      // 3. Create order items
       const orderItems = items.map((item) => ({
         order_id: order.id,
         product_id: item.id,
@@ -93,28 +89,26 @@ export default function CheckoutPage() {
 
       if (itemsError) throw itemsError;
 
-      // Success
-      setSubmitted(true);
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: order.id,
+          orderNumber,
+          items,
+          customerEmail: email,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
       clearCart();
+      window.location.href = data.url;
     } catch (err: any) {
       setError(err.message || "Something went wrong. Please try again.");
-    } finally {
       setLoading(false);
     }
-  }
-
-  if (submitted) {
-    return (
-      <div className="sandline-page">
-        <nav>
-          <a className="logo" href="/">SAND<span>LINE</span></a>
-        </nav>
-        <div className="shop-header">
-          <h1>Thank you.</h1>
-          <p>Your order has been received and saved. We'll be in touch soon.</p>
-        </div>
-      </div>
-    );
   }
 
   return (
@@ -146,7 +140,7 @@ export default function CheckoutPage() {
             {error && <p style={{ color: "#c0392b", fontSize: "13px" }}>{error}</p>}
 
             <button className="btn" type="submit" disabled={loading} style={{ marginTop: "20px" }}>
-              {loading ? "Placing order..." : `Place order — $${subtotal.toFixed(2)}`}
+              {loading ? "Redirecting to payment..." : `Pay — $${subtotal.toFixed(2)}`}
             </button>
           </form>
 
