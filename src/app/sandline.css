@@ -382,3 +382,80 @@ body{
   margin-bottom:40px;
   max-width:60ch;
 }
+
+.sandline-page .admin-wrap{
+  padding:0 clamp(24px,5vw,64px) 100px;
+}
+.sandline-page .admin-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:50px;
+}
+@media(max-width:900px){.sandline-page .admin-stats{grid-template-columns:1fr 1fr;}}
+.sandline-page .stat-card{
+  background:var(--foam);
+  border-radius:16px;
+  padding:24px;
+}
+.sandline-page .stat-card .num{
+  font-family:'Fraunces', serif;
+  font-size:32px;
+  color:var(--lagoon);
+}
+.sandline-page .stat-card .lbl{
+  font-family:'Space Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:rgba(27,36,32,0.55);
+  margin-top:6px;
+}
+.sandline-page .admin-table{
+  width:100%;
+  border-collapse:collapse;
+}
+.sandline-page .admin-table th{
+  font-family:'Space Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:rgba(27,36,32,0.5);
+  text-align:left;
+  padding:12px;
+  border-bottom:2px solid var(--ink);
+}
+.sandline-page .admin-table td{
+  padding:14px 12px;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.sandline-page .status-pill{
+  font-family:'Space Mono', monospace;
+  font-size:10px;
+  padding:4px 10px;
+  border-radius:999px;
+  text-transform:uppercase;
+}
+.sandline-page .status-pending{ background:#F3E0C4; color:#8A5A00; }
+.sandline-page .status-confirmed{ background:#D3EADD; color:#1E6B44; }
+.sandline-page .status-shipped{ background:#D5E4F7; color:#1E4E8A; }
+.sandline-page .status-delivered{ background:#DCEAD1; color:#3B6B2A; }
+.sandline-page .status-cancelled{ background:#F3D3D3; color:#8A1E1E; }
+
+.sandline-page .admin-login-wrap{
+  max-width:360px;
+  margin:0 auto;
+  padding:120px 24px;
+}
+.sandline-page .admin-login-wrap input{
+  width:100%;
+  font-family:'Work Sans', sans-serif;
+  font-size:15px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  outline:none;
+  background:var(--foam);
+  margin-bottom:16px;
+}
