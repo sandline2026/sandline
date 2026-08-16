@@ -52,6 +52,7 @@ export default async function Shop() {
         <a className="logo" href="/">SAND<span>LINE</span></a>
         <div className="nav-links">
           <a href="/shop">Shop</a>
+          <a href="/size-guide">Size Guide</a>
           <a href="/#story">Story</a>
           <a href="/#contact">Contact</a>
           <CartLink />
