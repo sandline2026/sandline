@@ -489,3 +489,77 @@ body{
 .sandline-page .chart-box{
   background:var(--foam); border-radius:16px; padding:30px; margin-bottom:40px;
 }
+
+.sandline-page .product-detail{
+  padding:140px clamp(24px,5vw,64px) 100px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:start;
+}
+@media(max-width:860px){.sandline-page .product-detail{grid-template-columns:1fr; padding-top:120px;}}
+.sandline-page .product-gallery{
+  position:sticky;
+  top:20px;
+  border-radius:20px;
+  overflow:hidden;
+  aspect-ratio:3/4;
+  background:var(--foam);
+}
+.sandline-page .product-gallery img{
+  width:100%; height:100%; object-fit:cover;
+}
+.sandline-page .product-info .eyebrow{ margin-bottom:10px; }
+.sandline-page .product-info h1{
+  font-size:clamp(30px,4vw,44px);
+  margin-bottom:14px;
+}
+.sandline-page .product-price{
+  font-family:'Space Mono', monospace;
+  font-size:20px;
+  color:var(--lagoon);
+  margin-bottom:24px;
+}
+.sandline-page .product-desc{
+  font-size:15px;
+  line-height:1.7;
+  color:rgba(27,36,32,0.72);
+  margin-bottom:30px;
+  max-width:52ch;
+}
+.sandline-page .option-group{ margin-bottom:24px; }
+.sandline-page .option-group .option-label{
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:rgba(27,36,32,0.55);
+  margin-bottom:10px;
+  display:block;
+}
+.sandline-page .swatch-row{ display:flex; gap:10px; flex-wrap:wrap; }
+.sandline-page .swatch{
+  font-family:'Work Sans', sans-serif;
+  font-size:13px;
+  padding:9px 16px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:transparent;
+}
+.sandline-page .product-meta-list{
+  border-top:1px solid var(--line);
+  margin-top:30px;
+  padding-top:24px;
+}
+.sandline-page .product-meta-list div{
+  display:flex; justify-content:space-between;
+  padding:10px 0; border-bottom:1px solid var(--line);
+  font-size:13.5px;
+}
+.sandline-page .product-meta-list div span:first-child{
+  color:rgba(27,36,32,0.55);
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  text-transform:uppercase;
+}
+.sandline-page .collection-card-link{ text-decoration:none; color:inherit; display:block; }

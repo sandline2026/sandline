@@ -73,26 +73,30 @@ export default async function Shop() {
             return (
               <div className="collection-card" key={product.id}>
                 <span className="price-tag">${product.selling_price_usd}</span>
-                <div className="art">
-                  {hasPhoto ? (
-                    <img
-                      src={product.images[0]}
-                      alt={product.name}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        position: "absolute",
-                        inset: 0,
-                      }}
-                    />
-                  ) : (
-                    collectionArt[product.collection] || collectionArt.beach_party
-                  )}
-                </div>
-                <div className="label">
-                  <div className="eyebrow">{collectionLabel[product.collection] || "Sandline"}</div>
-                  <h3>{product.name}</h3>
+                <a href={`/product/${product.slug}`} className="collection-card-link">
+                  <div className="art">
+                    {hasPhoto ? (
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          position: "absolute",
+                          inset: 0,
+                        }}
+                      />
+                    ) : (
+                      collectionArt[product.collection] || collectionArt.beach_party
+                    )}
+                  </div>
+                  <div className="label">
+                    <div className="eyebrow">{collectionLabel[product.collection] || "Sandline"}</div>
+                    <h3>{product.name}</h3>
+                  </div>
+                </a>
+                <div style={{ padding: "0 24px 24px" }}>
                   <AddToCartButton
                     id={product.id}
                     name={product.name}
