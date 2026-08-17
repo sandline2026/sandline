@@ -37,16 +37,18 @@ export default async function CheckoutSuccess({
       const cookieStore = await cookies();
       const supabase = createClient(cookieStore);
 
-      await supabase
-        .from("orders")
-        .update({ status: "confirmed" })
-        .eq("id", orderId);
+      const amountTotal = (session.amount_total || 0) / 100;
+      // Approximate Stripe fee: 2.9% + $0.30 (actual fee varies by card/currency)
+      const estimatedFee = amountTotal * 0.029 + 0.3;
+
+      await supabase.from("orders").update({ status: "confirmed" }).eq("id", orderId);
 
       await supabase.from("payments").insert({
         order_id: orderId,
         gateway: "stripe",
         gateway_transaction_id: session.payment_intent as string,
-        amount_usd: (session.amount_total || 0) / 100,
+        amount_usd: amountTotal,
+        gateway_fee_usd: Number(estimatedFee.toFixed(2)),
         status: "paid",
       });
     }

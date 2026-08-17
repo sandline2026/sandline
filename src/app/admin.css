@@ -1,0 +1,284 @@
+.admin-app{
+  --bg:#F7F8FA;
+  --surface:#FFFFFF;
+  --border:#E5E7EB;
+  --text:#111827;
+  --text-muted:#6B7280;
+  --accent:#4F46E5;
+  --accent-soft:#EEF2FF;
+  --green:#059669;
+  --green-soft:#ECFDF5;
+  --amber:#D97706;
+  --amber-soft:#FFFBEB;
+  --red:#DC2626;
+  --red-soft:#FEF2F2;
+  --blue:#2563EB;
+  --blue-soft:#EFF6FF;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Sidebar */
+.admin-sidebar{
+  width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 16px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+}
+.admin-sidebar .brand{
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.admin-sidebar .brand .dot{
+  width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+}
+.admin-nav-group{ margin-bottom: 4px; }
+.admin-sidebar a{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.admin-sidebar a:hover{ background: var(--bg); color: var(--text); }
+.admin-sidebar a.active{ background: var(--accent-soft); color: var(--accent); }
+.admin-sidebar .back-link{
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12.5px;
+}
+
+/* Main content */
+.admin-main{
+  flex: 1;
+  margin-left: 240px;
+  padding: 32px 40px 80px;
+  max-width: 1200px;
+}
+.admin-header{
+  margin-bottom: 28px;
+}
+.admin-header h1{
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.admin-header p{
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Stat cards */
+.admin-stats-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+@media(max-width: 900px){ .admin-stats-grid{ grid-template-columns: 1fr 1fr; } }
+.admin-stat-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.admin-stat-card .value{
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.admin-stat-card .label{
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Section */
+.admin-section{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.admin-section-header{
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin-section-header h2{
+  font-size: 15px;
+  font-weight: 600;
+}
+.admin-section-body{ padding: 20px; }
+
+/* Table */
+.admin-data-table{
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-data-table th{
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.admin-data-table td{
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+}
+.admin-data-table tr:last-child td{ border-bottom: none; }
+.admin-data-table tr:hover td{ background: var(--bg); }
+
+/* Pills */
+.pill{
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: capitalize;
+}
+.pill-pending{ background: var(--amber-soft); color: var(--amber); }
+.pill-confirmed{ background: var(--green-soft); color: var(--green); }
+.pill-shipped{ background: var(--blue-soft); color: var(--blue); }
+.pill-delivered{ background: var(--green-soft); color: var(--green); }
+.pill-cancelled{ background: var(--red-soft); color: var(--red); }
+.pill-active{ background: var(--green-soft); color: var(--green); }
+.pill-inactive{ background: var(--red-soft); color: var(--red); }
+
+/* Buttons */
+.admin-btn{
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.admin-btn:hover{ opacity: 0.9; }
+.admin-btn:disabled{ opacity: 0.5; cursor: not-allowed; }
+.admin-btn-ghost{
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.admin-btn-sm{
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* Form */
+.admin-inline-form{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.admin-inline-form label{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.admin-inline-form input, .admin-inline-form select{
+  font-size: 13.5px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  outline: none;
+  background: var(--surface);
+  min-width: 130px;
+  font-family: inherit;
+}
+.admin-inline-form input:focus, .admin-inline-form select:focus{
+  border-color: var(--accent);
+}
+
+.admin-empty{
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13.5px;
+}
+
+/* Login page */
+.admin-login-page{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.admin-login-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 360px;
+}
+.admin-login-card .brand{
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.admin-login-card h1{
+  font-size: 20px;
+  font-weight: 700;
+  margin: 4px 0 24px;
+}
+.admin-login-card input{
+  width: 100%;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  margin-bottom: 14px;
+  box-sizing: border-box;
+}
+.admin-login-card input:focus{ border-color: var(--accent); }
+.admin-login-card .admin-btn{ width: 100%; }

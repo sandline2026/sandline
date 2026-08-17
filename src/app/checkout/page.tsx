@@ -55,6 +55,22 @@ export default function CheckoutPage() {
         customerId = newCustomer.id;
       }
 
+      // Fetch real cost prices + dropship fee for accurate profit tracking
+      const productIds = items.map((i) => i.id);
+      const { data: productRows } = await supabase
+        .from("products")
+        .select("id, cost_price, dropship_fee, manufacturer_id")
+        .in("id", productIds);
+
+      const costMap: Record<string, { cost: number; dropship: number; manufacturerId: string | null }> = {};
+      productRows?.forEach((p: any) => {
+        costMap[p.id] = {
+          cost: Number(p.cost_price) || 0,
+          dropship: Number(p.dropship_fee) || 0,
+          manufacturerId: p.manufacturer_id,
+        };
+      });
+
       const orderNumber = "SL-" + Date.now().toString().slice(-8);
       const { data: order, error: orderError } = await supabase
         .from("orders")
@@ -73,20 +89,21 @@ export default function CheckoutPage() {
 
       if (orderError) throw orderError;
 
-      const orderItems = items.map((item) => ({
-        order_id: order.id,
-        product_id: item.id,
-        size: null,
-        color: null,
-        quantity: item.quantity,
-        unit_price_usd: item.price,
-        unit_cost_inr: 0,
-      }));
+      const orderItems = items.map((item) => {
+        const info = costMap[item.id] || { cost: 0, dropship: 0, manufacturerId: null };
+        return {
+          order_id: order.id,
+          product_id: item.id,
+          manufacturer_id: info.manufacturerId,
+          size: null,
+          color: null,
+          quantity: item.quantity,
+          unit_price_usd: item.price,
+          unit_cost_inr: info.cost + info.dropship,
+        };
+      });
 
-      const { error: itemsError } = await supabase
-        .from("order_items")
-        .insert(orderItems);
-
+      const { error: itemsError } = await supabase.from("order_items").insert(orderItems);
       if (itemsError) throw itemsError;
 
       const res = await fetch("/api/checkout", {

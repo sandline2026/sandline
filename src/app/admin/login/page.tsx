@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import "../../sandline.css";
+import "../../admin.css";
 
 export default function AdminLogin() {
   const [password, setPassword] = useState("");
@@ -28,12 +28,10 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="sandline-page">
-      <nav>
-        <a className="logo" href="/">SAND<span>LINE</span></a>
-      </nav>
-      <div className="admin-login-wrap">
-        <h1 style={{ fontSize: "28px", marginBottom: "24px" }}>Admin login</h1>
+    <div className="admin-login-page">
+      <div className="admin-login-card">
+        <div className="brand">SANDLINE</div>
+        <h1>Admin login</h1>
         <form onSubmit={handleSubmit}>
           <input
             type="password"
@@ -42,8 +40,8 @@ export default function AdminLogin() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {error && <p style={{ color: "#c0392b", fontSize: "13px", marginBottom: "12px" }}>{error}</p>}
-          <button className="btn" type="submit" disabled={loading} style={{ width: "100%" }}>
+          {error && <p style={{ color: "#DC2626", fontSize: "13px", marginBottom: "12px" }}>{error}</p>}
+          <button className="admin-btn" type="submit" disabled={loading}>
             {loading ? "Checking..." : "Log in"}
           </button>
         </form>
