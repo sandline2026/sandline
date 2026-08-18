@@ -49,9 +49,9 @@ export default function Home() {
       <nav>
         <div className="logo">SAND<span>LINE</span></div>
         <div className="nav-links">
+          <a href="/shop">Shop</a>
+          <a href="/size-guide">Size Guide</a>
           <a href="#story">Story</a>
-          <a href="#collections">Collections</a>
-          <a href="#craft">Craft</a>
           <a href="#contact">Contact</a>
         </div>
       </nav>
@@ -117,7 +117,7 @@ export default function Home() {
           <p>Every collection is built around a moment — the wedding night, the beach party, the resort evening.</p>
         </div>
         <div className="collections-grid">
-          <div className="collection-card reveal">
+          <a href="/collections/honeymoon" className="collection-card reveal" style={{ display: "block", textDecoration: "none", color: "inherit" }}>
             <span className="price-tag">from $58</span>
             <div className="art">
               <svg viewBox="0 0 200 260" fill="none">
@@ -130,9 +130,9 @@ export default function Home() {
               <div className="eyebrow">The Wedding Night Edit</div>
               <h3>Long Silk Slips</h3>
             </div>
-          </div>
+          </a>
 
-          <div className="collection-card reveal">
+          <a href="/collections/beach_party" className="collection-card reveal" style={{ display: "block", textDecoration: "none", color: "inherit" }}>
             <span className="price-tag">from $42</span>
             <div className="art">
               <svg viewBox="0 0 200 260" fill="none">
@@ -147,9 +147,9 @@ export default function Home() {
               <div className="eyebrow">The Beach Party Edit</div>
               <h3>Short Sundown Dresses</h3>
             </div>
-          </div>
+          </a>
 
-          <div className="collection-card reveal">
+          <a href="/collections/resort_evening" className="collection-card reveal" style={{ display: "block", textDecoration: "none", color: "inherit" }}>
             <span className="price-tag">from $50</span>
             <div className="art">
               <svg viewBox="0 0 200 260" fill="none">
@@ -162,7 +162,7 @@ export default function Home() {
               <div className="eyebrow">The Resort Evening Edit</div>
               <h3>Wrap &amp; Flow Dresses</h3>
             </div>
-          </div>
+          </a>
         </div>
       </section>
 
