@@ -3,6 +3,10 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import AddToCartButton from "@/components/AddToCartButton";
 import CartLink from "@/components/CartLink";
+import WishlistButton from "@/components/WishlistButton";
+import ReviewForm from "@/components/ReviewForm";
+import NotifyMeForm from "@/components/NotifyMeForm";
+import PincodeCheck from "@/components/PincodeCheck";
 import "../../sandline.css";
 
 const collectionArt: Record<string, React.ReactElement> = {
@@ -51,6 +55,22 @@ export default async function ProductDetail({
   if (!product) notFound();
 
   const hasPhoto = product.images && product.images.length > 0;
+  const inStock = product.stock_status === "in_stock";
+
+  const { data: reviews } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("product_id", product.id)
+    .eq("is_approved", true)
+    .order("created_at", { ascending: false });
+
+  const { data: similarProducts } = await supabase
+    .from("products")
+    .select()
+    .eq("collection", product.collection)
+    .neq("id", product.id)
+    .eq("is_active", true)
+    .limit(3);
 
   return (
     <div className="sandline-page">
@@ -59,6 +79,7 @@ export default async function ProductDetail({
         <div className="nav-links">
           <a href="/shop">Shop</a>
           <a href="/size-guide">Size Guide</a>
+          <a href="/wishlist">Wishlist</a>
           <a href="/#contact">Contact</a>
           <CartLink />
         </div>
@@ -77,6 +98,8 @@ export default async function ProductDetail({
           <span className="eyebrow">{collectionLabel[product.collection] || "Sandline"}</span>
           <h1>{product.name}</h1>
           <div className="product-price">${product.selling_price_usd}</div>
+
+          {!inStock && <div className="out-of-stock-badge">Currently out of stock</div>}
 
           {product.description && <p className="product-desc">{product.description}</p>}
 
@@ -102,21 +125,76 @@ export default async function ProductDetail({
             </div>
           )}
 
-          <AddToCartButton
+          {inStock ? (
+            <AddToCartButton id={product.id} name={product.name} price={product.selling_price_usd} />
+          ) : (
+            <NotifyMeForm productId={product.id} />
+          )}
+
+          <WishlistButton
             id={product.id}
             name={product.name}
             price={product.selling_price_usd}
+            image={hasPhoto ? product.images[0] : null}
           />
 
+          <PincodeCheck />
+
           <div className="product-meta-list">
-            {product.fabric && (
-              <div><span>Fabric</span><span>{product.fabric}</span></div>
-            )}
+            {product.fabric && <div><span>Fabric</span><span>{product.fabric}</span></div>}
             <div><span>Shipping</span><span>Worldwide, tracked courier</span></div>
             <div><span>Returns</span><span>Easy size exchange</span></div>
           </div>
+
+          <div className="reviews-section">
+            <h2>Reviews</h2>
+            {reviews && reviews.length > 0 ? (
+              reviews.map((r: any) => (
+                <div className="review-item" key={r.id}>
+                  <div className="review-stars">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</div>
+                  <p className="review-text">{r.review_text}</p>
+                </div>
+              ))
+            ) : (
+              <p style={{ fontSize: "14px", color: "rgba(27,36,32,0.55)" }}>No reviews yet — be the first.</p>
+            )}
+            <ReviewForm productId={product.id} />
+          </div>
         </div>
       </div>
+
+      {similarProducts && similarProducts.length > 0 && (
+        <section className="suggestions-section">
+          <h2>You might also like</h2>
+          <div className="collection-product-grid">
+            {similarProducts.map((p: any) => {
+              const pHasPhoto = p.images && p.images.length > 0;
+              return (
+                <div className="collection-card" key={p.id}>
+                  <span className="price-tag">${p.selling_price_usd}</span>
+                  <a href={`/product/${p.slug}`} className="collection-card-link">
+                    <div className="art">
+                      {pHasPhoto ? (
+                        <img
+                          src={p.images[0]}
+                          alt={p.name}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
+                        />
+                      ) : (
+                        collectionArt[p.collection] || collectionArt.beach_party
+                      )}
+                    </div>
+                    <div className="label"><h3>{p.name}</h3></div>
+                  </a>
+                  <div style={{ padding: "0 24px 24px" }}>
+                    <AddToCartButton id={p.id} name={p.name} price={p.selling_price_usd} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

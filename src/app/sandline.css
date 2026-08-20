@@ -634,3 +634,104 @@ body{
 }
 @media(max-width:960px){.sandline-page .collection-product-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:640px){.sandline-page .collection-product-grid{grid-template-columns:1fr;}}
+
+.sandline-page .wishlist-btn{
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  padding:11px 20px;
+  border-radius:999px;
+  border:1px solid var(--ink);
+  background:transparent;
+  color:var(--ink);
+  cursor:pointer;
+  margin-top:12px;
+  transition:all 0.3s ease;
+}
+.sandline-page .wishlist-btn:hover{ background:var(--ink); color:var(--sand); }
+
+.sandline-page .notify-form{
+  margin-top:16px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.sandline-page .notify-form input{
+  font-family:'Work Sans', sans-serif;
+  font-size:14px;
+  padding:11px 14px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  outline:none;
+  background:var(--foam);
+  flex:1;
+  min-width:180px;
+}
+.sandline-page .out-of-stock-badge{
+  display:inline-block;
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  color:var(--papaya);
+  margin-bottom:14px;
+}
+
+.sandline-page .reviews-section{
+  border-top:1px solid var(--line);
+  margin-top:40px;
+  padding-top:30px;
+}
+.sandline-page .reviews-section h2{
+  font-size:22px;
+  margin-bottom:20px;
+}
+.sandline-page .review-item{
+  border-bottom:1px solid var(--line);
+  padding:18px 0;
+}
+.sandline-page .review-stars{
+  color:var(--gold);
+  font-size:14px;
+  margin-bottom:6px;
+}
+.sandline-page .review-text{
+  font-size:14.5px;
+  line-height:1.6;
+  color:rgba(27,36,32,0.8);
+}
+.sandline-page .review-form{
+  background:var(--foam);
+  border-radius:16px;
+  padding:24px;
+  margin-top:24px;
+}
+.sandline-page .review-form label{
+  display:block;
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+  color:rgba(27,36,32,0.6);
+}
+.sandline-page .review-form select,
+.sandline-page .review-form textarea{
+  width:100%;
+  font-family:'Work Sans', sans-serif;
+  font-size:14px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  outline:none;
+  background:var(--sand);
+  margin-bottom:14px;
+  box-sizing:border-box;
+}
+
+.sandline-page .suggestions-section{
+  padding:80px clamp(24px,5vw,64px);
+}
+.sandline-page .suggestions-section h2{
+  font-size:24px;
+  margin-bottom:24px;
+}
