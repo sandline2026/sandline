@@ -814,29 +814,38 @@
 .admin-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(17, 24, 39, 0.5);
-  z-index: 2000;
+  background: rgba(17, 24, 39, 0.65);
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  backdrop-filter: blur(4px);
+  padding: 16px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  overscroll-behavior: contain;
 }
 
 .admin-modal {
-  background: var(--surface);
+  background: #FFFFFF;
   border-radius: 16px;
   width: 100%;
-  max-width: 760px;
-  max-height: 90vh;
+  max-width: 740px;
+  max-height: 88vh;
   overflow-y: auto;
-  box-shadow: var(--shadow-lg);
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border);
   position: relative;
+  animation: adminModalEnter 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes adminModalEnter {
+  0% { opacity: 0; transform: scale(0.96) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .admin-modal-header {
-  padding: 20px 28px;
+  padding: 18px 24px;
   border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;

@@ -79,9 +79,15 @@ const STATUS_OPTIONS = [
   { value: "cancelled", label: "Cancelled" },
 ];
 
-export default function AdminOrdersTable({ initialOrders }: { initialOrders: Order[] }) {
+export default function AdminOrdersTable({
+  initialOrders,
+  orders: incomingOrders,
+}: {
+  initialOrders?: Order[];
+  orders?: Order[];
+}) {
   const router = useRouter();
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const [orders, setOrders] = useState<Order[]>(initialOrders || incomingOrders || []);
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeOrder, setActiveOrder] = useState<Order | null>(null);
