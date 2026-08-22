@@ -1,15 +1,41 @@
 import { createClient } from "@/../utils/supabase/server";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import AddToCartButton from "@/components/AddToCartButton";
+import WishlistButton from "@/components/WishlistButton";
 import CartLink from "@/components/CartLink";
 import SortSelect from "@/components/SortSelect";
 import "../../sandline.css";
 
-const collectionTitles: Record<string, string> = {
-  honeymoon: "The Wedding Night Edit",
-  beach_party: "The Beach Party Edit",
-  resort_evening: "The Resort Evening Edit",
+const collectionsMeta: Record<
+  string,
+  { title: string; subtitle: string; tag: string }
+> = {
+  beach_party: {
+    title: "The Beach Party Edit",
+    subtitle:
+      "Vibrant, sun-drenched silhouettes crafted in lightweight silks and breezy weaves for oceanside soirées and sundown celebrations.",
+    tag: "SUNDOWN & BEACH PARTIES",
+  },
+  honeymoon: {
+    title: "The Wedding Night Edit",
+    subtitle:
+      "Intimate drape dresses, ethereal slip silhouettes, and delicate cuts curated for honeymoons and romantic coastal retreats.",
+    tag: "HONEYMOON & INTIMATE",
+  },
+  resort_evening: {
+    title: "The Resort Evening Edit",
+    subtitle:
+      "Sculpted wrap silhouettes and elevated maxi gowns designed for cocktail dinners and poolside elegance.",
+    tag: "RESORT & COCKTAILS",
+  },
 };
+
+const collectionTabs = [
+  { slug: "beach_party", label: "The Beach Party Edit" },
+  { slug: "honeymoon", label: "The Wedding Night Edit" },
+  { slug: "resort_evening", label: "The Resort Evening Edit" },
+];
 
 export default async function CollectionPage({
   params,
@@ -37,28 +63,42 @@ export default async function CollectionPage({
   const activeFabrics = sp.fabric ? sp.fabric.split(",") : [];
 
   if (activeSizes.length > 0) {
-    products = products.filter((p: any) => p.sizes?.some((s: string) => activeSizes.includes(s)));
+    products = products.filter((p: any) =>
+      p.sizes?.some((s: string) => activeSizes.includes(s))
+    );
   }
   if (activeColors.length > 0) {
-    products = products.filter((p: any) => p.colors?.some((c: string) => activeColors.includes(c)));
+    products = products.filter((p: any) =>
+      p.colors?.some((c: string) => activeColors.includes(c))
+    );
   }
   if (activeFabrics.length > 0) {
     products = products.filter((p: any) => activeFabrics.includes(p.fabric));
   }
 
   if (sp.sort === "price_asc") {
-    products = [...products].sort((a: any, b: any) => a.selling_price_usd - b.selling_price_usd);
+    products = [...products].sort(
+      (a: any, b: any) => a.selling_price_usd - b.selling_price_usd
+    );
   } else if (sp.sort === "price_desc") {
-    products = [...products].sort((a: any, b: any) => b.selling_price_usd - a.selling_price_usd);
+    products = [...products].sort(
+      (a: any, b: any) => b.selling_price_usd - a.selling_price_usd
+    );
   }
 
-  const allSizes = Array.from(new Set((allProducts || []).flatMap((p: any) => p.sizes || [])));
-  const allColors = Array.from(new Set((allProducts || []).flatMap((p: any) => p.colors || [])));
-  const allFabrics = Array.from(new Set((allProducts || []).map((p: any) => p.fabric).filter(Boolean)));
+  const allSizes = Array.from(
+    new Set((allProducts || []).flatMap((p: any) => p.sizes || []))
+  );
+  const allColors = Array.from(
+    new Set((allProducts || []).flatMap((p: any) => p.colors || []))
+  );
+  const allFabrics = Array.from(
+    new Set((allProducts || []).map((p: any) => p.fabric).filter(Boolean))
+  );
 
   function buildFilterLink(type: "sizes" | "colors" | "fabric", value: string) {
-    const params = new URLSearchParams();
-    if (sp.sort) params.set("sort", sp.sort);
+    const query = new URLSearchParams();
+    if (sp.sort) query.set("sort", sp.sort);
 
     const current = {
       sizes: activeSizes,
@@ -71,69 +111,138 @@ export default async function CollectionPage({
 
     (["sizes", "colors", "fabric"] as const).forEach((key) => {
       const values = key === type ? newList : current[key];
-      if (values.length > 0) params.set(key, values.join(","));
+      if (values.length > 0) query.set(key, values.join(","));
     });
 
-    return `/collections/${collection}?${params.toString()}`;
+    return `/collections/${collection}?${query.toString()}`;
   }
 
-  const hasActiveFilters = activeSizes.length > 0 || activeColors.length > 0 || activeFabrics.length > 0;
+  const hasActiveFilters =
+    activeSizes.length > 0 || activeColors.length > 0 || activeFabrics.length > 0;
+  const currentMeta = collectionsMeta[collection] || {
+    title: "Sandline Collection",
+    subtitle: "Resort and beach silhouettes crafted for effortless coastal luxury.",
+    tag: "CURATED EDIT",
+  };
 
   return (
     <div className="sandline-page">
+      {/* Navigation */}
       <nav>
-        <a className="logo" href="/">SAND<span>LINE</span></a>
+        <a className="logo" href="/">
+          SAND<span>LINE</span>
+        </a>
         <div className="nav-links">
           <a href="/shop">Shop</a>
           <a href="/size-guide">Size Guide</a>
+          <a href="/#story">Story</a>
           <a href="/#contact">Contact</a>
           <CartLink />
         </div>
       </nav>
 
-      <div className="collection-layout">
-        <aside className="filter-sidebar">
-          {hasActiveFilters && (
-            <a href={`/collections/${collection}`} className="clear-filters">Clear all filters</a>
-          )}
+      {/* Collection Hero Header */}
+      <section className="collection-hero-wrap">
+        <div className="collection-eyebrow">
+          <span>✦</span>
+          <span>{currentMeta.tag}</span>
+        </div>
+        <h1 className="collection-title">{currentMeta.title}</h1>
+        <p className="collection-desc">{currentMeta.subtitle}</p>
 
+        {/* Collection Switcher Tabs */}
+        <div className="collection-switcher">
+          {collectionTabs.map((tab) => (
+            <Link
+              key={tab.slug}
+              href={`/collections/${tab.slug}`}
+              className={`collection-switch-tab ${collection === tab.slug ? "active" : ""}`}
+            >
+              {tab.label}
+            </Link>
+          ))}
+          <Link href="/shop" className="collection-switch-tab">
+            View All Pieces →
+          </Link>
+        </div>
+      </section>
+
+      {/* Collection Layout: Filter Sidebar + Products Grid */}
+      <div className="collection-layout">
+        {/* Sidebar Filters */}
+        <aside className="filter-sidebar-card">
+          <div className="filter-card-header">
+            <h3>Filters</h3>
+            {hasActiveFilters && (
+              <Link href={`/collections/${collection}`} className="clear-filters-btn">
+                Reset All ✕
+              </Link>
+            )}
+          </div>
+
+          {/* Size Filter */}
           {allSizes.length > 0 && (
             <div className="filter-group">
               <h4>Size</h4>
-              {allSizes.map((s: string) => (
-                <a key={s} href={buildFilterLink("sizes", s)} className={`filter-option ${activeSizes.includes(s) ? "active" : ""}`}>
-                  {s}
-                </a>
-              ))}
+              <div className="size-chip-grid">
+                {allSizes.map((s: string) => (
+                  <Link
+                    key={s}
+                    href={buildFilterLink("sizes", s)}
+                    className={`size-chip ${activeSizes.includes(s) ? "active" : ""}`}
+                  >
+                    {s}
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
 
-          {allColors.length > 0 && (
-            <div className="filter-group">
-              <h4>Color</h4>
-              {allColors.map((c: string) => (
-                <a key={c} href={buildFilterLink("colors", c)} className={`filter-option ${activeColors.includes(c) ? "active" : ""}`}>
-                  {c}
-                </a>
-              ))}
-            </div>
-          )}
-
+          {/* Fabric Filter */}
           {allFabrics.length > 0 && (
             <div className="filter-group">
               <h4>Fabric</h4>
-              {allFabrics.map((f: string) => (
-                <a key={f} href={buildFilterLink("fabric", f)} className={`filter-option ${activeFabrics.includes(f) ? "active" : ""}`}>
-                  {f}
-                </a>
-              ))}
+              <div className="filter-tag-list">
+                {allFabrics.map((f: string) => (
+                  <Link
+                    key={f}
+                    href={buildFilterLink("fabric", f)}
+                    className={`filter-tag-row ${activeFabrics.includes(f) ? "active" : ""}`}
+                  >
+                    <span>{f}</span>
+                    {activeFabrics.includes(f) && <span>✓</span>}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Color Filter */}
+          {allColors.length > 0 && (
+            <div className="filter-group">
+              <h4>Color</h4>
+              <div className="filter-tag-list">
+                {allColors.map((c: string) => (
+                  <Link
+                    key={c}
+                    href={buildFilterLink("colors", c)}
+                    className={`filter-tag-row ${activeColors.includes(c) ? "active" : ""}`}
+                  >
+                    <span>{c}</span>
+                    {activeColors.includes(c) && <span>✓</span>}
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
         </aside>
 
+        {/* Main Content: Topbar & Product Grid */}
         <div>
           <div className="collection-topbar">
-            <h1>{collectionTitles[collection] || "Collection"}</h1>
+            <div className="collection-count">
+              Showing <strong>{products.length}</strong> {products.length === 1 ? "silhouette" : "silhouettes"}
+            </div>
             <SortSelect collection={collection} />
           </div>
 
@@ -141,36 +250,126 @@ export default async function CollectionPage({
             <div className="collection-product-grid">
               {products.map((product: any) => {
                 const hasPhoto = product.images && product.images.length > 0;
+                const isOutOfStock = product.stock_status === "out_of_stock";
+
                 return (
-                  <div className="collection-card" key={product.id}>
-                    <span className="price-tag">${product.selling_price_usd}</span>
-                    <a href={`/product/${product.slug}`} className="collection-card-link">
-                      <div className="art">
+                  <div className="product-grid-card" key={product.id}>
+                    {/* Visual box with price, wishlist heart, and image */}
+                    <div className="product-card-image-box">
+                      <span className="floating-price-tag">
+                        ${Number(product.selling_price_usd).toFixed(2)}
+                      </span>
+
+                      <WishlistButton
+                        id={product.id}
+                        name={product.name}
+                        price={product.selling_price_usd}
+                        image={hasPhoto ? product.images[0] : null}
+                        variant="icon"
+                      />
+
+                      {isOutOfStock && (
+                        <span className="floating-sold-out-tag">Sold Out</span>
+                      )}
+
+                      <Link href={`/product/${product.slug}`}>
                         {hasPhoto ? (
                           <img
                             src={product.images[0]}
                             alt={product.name}
-                            style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
+                            className="product-card-img"
                           />
                         ) : (
-                          <svg viewBox="0 0 200 260" fill="none">
-                            <path d="M100 30 L65 65 L70 160 L130 160 L135 65 Z" fill="#FF7A54" opacity="0.92" />
-                          </svg>
+                          <div
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              background: "var(--foam)",
+                            }}
+                          >
+                            <svg viewBox="0 0 200 260" fill="none" style={{ width: "60%", height: "60%" }}>
+                              <path d="M100 30 L65 65 L70 160 L130 160 L135 65 Z" fill="#FF7A54" opacity="0.92" />
+                            </svg>
+                          </div>
+                        )}
+                      </Link>
+                    </div>
+
+                    {/* Product Card Details */}
+                    <div className="product-card-body">
+                      <div>
+                        <div className="product-card-eyebrow">
+                          {product.fabric || currentMeta.tag}
+                        </div>
+                        <Link
+                          href={`/product/${product.slug}`}
+                          className="product-card-title"
+                        >
+                          {product.name}
+                        </Link>
+                        {product.sizes && product.sizes.length > 0 && (
+                          <div className="product-card-sizes">
+                            Sizes: {product.sizes.join(", ")}
+                          </div>
                         )}
                       </div>
-                      <div className="label">
-                        <h3>{product.name}</h3>
+
+                      <div className="product-card-actions">
+                        {isOutOfStock ? (
+                          <Link
+                            href={`/product/${product.slug}`}
+                            className="add-to-cart-btn"
+                            style={{
+                              textAlign: "center",
+                              textDecoration: "none",
+                              background: "var(--foam)",
+                              color: "var(--ink)",
+                              border: "1px solid var(--line)",
+                              display: "block",
+                            }}
+                          >
+                            Notify Me When Back
+                          </Link>
+                        ) : (
+                          <AddToCartButton
+                            id={product.id}
+                            name={product.name}
+                            price={product.selling_price_usd}
+                          />
+                        )}
                       </div>
-                    </a>
-                    <div style={{ padding: "0 24px 24px" }}>
-                      <AddToCartButton id={product.id} name={product.name} price={product.selling_price_usd} />
                     </div>
                   </div>
                 );
               })}
             </div>
           ) : (
-            <p className="empty-state" style={{ padding: 0 }}>No products match these filters.</p>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "80px 20px",
+                background: "var(--foam)",
+                borderRadius: "18px",
+                border: "1px solid var(--line)",
+              }}
+            >
+              <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: "22px", marginBottom: "8px" }}>
+                No pieces match these filters
+              </h3>
+              <p style={{ color: "rgba(27,36,32,0.6)", fontSize: "14px", marginBottom: "20px" }}>
+                Try selecting different sizes or fabrics to discover more silhouettes.
+              </p>
+              <Link
+                href={`/collections/${collection}`}
+                className="btn"
+                style={{ display: "inline-block" }}
+              >
+                Clear All Filters
+              </Link>
+            </div>
           )}
         </div>
       </div>

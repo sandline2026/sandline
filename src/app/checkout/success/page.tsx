@@ -31,6 +31,7 @@ export default async function CheckoutSuccess({
     const session = await stripe.checkout.sessions.retrieve(session_id);
     orderNumber = (session.metadata?.order_number as string) || "";
     const orderId = session.metadata?.order_id as string;
+    const couponId = session.metadata?.coupon_id as string;
 
     if (session.payment_status === "paid" && orderId) {
       paid = true;
@@ -51,6 +52,22 @@ export default async function CheckoutSuccess({
         gateway_fee_usd: Number(estimatedFee.toFixed(2)),
         status: "paid",
       });
+
+      // Increment coupon used_count if a coupon was applied
+      if (couponId) {
+        const { data: couponRecord } = await supabase
+          .from("coupons")
+          .select("used_count")
+          .eq("id", couponId)
+          .maybeSingle();
+
+        if (couponRecord) {
+          await supabase
+            .from("coupons")
+            .update({ used_count: (couponRecord.used_count || 0) + 1 })
+            .eq("id", couponId);
+        }
+      }
     }
   } catch (err) {
     console.error(err);

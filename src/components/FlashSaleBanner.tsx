@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const STORAGE_KEY = "sandline-flash-sale-end";
 const DURATION_MS = 24 * 60 * 60 * 1000;
 
 export default function FlashSaleBanner() {
+  const pathname = usePathname();
   const [timeLeft, setTimeLeft] = useState<{ h: string; m: string; s: string } | null>(null);
 
   useEffect(() => {
@@ -39,6 +41,11 @@ export default function FlashSaleBanner() {
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  // Do not render Flash Sale Banner on Admin pages
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   if (!timeLeft) return null;
 

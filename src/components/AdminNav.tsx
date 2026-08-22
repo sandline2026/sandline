@@ -1,17 +1,32 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import {
+  LayoutDashboard,
+  ShoppingBag,
+  TrendingUp,
+  Shirt,
+  FolderTree,
+  Users,
+  Tag,
+  BellRing,
+  Megaphone,
+  MessageSquare,
+  ArrowUpRight,
+} from "lucide-react";
 
 const links = [
-  { href: "/admin", label: "Dashboard" },
-  { href: "/admin/analytics", label: "Analytics" },
-  { href: "/admin/products", label: "Products" },
-  { href: "/admin/categories", label: "Categories" },
-  { href: "/admin/customers", label: "Customers" },
-  { href: "/admin/coupons", label: "Coupons" },
-  { href: "/admin/notify-requests", label: "Notify Requests" },
-  { href: "/admin/ads", label: "Ad Campaigns" },
-  { href: "/admin/chats", label: "Chats" },
+  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/orders", label: "Orders", icon: ShoppingBag },
+  { href: "/admin/analytics", label: "Analytics", icon: TrendingUp },
+  { href: "/admin/products", label: "Products", icon: Shirt },
+  { href: "/admin/categories", label: "Categories", icon: FolderTree },
+  { href: "/admin/customers", label: "Customers", icon: Users },
+  { href: "/admin/coupons", label: "Coupons", icon: Tag },
+  { href: "/admin/notify-requests", label: "Notify Requests", icon: BellRing },
+  { href: "/admin/ads", label: "Ad Campaigns", icon: Megaphone },
+  { href: "/admin/chats", label: "Chats", icon: MessageSquare },
 ];
 
 export default function AdminNav() {
@@ -19,22 +34,41 @@ export default function AdminNav() {
 
   return (
     <aside className="admin-sidebar">
-      <div className="brand">
-        <span className="dot"></span>
-        Sandline Admin
+      <div className="admin-sidebar-top">
+        <div className="brand">
+          <div className="brand-logo-icon">S</div>
+          <div className="brand-name">
+            SANDLINE
+            <span className="brand-badge">Admin Studio</span>
+          </div>
+        </div>
+
+        <nav className="admin-nav-group">
+          {links.map((link) => {
+            const Icon = link.icon;
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={isActive ? "active" : ""}
+              >
+                <Icon size={17} />
+                <span>{link.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
       </div>
-      <nav className="admin-nav-group">
-        {links.map((link) => {
-          const isActive = pathname === link.href;
-          return (
-            <a key={link.href} href={link.href} className={isActive ? "active" : ""}>
-              {link.label}
-            </a>
-          );
-        })}
-      </nav>
-      <div className="back-link">
-        <a href="/">Back to site</a>
+
+      <div className="admin-sidebar-footer">
+        <Link href="/" target="_blank" className="admin-store-link">
+          <div className="admin-store-badge">
+            <span className="admin-live-dot"></span>
+            <span>Storefront Live</span>
+          </div>
+          <ArrowUpRight size={15} />
+        </Link>
       </div>
     </aside>
   );

@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function SortSelect({ collection }: { collection: string }) {
+export default function SortSelect({ collection }: { collection?: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -13,12 +13,17 @@ export default function SortSelect({ collection }: { collection: string }) {
     } else {
       params.delete("sort");
     }
-    router.push(`/collections/${collection}?${params.toString()}`);
+    const basePath = collection ? `/collections/${collection}` : "/shop";
+    router.push(`${basePath}?${params.toString()}`);
   }
 
   return (
-    <select className="sort-select" onChange={handleChange} defaultValue={searchParams.get("sort") || ""}>
-      <option value="">Sort: Newest</option>
+    <select
+      className="sort-select"
+      onChange={handleChange}
+      defaultValue={searchParams.get("sort") || ""}
+    >
+      <option value="">Sort: Featured</option>
       <option value="price_asc">Price: Low to High</option>
       <option value="price_desc">Price: High to Low</option>
     </select>

@@ -6,9 +6,38 @@ import { createClient } from "@/../utils/supabase/client";
 import "../sandline.css";
 
 export default function CheckoutPage() {
-  const { items, subtotal, clearCart } = useCart();
+  const {
+    items,
+    subtotal,
+    discount,
+    total,
+    appliedCoupon,
+    applyCoupon,
+    removeCoupon,
+    clearCart,
+  } = useCart();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [couponInput, setCouponInput] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [couponError, setCouponError] = useState("");
+
+  async function handleApplyCoupon(e: React.FormEvent) {
+    e.preventDefault();
+    if (!couponInput.trim()) return;
+
+    setCouponLoading(true);
+    setCouponError("");
+
+    const result = await applyCoupon(couponInput);
+    if (!result.success) {
+      setCouponError(result.error || "Invalid coupon code.");
+    } else {
+      setCouponInput("");
+    }
+    setCouponLoading(false);
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -79,9 +108,9 @@ export default function CheckoutPage() {
           customer_id: customerId,
           status: "pending",
           subtotal_usd: subtotal,
-          discount_usd: 0,
+          discount_usd: discount,
           shipping_usd: 0,
-          total_usd: subtotal,
+          total_usd: total,
           traffic_source: "website_direct",
         })
         .select("id")
@@ -114,6 +143,9 @@ export default function CheckoutPage() {
           orderNumber,
           items,
           customerEmail: email,
+          couponCode: appliedCoupon?.code || null,
+          couponId: appliedCoupon?.id || null,
+          discountAmount: discount,
         }),
       });
 
@@ -122,8 +154,9 @@ export default function CheckoutPage() {
 
       clearCart();
       window.location.href = data.url;
-    } catch (err: any) {
-      setError(err.message || "Something went wrong. Please try again.");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      setError(message);
       setLoading(false);
     }
   }
@@ -157,7 +190,7 @@ export default function CheckoutPage() {
             {error && <p style={{ color: "#c0392b", fontSize: "13px" }}>{error}</p>}
 
             <button className="btn" type="submit" disabled={loading} style={{ marginTop: "20px" }}>
-              {loading ? "Redirecting to payment..." : `Pay — $${subtotal.toFixed(2)}`}
+              {loading ? "Redirecting to payment..." : `Pay — $${total.toFixed(2)}`}
             </button>
           </form>
 
@@ -168,9 +201,59 @@ export default function CheckoutPage() {
                 <div className="cart-row-price">${(item.price * item.quantity).toFixed(2)}</div>
               </div>
             ))}
-            <div className="cart-subtotal">
-              <span>Total</span>
+
+            {/* Promo Code Box */}
+            <div className="promo-box" style={{ margin: "20px 0" }}>
+              {appliedCoupon ? (
+                <div className="promo-applied-tag">
+                  <div>
+                    <span>Coupon: </span>
+                    <strong>{appliedCoupon.code}</strong>
+                    <span style={{ fontSize: "12px", opacity: 0.85, marginLeft: "4px" }}>
+                      ({appliedCoupon.discount_type === "percentage" ? `${appliedCoupon.discount_value}% off` : `$${appliedCoupon.discount_value} off`})
+                    </span>
+                  </div>
+                  <button className="promo-remove-btn" onClick={removeCoupon}>
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleApplyCoupon}>
+                  <div className="promo-input-group">
+                    <input
+                      type="text"
+                      className="promo-input"
+                      placeholder="Promo code (e.g. SUMMER20)"
+                      value={couponInput}
+                      onChange={(e) => {
+                        setCouponInput(e.target.value);
+                        if (couponError) setCouponError("");
+                      }}
+                    />
+                    <button className="promo-btn" type="submit" disabled={couponLoading}>
+                      {couponLoading ? "..." : "Apply"}
+                    </button>
+                  </div>
+                  {couponError && <p className="promo-error">{couponError}</p>}
+                </form>
+              )}
+            </div>
+
+            <div className="cart-subtotal" style={{ fontSize: "15px", marginTop: "12px" }}>
+              <span style={{ color: "rgba(27,36,32,0.7)" }}>Subtotal</span>
               <span>${subtotal.toFixed(2)}</span>
+            </div>
+
+            {discount > 0 && (
+              <div className="cart-discount-row">
+                <span>Discount ({appliedCoupon?.code})</span>
+                <span>-${discount.toFixed(2)}</span>
+              </div>
+            )}
+
+            <div className="cart-total-row">
+              <span>Total</span>
+              <span>${total.toFixed(2)}</span>
             </div>
           </div>
         </div>

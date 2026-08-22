@@ -1,9 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import CartLink from "@/components/CartLink";
+import WishlistLink from "@/components/WishlistLink";
+import IntroSplash from "@/components/IntroSplash";
 import "./sandline.css";
 
 export default function Home() {
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterDone, setNewsletterDone] = useState(false);
+
   useEffect(() => {
     const fill = document.getElementById("horizon-fill");
     const sun = document.getElementById("sun");
@@ -38,65 +45,98 @@ export default function Home() {
     };
   }, []);
 
+  function handleNewsletterSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    setNewsletterDone(true);
+    setNewsletterEmail("");
+  }
+
   return (
     <div className="sandline-page">
+      {/* Luxury Cinematic Brand Intro Curtain */}
+      <IntroSplash />
+
+      {/* Scroll Horizon Indicator */}
       <div id="horizon-wrap">
         <div id="horizon-track"></div>
         <div id="horizon-fill"></div>
       </div>
       <div id="sun"></div>
 
+      {/* Main Navigation */}
       <nav>
-        <div className="logo">SAND<span>LINE</span></div>
+        <Link className="logo" href="/">
+          SAND<span>LINE</span>
+        </Link>
         <div className="nav-links">
-          <a href="/shop">Shop</a>
-          <a href="/size-guide">Size Guide</a>
-          <a href="#story">Story</a>
-          <a href="#contact">Contact</a>
+          <Link href="/shop">Shop</Link>
+          <Link href="/size-guide">Size Guide</Link>
+          <WishlistLink />
+          <Link href="#story">Story</Link>
+          <Link href="#contact">Contact</Link>
+          <CartLink />
         </div>
       </nav>
 
+      {/* Hero Section */}
       <header className="hero">
         <div className="hero-bg"></div>
         <div className="horizon-line-deco"></div>
         <div className="hero-eyebrow">
           <span className="dot"></span>
-          <span className="eyebrow">Designed in India — worn on every shore</span>
+          <span className="eyebrow">✦ RESORTWEAR DESIGNED &amp; HAND-FINISHED IN JAIPUR • SHIPPED WORLDWIDE</span>
         </div>
-        <h1>Dresses cut for<br /><em>where the tide</em><br />meets the party.</h1>
+        <h1>
+          Dresses cut for<br />
+          <em>where the tide</em><br />
+          meets the party.
+        </h1>
         <p className="hero-sub">
-          Sandline designs short and long western silhouettes, hand-finished by our India-based ateliers,
-          for honeymoons, beach weddings and sundown parties from Bali to Mykonos.
+          Sandline designs ethereal slip silhouettes, lightweight silks, and sculpted wraps for honeymoons, beach weddings, and sundown gatherings from Bali to Mykonos.
         </p>
         <div className="hero-cta">
-          <a className="btn" href="#collections">Explore the collection</a>
-          <a className="btn ghost" href="#story">Our story</a>
+          <Link className="btn" href="/shop">
+            Explore All Silhouettes →
+          </Link>
+          <Link className="btn ghost" href="#collections">
+            Discover The 3 Edits ↓
+          </Link>
         </div>
         <div className="hero-tag-cloud">
-          <div className="float-tag">✦ Honeymoon edit</div>
-          <div className="float-tag">✦ Beach party ready</div>
-          <div className="float-tag">✦ Ships worldwide</div>
+          <div className="float-tag">✦ The Honeymoon Edit</div>
+          <div className="float-tag">✦ Beach Party Ready</div>
+          <div className="float-tag">✦ Ships to 80+ Countries</div>
         </div>
       </header>
 
+      {/* Decorative Wave Separation */}
       <svg className="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ marginTop: "-2px" }}>
         <path fill="#EAF2EF" d="M0,32 C240,80 480,0 720,24 C960,48 1200,8 1440,40 L1440,80 L0,80 Z"></path>
       </svg>
 
+      {/* Story & Atelier Craftsmanship Section */}
       <section id="story">
         <div className="story reveal">
           <div className="story-copy">
             <span className="eyebrow">The Sandline Story</span>
             <h2>Made in India. Worn on every beach.</h2>
             <p>
-              We work with trusted ateliers across India, each chosen for their craft in resort wear.
-              Every Sandline piece is hand-checked before it leaves for its journey to a beach on the
-              other side of the world.
+              We work with trusted ateliers across Jaipur, India, each chosen for their generational craft in lightweight resortwear. Every Sandline piece is hand-finished and inspected before its journey across the ocean.
             </p>
             <div className="story-stats">
-              <div><div className="num">01</div><div className="lbl">Atelier Partner</div></div>
-              <div><div className="num">40+</div><div className="lbl">Countries Shipped</div></div>
-              <div><div className="num">100%</div><div className="lbl">Hand-Finished</div></div>
+              <div>
+                <div className="num">01</div>
+                <div className="lbl">Jaipur Atelier</div>
+              </div>
+              <div>
+                <div className="num">40+</div>
+                <div className="lbl">Countries Shipped</div>
+              </div>
+              <div>
+                <div className="num">100%</div>
+                <div className="lbl">Hand-Finished</div>
+              </div>
             </div>
           </div>
           <div className="story-visual">
@@ -111,13 +151,21 @@ export default function Home() {
         </div>
       </section>
 
+      {/* The 3 Edits Collection Showcase */}
       <section id="collections">
         <div className="section-head reveal">
           <h2>Three edits, one horizon.</h2>
-          <p>Every collection is built around a moment — the wedding night, the beach party, the resort evening.</p>
+          <p>
+            Every collection is built around a moment — the intimate wedding night, the golden hour beach party, and the elevated resort evening.
+          </p>
         </div>
         <div className="collections-grid">
-          <a href="/collections/honeymoon" className="collection-card reveal" style={{ display: "block", textDecoration: "none", color: "inherit" }}>
+          {/* Honeymoon Card */}
+          <Link
+            href="/collections/honeymoon"
+            className="collection-card reveal"
+            style={{ display: "block", textDecoration: "none", color: "inherit" }}
+          >
             <span className="price-tag">from $58</span>
             <div className="art">
               <svg viewBox="0 0 200 260" fill="none">
@@ -130,9 +178,14 @@ export default function Home() {
               <div className="eyebrow">The Wedding Night Edit</div>
               <h3>Long Silk Slips</h3>
             </div>
-          </a>
+          </Link>
 
-          <a href="/collections/beach_party" className="collection-card reveal" style={{ display: "block", textDecoration: "none", color: "inherit" }}>
+          {/* Beach Party Card */}
+          <Link
+            href="/collections/beach_party"
+            className="collection-card reveal"
+            style={{ display: "block", textDecoration: "none", color: "inherit" }}
+          >
             <span className="price-tag">from $42</span>
             <div className="art">
               <svg viewBox="0 0 200 260" fill="none">
@@ -147,9 +200,14 @@ export default function Home() {
               <div className="eyebrow">The Beach Party Edit</div>
               <h3>Short Sundown Dresses</h3>
             </div>
-          </a>
+          </Link>
 
-          <a href="/collections/resort_evening" className="collection-card reveal" style={{ display: "block", textDecoration: "none", color: "inherit" }}>
+          {/* Resort Evening Card */}
+          <Link
+            href="/collections/resort_evening"
+            className="collection-card reveal"
+            style={{ display: "block", textDecoration: "none", color: "inherit" }}
+          >
             <span className="price-tag">from $50</span>
             <div className="art">
               <svg viewBox="0 0 200 260" fill="none">
@@ -162,98 +220,121 @@ export default function Home() {
               <div className="eyebrow">The Resort Evening Edit</div>
               <h3>Wrap &amp; Flow Dresses</h3>
             </div>
-          </a>
+          </Link>
         </div>
       </section>
 
+      {/* Marquee Trust Banner */}
       <div className="marquee-wrap">
         <div className="marquee">
-          <span>Worldwide Shipping</span>
-          <span>Hand-Finished in India</span>
-          <span>Easy Size Exchange</span>
-          <span>Secure International Checkout</span>
-          <span>Worldwide Shipping</span>
-          <span>Hand-Finished in India</span>
-          <span>Easy Size Exchange</span>
-          <span>Secure International Checkout</span>
+          <span>Worldwide Tracked Shipping</span>
+          <span>Handcrafted in Jaipur</span>
+          <span>Hassle-Free Exchanges</span>
+          <span>Ethically Sourced Mulberry Silks</span>
+          <span>Worldwide Tracked Shipping</span>
+          <span>Handcrafted in Jaipur</span>
+          <span>Hassle-Free Exchanges</span>
+          <span>Ethically Sourced Mulberry Silks</span>
         </div>
       </div>
 
+      {/* Craft Pillars Section */}
       <section id="craft">
         <div className="section-head reveal">
           <h2>Built for the trip, not just the photo.</h2>
-          <p>Everything about a Sandline piece is decided by what happens after you land.</p>
+          <p>Everything about a Sandline piece is chosen by what happens after your flight touches down.</p>
         </div>
         <div className="craft-grid reveal">
           <div className="craft-item">
-            <span className="num">FABRIC</span>
+            <span className="num">01 / FABRIC</span>
             <h3>Breathes on a 34°C beach</h3>
-            <p>Light rayon and cotton-linen blends chosen for humidity, not just for how they photograph on a hanger.</p>
+            <p>Pure mulmul cottons and airy silk blends chosen for coastal humidity, ensuring breezy comfort all day.</p>
           </div>
           <div className="craft-item">
-            <span className="num">FIT</span>
-            <h3>Sized on real bodies</h3>
-            <p>Every style ships with a US/UK/EU conversion guide and a video fit note before you order.</p>
+            <span className="num">02 / FIT</span>
+            <h3>Draped on real silhouettes</h3>
+            <p>Every silhouette is tailored for fluid movement, with comprehensive US/UK/EU sizing guides and fit notes.</p>
           </div>
           <div className="craft-item">
-            <span className="num">JOURNEY</span>
-            <h3>Packed to travel well</h3>
-            <p>Wrinkle-resistant folding and tracked international courier, door to resort.</p>
+            <span className="num">03 / JOURNEY</span>
+            <h3>Packed to travel light</h3>
+            <p>Wrinkle-resistant folding and express international courier from our Jaipur atelier straight to your resort.</p>
           </div>
         </div>
       </section>
 
+      {/* Social Proof & Testimonial */}
       <section>
         <div className="testimonial reveal">
           <h2>
-            "I ordered it for my honeymoon in Bali not knowing what to expect from a brand I'd found on
-            Instagram — it fit perfectly and every stranger on the beach asked where it was from."
+            "I wore the sunset dress for our honeymoon in Bali. The silk is unimaginably soft and strangers on the beach kept asking where I got it."
           </h2>
-          <div className="who">— Early Customer, Canggu, Indonesia</div>
+          <div className="who">— Chloe M., Canggu, Indonesia (Verified Buyer)</div>
         </div>
       </section>
 
+      {/* Sunset VIP Newsletter & Footer */}
       <footer id="contact">
         <div className="footer-cta">
-          <h2>Your dress is waiting<br />for its <em>first sunset.</em></h2>
-          <div className="footer-form">
-            <input type="email" placeholder="Enter your email for early access" />
-            <button type="button">Notify me →</button>
-          </div>
+          <h2>
+            Your dress is waiting<br />
+            for its <em>first sunset.</em>
+          </h2>
+          {newsletterDone ? (
+            <div style={{ color: "var(--gold)", fontFamily: "'Space Mono', monospace", fontSize: "13px" }}>
+              ✓ You're on the VIP Sunset list! We'll notify you on new drops.
+            </div>
+          ) : (
+            <form className="footer-form" onSubmit={handleNewsletterSubmit}>
+              <input
+                type="email"
+                placeholder="Enter your email for early access"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                required
+              />
+              <button type="submit">Join VIP →</button>
+            </form>
+          )}
         </div>
+
         <div className="footer-cols">
           <div>
             <div className="brand">SANDLINE</div>
-            <p>Resort and beach dresses, designed and hand-finished in India — shipped to shores around the world.</p>
+            <p>
+              Resort and beach dresses, designed and hand-finished in Jaipur, India — shipped to shores around the world.
+            </p>
           </div>
           <div>
-            <h4>Shop</h4>
+            <h4>Collections</h4>
             <ul>
-              <li>Honeymoon Edit</li>
-              <li>Beach Party Edit</li>
-              <li>Resort Evening Edit</li>
+              <li><Link href="/collections/honeymoon" style={{ color: "inherit", textDecoration: "none" }}>Honeymoon Edit</Link></li>
+              <li><Link href="/collections/beach_party" style={{ color: "inherit", textDecoration: "none" }}>Beach Party Edit</Link></li>
+              <li><Link href="/collections/resort_evening" style={{ color: "inherit", textDecoration: "none" }}>Resort Evening Edit</Link></li>
+              <li><Link href="/shop" style={{ color: "inherit", textDecoration: "none" }}>All Silhouettes</Link></li>
             </ul>
           </div>
           <div>
-            <h4>Info</h4>
+            <h4>Info &amp; Care</h4>
             <ul>
-              <li>Size Guide</li>
-              <li>Shipping &amp; Returns</li>
-              <li>Our Atelier</li>
+              <li><Link href="/size-guide" style={{ color: "inherit", textDecoration: "none" }}>Size Guide</Link></li>
+              <li><Link href="/wishlist" style={{ color: "inherit", textDecoration: "none" }}>Saved Wishlist</Link></li>
+              <li><Link href="/cart" style={{ color: "inherit", textDecoration: "none" }}>Shopping Bag</Link></li>
             </ul>
           </div>
           <div>
-            <h4>Follow</h4>
+            <h4>Studio</h4>
             <ul>
-              <li>Instagram</li>
-              <li>Pinterest</li>
-              <li>WhatsApp</li>
+              <li><Link href="/admin" style={{ color: "inherit", textDecoration: "none" }}>Admin Portal</Link></li>
+              <li>Instagram (@sandline)</li>
+              <li>WhatsApp Support</li>
             </ul>
           </div>
         </div>
+
         <div className="footer-bottom">
-          <span>© 2026 SANDLINE — MADE IN INDIA</span>
-          <span>SHIPPING WORLDWIDE</span>
+          <span>© 2026 SANDLINE STUDIO — HANDCRAFTED IN INDIA</span>
+          <span>WORLDWIDE EXPRESS SHIPPING</span>
         </div>
       </footer>
     </div>

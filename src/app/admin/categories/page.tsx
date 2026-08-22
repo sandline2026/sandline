@@ -1,7 +1,9 @@
 import { createClient } from "@/../utils/supabase/server";
 import { cookies } from "next/headers";
 import AdminNav from "@/components/AdminNav";
+import AdminHeader from "@/components/AdminHeader";
 import { CategoryCreateForm, ToggleCategoryButton } from "@/components/CategoryFormUI";
+import { FolderTree, PlusCircle, Layers } from "lucide-react";
 import "../../admin.css";
 
 export default async function CategoriesPage() {
@@ -20,28 +22,70 @@ export default async function CategoriesPage() {
     <div className="admin-app">
       <AdminNav />
       <main className="admin-main">
-        <div className="admin-header">
-          <h1>Categories</h1>
-          <p>Manage product categories shown on the site</p>
+        <AdminHeader
+          title="Categories Management"
+          subtitle="Organize garments into collections and shop filters"
+        />
+
+        <div className="admin-section">
+          <div className="admin-section-header">
+            <h2>
+              <PlusCircle size={18} />
+              <span>Create New Category</span>
+            </h2>
+          </div>
+          <CategoryCreateForm />
         </div>
 
         <div className="admin-section">
-          <CategoryCreateForm />
+          <div className="admin-section-header">
+            <h2>
+              <FolderTree size={18} />
+              <span>All Categories ({categories?.length || 0})</span>
+            </h2>
+          </div>
           {categories && categories.length > 0 ? (
             <table className="admin-data-table">
-              <thead><tr><th>Name</th><th>Slug</th><th>Products</th><th>Status</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>Category Name</th>
+                  <th>URL Slug</th>
+                  <th>Total Garments</th>
+                  <th>Visibility Status</th>
+                </tr>
+              </thead>
               <tbody>
                 {categories.map((c: any) => (
                   <tr key={c.id}>
-                    <td>{c.name}</td>
-                    <td>{c.slug}</td>
-                    <td>{countByCategory[c.id] || 0}</td>
-                    <td><ToggleCategoryButton id={c.id} isActive={c.is_active} /></td>
+                    <td>
+                      <strong style={{ color: "var(--ink)" }}>{c.name}</strong>
+                    </td>
+                    <td>
+                      <code
+                        style={{
+                          background: "var(--bg)",
+                          padding: "2px 6px",
+                          borderRadius: "4px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        /{c.slug}
+                      </code>
+                    </td>
+                    <td>{countByCategory[c.id] || 0} items</td>
+                    <td>
+                      <ToggleCategoryButton id={c.id} isActive={c.is_active} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          ) : <div className="admin-empty">No categories yet.</div>}
+          ) : (
+            <div className="admin-empty">
+              <FolderTree size={32} />
+              <p>No categories created yet.</p>
+            </div>
+          )}
         </div>
       </main>
     </div>
