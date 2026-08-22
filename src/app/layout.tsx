@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
+import FlashSaleBanner from "@/components/FlashSaleBanner";
 
 export const metadata: Metadata = {
   title: "Sandline — Resort & Beach Dresses, Made in India",
@@ -24,6 +25,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <FlashSaleBanner />
         <CartProvider>
           <WishlistProvider>{children}</WishlistProvider>
         </CartProvider>

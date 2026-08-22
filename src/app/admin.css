@@ -328,3 +328,5 @@
   background:none;
   border:none;
 }
+
+.pill-pending{ background: var(--amber-soft); color: var(--amber); }

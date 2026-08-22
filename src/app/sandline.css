@@ -735,3 +735,160 @@ body{
   font-size:24px;
   margin-bottom:24px;
 }
+
+.sandline-page .flash-banner{
+  background:var(--ink);
+  color:var(--sand);
+  padding:12px clamp(20px,4vw,40px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  text-align:center;
+  position:relative;
+  z-index:300;
+  font-family:'Space Mono', monospace;
+  font-size:12.5px;
+  letter-spacing:0.02em;
+}
+.sandline-page .flash-banner strong{
+  color:var(--gold);
+  font-weight:700;
+}
+.sandline-page .flash-banner .flash-timer{
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
+  font-weight:700;
+  color:var(--papaya);
+}
+.sandline-page .flash-banner .flash-timer span{
+  background:rgba(246,239,227,0.12);
+  padding:2px 7px;
+  border-radius:5px;
+  min-width:26px;
+  display:inline-block;
+  text-align:center;
+}
+.sandline-page .flash-banner a{
+  color:var(--sand);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.sandline-page .flash-banner a:hover{ color:var(--gold); }
+
+.sandline-page .flash-banner{
+  background:var(--ink) !important;
+  color:var(--sand) !important;
+  padding:12px 0;
+  overflow:hidden;
+  white-space:nowrap;
+  position:relative;
+  z-index:300;
+  display:block !important;
+}
+.sandline-page .flash-banner-track{
+  display:inline-flex;
+  animation:flashScroll 18s linear infinite;
+}
+.sandline-page .flash-banner-item{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  font-family:'Space Mono', monospace;
+  font-size:12.5px;
+  letter-spacing:0.03em;
+  padding:0 40px;
+  color:var(--sand);
+}
+.sandline-page .flash-banner-item strong{
+  color:var(--gold);
+  font-weight:700;
+}
+.sandline-page .flash-banner-item .flash-timer{
+  display:inline-flex;
+  gap:5px;
+  align-items:center;
+  font-weight:700;
+  color:var(--papaya);
+}
+.sandline-page .flash-banner-item .flash-timer span{
+  background:rgba(246,239,227,0.15);
+  padding:2px 7px;
+  border-radius:5px;
+  min-width:24px;
+  display:inline-block;
+  text-align:center;
+}
+.sandline-page .flash-banner-item a{
+  color:var(--sand);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  font-weight:700;
+}
+.sandline-page .flash-banner-item a:hover{ color:var(--gold); }
+@keyframes flashScroll{
+  0%{ transform:translateX(0); }
+  100%{ transform:translateX(-50%); }
+}
+
+.flash-banner{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:38px;
+  background:var(--ink);
+  overflow:hidden;
+  white-space:nowrap;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+}
+.flash-banner-track{
+  display:inline-flex;
+  animation:flashScroll 18s linear infinite;
+}
+.flash-banner-item{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  font-family:'Space Mono', monospace;
+  font-size:12px;
+  letter-spacing:0.03em;
+  padding:0 40px;
+  color:var(--sand);
+}
+.flash-banner-item strong{ color:var(--gold); font-weight:700; }
+.flash-banner-item .flash-timer{
+  display:inline-flex;
+  gap:5px;
+  align-items:center;
+  font-weight:700;
+  color:var(--papaya);
+}
+.flash-banner-item .flash-timer span{
+  background:rgba(246,239,227,0.15);
+  padding:2px 7px;
+  border-radius:5px;
+  min-width:24px;
+  display:inline-block;
+  text-align:center;
+}
+.flash-banner-item a{
+  color:var(--sand);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  font-weight:700;
+}
+.flash-banner-item a:hover{ color:var(--gold); }
+@keyframes flashScroll{
+  0%{ transform:translateX(0); }
+  100%{ transform:translateX(-50%); }
+}
+
+.sandline-page nav{ top:41px !important; }
+#horizon-wrap{ top:38px !important; }
+#sun{ top:29px !important; }
+.admin-sidebar{ top:38px !important; height:calc(100vh - 38px) !important; }
