@@ -48,6 +48,7 @@ export default function CheckoutPage() {
     const formData = new FormData(form);
     const fullName = formData.get("fullName") as string;
     const email = formData.get("email") as string;
+    const phone = (formData.get("phone") as string) || "";
     const address = formData.get("address") as string;
     const city = formData.get("city") as string;
     const country = formData.get("country") as string;
@@ -65,12 +66,16 @@ export default function CheckoutPage() {
 
       if (existingCustomer) {
         customerId = existingCustomer.id;
+        if (phone) {
+          await supabase.from("customers").update({ phone }).eq("id", customerId);
+        }
       } else {
         const { data: newCustomer, error: customerError } = await supabase
           .from("customers")
           .insert({
             full_name: fullName,
             email,
+            phone: phone || null,
             address_line: address,
             city,
             country,
@@ -180,12 +185,13 @@ export default function CheckoutPage() {
       ) : (
         <div className="checkout-wrap">
           <form className="checkout-form" onSubmit={handleSubmit}>
-            <label>Full name<input type="text" name="fullName" required /></label>
-            <label>Email<input type="email" name="email" required /></label>
-            <label>Address<input type="text" name="address" required /></label>
+            <label>Full name<input type="text" name="fullName" placeholder="e.g. Ansh Bhatia" required /></label>
+            <label>Email (for order confirmation)<input type="email" name="email" placeholder="e.g. ansh@example.com" required /></label>
+            <label>WhatsApp / Phone (for express courier tracking)<input type="tel" name="phone" placeholder="+91 98765 43210" required /></label>
+            <label>Street Address<input type="text" name="address" placeholder="Apartment, suite, street" required /></label>
             <label>City<input type="text" name="city" required /></label>
             <label>Country<input type="text" name="country" required /></label>
-            <label>Postal code<input type="text" name="postalCode" required /></label>
+            <label>Postal / ZIP code<input type="text" name="postalCode" required /></label>
 
             {error && <p style={{ color: "#c0392b", fontSize: "13px" }}>{error}</p>}
 

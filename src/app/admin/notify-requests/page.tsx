@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import AdminNav from "@/components/AdminNav";
 import AdminHeader from "@/components/AdminHeader";
 import NotifyToggleButton from "@/components/NotifyToggleButton";
+import { buildWhatsAppLink, getWhatsAppRestockAlertMessage } from "@/lib/whatsapp";
 import { BellRing, Clock, CheckCircle2 } from "lucide-react";
 import "../../admin.css";
 
@@ -24,8 +25,8 @@ export default async function NotifyRequestsPage() {
       <AdminNav />
       <main className="admin-main">
         <AdminHeader
-          title="Restock Notifications"
-          subtitle="Shoppers waiting for out-of-stock garments to be replenished"
+          title="Restock Notifications & Waitlist"
+          subtitle="Shoppers waiting for out-of-stock garments to be replenished with 1-click outreach"
         />
 
         {/* Stats Grid */}
@@ -56,7 +57,7 @@ export default async function NotifyRequestsPage() {
             </div>
             <div className="admin-stat-footer">
               <span className="admin-stat-badge amber">Awaiting restock</span>
-              <span>Needs email update</span>
+              <span>Ready for alert</span>
             </div>
           </div>
 
@@ -92,7 +93,7 @@ export default async function NotifyRequestsPage() {
                   <th>Current Stock</th>
                   <th>Customer Email</th>
                   <th>Date Requested</th>
-                  <th>Status Action</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,7 +116,31 @@ export default async function NotifyRequestsPage() {
                     </td>
                     <td>{new Date(r.created_at).toLocaleDateString()}</td>
                     <td>
-                      <NotifyToggleButton id={r.id} notified={r.notified} />
+                      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                        <NotifyToggleButton id={r.id} notified={r.notified} />
+                        <a
+                          href={buildWhatsAppLink(
+                            "",
+                            getWhatsAppRestockAlertMessage({
+                              productName: r.products?.name || "Sandline Garment",
+                              productSlug: r.products?.slug,
+                            })
+                          )}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="admin-btn admin-btn-ghost admin-btn-sm"
+                          style={{
+                            color: "#065F46",
+                            borderColor: "#A7F3D0",
+                            background: "#ECFDF5",
+                            textDecoration: "none",
+                            fontSize: "11.5px",
+                          }}
+                          title="Launch WhatsApp with pre-filled Restock message"
+                        >
+                          📲 WhatsApp
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 ))}

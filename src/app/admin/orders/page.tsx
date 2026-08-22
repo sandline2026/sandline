@@ -14,7 +14,7 @@ export default async function AdminOrdersPage() {
     .from("orders")
     .select(`
       *,
-      customers (id, full_name, email, address_line, city, country, postal_code),
+      customers (id, full_name, email, phone, address_line, city, country, postal_code),
       order_items (id, quantity, unit_price_usd, unit_cost_inr, size, color, products (name, slug)),
       payments (id, gateway, gateway_transaction_id, amount_usd, gateway_fee_usd, status)
     `)

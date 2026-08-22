@@ -2,6 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  buildWhatsAppLink,
+  getWhatsAppOrderConfirmationMessage,
+  getWhatsAppShippingMessage,
+  getWhatsAppDeliveredMessage,
+  getWhatsAppAbandonedCartMessage,
+} from "@/lib/whatsapp";
 
 export interface OrderItem {
   id: string;
@@ -29,6 +36,7 @@ export interface CustomerInfo {
   id?: string;
   full_name: string;
   email: string;
+  phone?: string | null;
   address_line?: string | null;
   city?: string | null;
   country?: string | null;
@@ -313,6 +321,99 @@ export default function AdminOrdersTable({ initialOrders }: { initialOrders: Ord
                 </div>
               </div>
 
+              {/* WhatsApp Quick Customer Assistant */}
+              <div style={{ background: "#ECFDF5", border: "1px solid #A7F3D0", borderRadius: "12px", padding: "18px 20px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexWrap: "wrap", gap: "8px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ fontSize: "16px" }}>📲</span>
+                    <h3 style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", color: "#065F46", margin: 0, letterSpacing: "0.04em" }}>
+                      1-Click WhatsApp Customer Outreach
+                    </h3>
+                  </div>
+                  {activeOrder.customers?.phone ? (
+                    <span style={{ fontSize: "12.5px", fontFamily: "monospace", color: "#047857", fontWeight: 700 }}>
+                      📞 {activeOrder.customers.phone}
+                    </span>
+                  ) : (
+                    <span style={{ fontSize: "11px", color: "#6B7280" }}>
+                      (No phone on file — prompts for number on send)
+                    </span>
+                  )}
+                </div>
+
+                <p style={{ fontSize: "12px", color: "#064E3B", margin: "0 0 12px", lineHeight: 1.4 }}>
+                  Click to launch WhatsApp Web/App with pre-formatted luxury message:
+                </p>
+
+                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                  <a
+                    href={buildWhatsAppLink(
+                      activeOrder.customers?.phone || "",
+                      getWhatsAppOrderConfirmationMessage({
+                        orderNumber: activeOrder.order_number,
+                        customerName: activeOrder.customers?.full_name,
+                        total: Number(activeOrder.total_usd || 0),
+                        itemsSummary: activeOrder.order_items?.map((i) => i.products?.name).filter(Boolean).join(", "),
+                      })
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="admin-btn admin-btn-sm"
+                    style={{ background: "#059669", borderColor: "#059669", color: "#FFFFFF", textDecoration: "none", fontSize: "11.5px" }}
+                  >
+                    🧾 Send Receipt / Invoice
+                  </a>
+
+                  <a
+                    href={buildWhatsAppLink(
+                      activeOrder.customers?.phone || "",
+                      getWhatsAppShippingMessage({
+                        orderNumber: activeOrder.order_number,
+                        customerName: activeOrder.customers?.full_name,
+                      })
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="admin-btn admin-btn-sm"
+                    style={{ background: "#2563EB", borderColor: "#2563EB", color: "#FFFFFF", textDecoration: "none", fontSize: "11.5px" }}
+                  >
+                    ✈️ Dispatched Tracking
+                  </a>
+
+                  <a
+                    href={buildWhatsAppLink(
+                      activeOrder.customers?.phone || "",
+                      getWhatsAppDeliveredMessage({
+                        orderNumber: activeOrder.order_number,
+                        customerName: activeOrder.customers?.full_name,
+                      })
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="admin-btn admin-btn-sm"
+                    style={{ background: "#047857", borderColor: "#047857", color: "#FFFFFF", textDecoration: "none", fontSize: "11.5px" }}
+                  >
+                    🏖️ Delivered Alert
+                  </a>
+
+                  <a
+                    href={buildWhatsAppLink(
+                      activeOrder.customers?.phone || "",
+                      getWhatsAppAbandonedCartMessage({
+                        customerName: activeOrder.customers?.full_name,
+                        itemsCount: activeOrder.order_items?.length || 1,
+                      })
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="admin-btn admin-btn-sm"
+                    style={{ background: "#D97706", borderColor: "#D97706", color: "#FFFFFF", textDecoration: "none", fontSize: "11.5px" }}
+                  >
+                    🎁 Abandoned Cart (10% OFF)
+                  </a>
+                </div>
+              </div>
+
               {/* Customer & Shipping Information */}
               <div className="order-info-grid">
                 <div className="order-card-box">
@@ -321,6 +422,11 @@ export default function AdminOrdersTable({ initialOrders }: { initialOrders: Ord
                     <strong>{activeOrder.customers?.full_name || "—"}</strong>
                   </p>
                   <p style={{ color: "var(--text-muted)" }}>{activeOrder.customers?.email || "—"}</p>
+                  {activeOrder.customers?.phone && (
+                    <p style={{ color: "#059669", fontWeight: 600, fontSize: "13px" }}>
+                      📞 {activeOrder.customers.phone}
+                    </p>
+                  )}
                   <hr style={{ border: "none", borderTop: "1px solid var(--border)", margin: "10px 0" }} />
                   <p>{activeOrder.customers?.address_line || "No street address provided"}</p>
                   <p>
