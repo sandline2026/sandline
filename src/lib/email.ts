@@ -372,7 +372,7 @@ async function sendEmailViaProvider({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: process.env.EMAIL_FROM || "Sandline Studio <onboarding@resend.dev>",
+        from: process.env.EMAIL_FROM || "Sandline Studio <orders@sandline.store>",
         to: [to],
         subject,
         html,
