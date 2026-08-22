@@ -1031,64 +1031,221 @@
   padding: 11px 16px;
 }
 
+.admin-mobile-store-link {
+  display: none;
+}
+
 /* ==========================================================================
-   Mobile & Tablet Responsiveness for Admin Portal (< 860px)
+   Mobile & Tablet Responsiveness for Admin Portal (< 900px)
    ========================================================================== */
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .admin-app {
+    display: flex !important;
     flex-direction: column !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
   }
+  
   .admin-sidebar {
-    position: relative !important;
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
     width: 100% !important;
     height: auto !important;
+    z-index: 999 !important;
+    background: #FFFFFF !important;
     border-right: none !important;
     border-bottom: 1px solid var(--border) !important;
-    padding: 14px 16px !important;
+    padding: 10px 14px 6px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
   }
-  .admin-sidebar nav {
+  
+  .admin-sidebar-top {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 6px !important;
+  }
+  
+  .admin-sidebar .brand {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 0 8px 0 !important;
+    margin-bottom: 2px !important;
+    border-bottom: 1px solid var(--border) !important;
+    width: 100% !important;
+  }
+
+  .admin-mobile-store-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 4px 10px !important;
+    background: var(--green-soft) !important;
+    border: 1px solid var(--green-border) !important;
+    border-radius: 999px !important;
+    color: var(--green) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+  }
+  
+  .admin-nav-group {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto !important;
-    gap: 6px !important;
-    padding-bottom: 4px !important;
-    -webkit-overflow-scrolling: touch;
-  }
-  .admin-sidebar nav a {
     white-space: nowrap !important;
-    padding: 7px 12px !important;
-    font-size: 12px !important;
-    flex-shrink: 0;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 6px !important;
+    padding: 4px 0 6px !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
   }
-  .admin-sidebar .brand {
-    padding-bottom: 10px !important;
-    margin-bottom: 8px !important;
+  
+  .admin-nav-group::-webkit-scrollbar {
+    display: none !important;
   }
+  
+  .admin-sidebar a:not(.admin-mobile-store-link) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 12px !important;
+    border-radius: 999px !important;
+    font-size: 11.5px !important;
+    background: var(--bg) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text) !important;
+    flex-shrink: 0 !important;
+    text-decoration: none !important;
+  }
+  
+  .admin-sidebar a.active {
+    background: var(--ink) !important;
+    color: #FFFFFF !important;
+    border-color: var(--ink) !important;
+  }
+
+  .admin-sidebar a.active svg {
+    color: #F6EFE3 !important;
+  }
+  
   .admin-sidebar-footer {
     display: none !important;
   }
+  
   .admin-main {
     margin-left: 0 !important;
-    padding: 16px 14px 80px !important;
+    padding: 16px 12px 80px !important;
     width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
   }
+
+  .admin-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .admin-header-title h1 {
+    font-size: 20px !important;
+  }
+
+  .admin-header-title p {
+    font-size: 12.5px !important;
+  }
+
+  .admin-header-actions {
+    width: 100% !important;
+    display: flex !important;
+    gap: 8px !important;
+  }
+
+  .admin-header-actions .admin-btn {
+    flex: 1 !important;
+    justify-content: center !important;
+  }
+  
   .admin-stats-grid {
     grid-template-columns: 1fr !important;
-    gap: 12px !important;
+    gap: 10px !important;
+    margin-bottom: 18px !important;
   }
-  .admin-table-container {
+
+  .admin-section {
+    padding: 16px 12px !important;
+    border-radius: 14px !important;
+    margin-bottom: 18px !important;
+    overflow: hidden !important;
+  }
+
+  .admin-section-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .admin-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .admin-search-wrapper,
+  .admin-search-input {
+    width: 100% !important;
+  }
+
+  .admin-tabs {
+    width: 100% !important;
     overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 4px !important;
   }
+  
+  .admin-table-container {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 0 -12px !important;
+    padding: 0 12px !important;
+  }
+
+  .admin-data-table {
+    min-width: 580px !important;
+  }
+  
   .admin-modal {
     width: 95% !important;
-    max-height: 88vh !important;
-    padding: 16px !important;
-    margin: 20px auto !important;
+    max-width: 95% !important;
+    max-height: 90vh !important;
+    padding: 18px 14px !important;
+    margin: 10px auto !important;
+    overflow-y: auto !important;
+    border-radius: 14px !important;
   }
+  
   .order-info-grid {
     grid-template-columns: 1fr !important;
     gap: 12px !important;
   }
+
+  .order-status-bar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .order-items-table {
+    min-width: 480px !important;
+  }
 }
+
 

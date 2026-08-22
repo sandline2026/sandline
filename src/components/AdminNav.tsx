@@ -24,9 +24,9 @@ const links = [
   { href: "/admin/categories", label: "Categories", icon: FolderTree },
   { href: "/admin/customers", label: "Customers", icon: Users },
   { href: "/admin/coupons", label: "Coupons", icon: Tag },
-  { href: "/admin/notify-requests", label: "Notify Requests", icon: BellRing },
+  { href: "/admin/notify-requests", label: "Restock Waitlist", icon: BellRing },
   { href: "/admin/ads", label: "Ad Campaigns", icon: Megaphone },
-  { href: "/admin/chats", label: "Chats", icon: MessageSquare },
+  { href: "/admin/chats", label: "Support Chats", icon: MessageSquare },
 ];
 
 export default function AdminNav() {
@@ -36,11 +36,17 @@ export default function AdminNav() {
     <aside className="admin-sidebar">
       <div className="admin-sidebar-top">
         <div className="brand">
-          <div className="brand-logo-icon">S</div>
-          <div className="brand-name">
-            SANDLINE
-            <span className="brand-badge">Admin Studio</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div className="brand-logo-icon">S</div>
+            <div className="brand-name">
+              SANDLINE
+              <span className="brand-badge">Admin Studio</span>
+            </div>
           </div>
+          <Link href="/" target="_blank" className="admin-mobile-store-link">
+            <span className="admin-live-dot"></span>
+            <span>Live Store ↗</span>
+          </Link>
         </div>
 
         <nav className="admin-nav-group">
@@ -53,7 +59,7 @@ export default function AdminNav() {
                 href={link.href}
                 className={isActive ? "active" : ""}
               >
-                <Icon size={17} />
+                <Icon size={16} />
                 <span>{link.label}</span>
               </Link>
             );
