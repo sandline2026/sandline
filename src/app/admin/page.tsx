@@ -198,7 +198,7 @@ export default async function AdminDashboard() {
                       <td>
                         <span className={`pill pill-${order.status}`}>{order.status}</span>
                       </td>
-                      <td>{new Date(order.created_at).toLocaleDateString()}</td>
+                      <td suppressHydrationWarning>{new Date(order.created_at).toLocaleDateString()}</td>
                       <td>
                         <Link
                           href="/admin/orders"

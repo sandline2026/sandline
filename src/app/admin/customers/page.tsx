@@ -125,7 +125,7 @@ export default async function CustomersPage() {
                       <td>
                         <strong style={{ color: "var(--green)" }}>${stats.total.toFixed(2)}</strong>
                       </td>
-                      <td>{new Date(c.created_at).toLocaleDateString()}</td>
+                      <td suppressHydrationWarning>{new Date(c.created_at).toLocaleDateString()}</td>
                     </tr>
                   );
                 })}

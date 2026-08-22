@@ -84,7 +84,7 @@ export default async function ChatsPage() {
                         {c.status || "open"}
                       </span>
                     </td>
-                    <td>{new Date(c.created_at).toLocaleDateString()}</td>
+                    <td suppressHydrationWarning>{new Date(c.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>

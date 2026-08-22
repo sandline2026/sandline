@@ -114,7 +114,7 @@ export default async function NotifyRequestsPage() {
                     <td>
                       <span style={{ fontWeight: 500 }}>{r.email}</span>
                     </td>
-                    <td>{new Date(r.created_at).toLocaleDateString()}</td>
+                    <td suppressHydrationWarning>{new Date(r.created_at).toLocaleDateString()}</td>
                     <td>
                       <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                         <NotifyToggleButton id={r.id} notified={r.notified} />

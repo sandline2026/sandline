@@ -133,7 +133,7 @@ export default async function AdsPage() {
                     <td>
                       <strong style={{ color: "var(--green)" }}>{c.conversions}</strong>
                     </td>
-                    <td>{new Date(c.date_recorded).toLocaleDateString()}</td>
+                    <td suppressHydrationWarning>{new Date(c.date_recorded).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>

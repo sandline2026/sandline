@@ -43,6 +43,18 @@ export interface CustomerInfo {
   postal_code?: string | null;
 }
 
+function formatOrderDate(dateString?: string | null): string {
+  if (!dateString) return "—";
+  try {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return "—";
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  } catch {
+    return "—";
+  }
+}
+
 export interface Order {
   id: string;
   order_number: string;
@@ -214,7 +226,7 @@ export default function AdminOrdersTable({ initialOrders }: { initialOrders: Ord
                         {order.order_number}
                       </strong>
                     </td>
-                    <td>{new Date(order.created_at).toLocaleDateString()}</td>
+                    <td suppressHydrationWarning>{formatOrderDate(order.created_at)}</td>
                     <td>
                       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         <div className="admin-user-avatar">
@@ -276,8 +288,8 @@ export default function AdminOrdersTable({ initialOrders }: { initialOrders: Ord
             <div className="admin-modal-header">
               <div>
                 <h2>Order {activeOrder.order_number}</h2>
-                <span style={{ fontSize: "12.5px", color: "var(--text-muted)" }}>
-                  Placed on {new Date(activeOrder.created_at).toLocaleString()}
+                <span suppressHydrationWarning style={{ fontSize: "12.5px", color: "var(--text-muted)" }}>
+                  Placed on {formatOrderDate(activeOrder.created_at)}
                 </span>
               </div>
               <button
