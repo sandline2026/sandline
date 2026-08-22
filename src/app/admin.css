@@ -1030,3 +1030,65 @@
   justify-content: center;
   padding: 11px 16px;
 }
+
+/* ==========================================================================
+   Mobile & Tablet Responsiveness for Admin Portal (< 860px)
+   ========================================================================== */
+@media (max-width: 860px) {
+  .admin-app {
+    flex-direction: column !important;
+  }
+  .admin-sidebar {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding: 14px 16px !important;
+  }
+  .admin-sidebar nav {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    gap: 6px !important;
+    padding-bottom: 4px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .admin-sidebar nav a {
+    white-space: nowrap !important;
+    padding: 7px 12px !important;
+    font-size: 12px !important;
+    flex-shrink: 0;
+  }
+  .admin-sidebar .brand {
+    padding-bottom: 10px !important;
+    margin-bottom: 8px !important;
+  }
+  .admin-sidebar-footer {
+    display: none !important;
+  }
+  .admin-main {
+    margin-left: 0 !important;
+    padding: 16px 14px 80px !important;
+    width: 100% !important;
+  }
+  .admin-stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .admin-table-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .admin-modal {
+    width: 95% !important;
+    max-height: 88vh !important;
+    padding: 16px !important;
+    margin: 20px auto !important;
+  }
+  .order-info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+

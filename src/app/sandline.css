@@ -1772,4 +1772,313 @@ body{
   color: #F6EFE3;
 }
 
+/* ==========================================================================
+   Comprehensive Mobile & Tablet Responsiveness Overhaul (< 768px & < 480px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  body {
+    font-size: 14.5px;
+  }
+
+  /* Flash Banner Fix on Mobile */
+  .flash-banner {
+    height: 34px !important;
+  }
+  .flash-banner-item {
+    font-size: 10.5px !important;
+    padding: 0 16px !important;
+    gap: 8px !important;
+  }
+  .sandline-page nav {
+    top: 34px !important;
+    padding: 10px 16px !important;
+    background: rgba(246, 239, 227, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid var(--line);
+  }
+  #horizon-wrap { top: 34px !important; }
+  #sun { top: 25px !important; }
+
+  /* Navbar on Mobile */
+  .sandline-page .logo {
+    font-size: 18px !important;
+  }
+  .sandline-page .nav-links {
+    display: flex !important;
+    gap: 10px !important;
+    font-size: 10px !important;
+    align-items: center;
+  }
+  .sandline-page .nav-links a:not([href="/shop"]):not([href*="cart"]):not([href*="wishlist"]) {
+    display: none !important;
+  }
+  .sandline-page .nav-links a {
+    padding: 4px 8px;
+    background: var(--foam);
+    border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+
+  /* Hero Section */
+  .sandline-page .hero {
+    padding: 85px 16px 45px !important;
+    min-height: auto !important;
+  }
+  .sandline-page .hero-eyebrow {
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .sandline-page .hero-eyebrow .eyebrow {
+    font-size: 9.5px !important;
+    line-height: 1.4;
+    letter-spacing: 0.1em;
+  }
+  .sandline-page .hero h1 {
+    font-size: clamp(30px, 8.5vw, 44px) !important;
+    max-width: 100% !important;
+    line-height: 1.12;
+  }
+  .sandline-page .hero-sub {
+    font-size: 14px !important;
+    margin-top: 14px !important;
+    line-height: 1.55;
+  }
+  .sandline-page .hero-cta {
+    margin-top: 22px !important;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px !important;
+  }
+  .sandline-page .hero-cta .btn {
+    width: 100%;
+    text-align: center;
+    padding: 13px 20px !important;
+    font-size: 11px !important;
+  }
+
+  /* Sections general */
+  .sandline-page section {
+    padding: 55px 16px !important;
+  }
+  .sandline-page .section-head {
+    margin-bottom: 28px !important;
+    gap: 14px !important;
+  }
+  .sandline-page .section-head h2 {
+    font-size: 26px !important;
+  }
+
+  /* Collections Grid */
+  .sandline-page .collections-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .sandline-page .collection-card {
+    aspect-ratio: 3/3.8 !important;
+    border-radius: 16px !important;
+  }
+
+  /* Craft Grid */
+  .sandline-page .craft-grid {
+    grid-template-columns: 1fr !important;
+    border-radius: 16px !important;
+  }
+  .sandline-page .craft-item {
+    padding: 22px 16px !important;
+  }
+  .sandline-page .craft-item h3 {
+    font-size: 18px !important;
+  }
+
+  /* Story Section */
+  .sandline-page .story {
+    margin: 0 4px !important;
+    border-radius: 16px !important;
+    grid-template-columns: 1fr !important;
+  }
+  .sandline-page .story-copy {
+    padding: 28px 16px !important;
+  }
+  .sandline-page .story-copy h2 {
+    font-size: 24px !important;
+  }
+  .sandline-page .story-stats {
+    gap: 18px !important;
+    margin-top: 20px !important;
+  }
+  .sandline-page .story-visual {
+    min-height: 180px !important;
+    padding: 16px !important;
+  }
+
+  /* Testimonial */
+  .sandline-page .testimonial h2 {
+    font-size: 19px !important;
+  }
+
+  /* Footer */
+  .sandline-page footer {
+    padding: 40px 16px 24px !important;
+    border-radius: 18px 18px 0 0 !important;
+    margin-top: 20px !important;
+  }
+  .sandline-page .footer-cta {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 18px !important;
+    padding-bottom: 30px !important;
+  }
+  .sandline-page .footer-cta h2 {
+    font-size: 26px !important;
+  }
+  .sandline-page .footer-form {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+  .sandline-page .footer-cols {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px !important;
+    padding-top: 28px !important;
+  }
+  .sandline-page .footer-cols div:first-child {
+    grid-column: 1 / -1;
+  }
+
+  /* Collection & Catalog Pages */
+  .sandline-page .collection-hero-wrap {
+    padding: 80px 16px 16px !important;
+  }
+  .sandline-page .collection-title {
+    font-size: 24px !important;
+  }
+  .sandline-page .collection-switcher {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    gap: 6px !important;
+  }
+  .sandline-page .collection-switch-tab {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    padding: 6px 12px !important;
+    font-size: 10.5px !important;
+  }
+  .sandline-page .collection-layout {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 16px 16px 60px !important;
+  }
+  .sandline-page .filter-sidebar-card {
+    position: relative !important;
+    top: 0 !important;
+    padding: 16px !important;
+    border-radius: 14px !important;
+  }
+  .sandline-page .collection-product-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .sandline-page .shop-header {
+    padding: 80px 16px 16px !important;
+  }
+  .sandline-page .shop-header h1 {
+    font-size: 26px !important;
+  }
+  .sandline-page .shop-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    padding: 0 16px 60px !important;
+  }
+
+  /* Product Detail Page */
+  .sandline-page .product-detail {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 75px 16px 45px !important;
+  }
+  .sandline-page .product-gallery {
+    position: relative !important;
+    top: 0 !important;
+    aspect-ratio: 1/1.05 !important;
+    max-height: 380px !important;
+    border-radius: 14px !important;
+  }
+  .sandline-page .product-info h1 {
+    font-size: 22px !important;
+  }
+  .sandline-page .product-price-amount {
+    font-size: 19px !important;
+  }
+  .sandline-page .product-buybox {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+    margin-bottom: 20px !important;
+  }
+  .sandline-page .buybox-qty-cart-row {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .sandline-page .buybox-qty-control {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 6px 14px !important;
+  }
+  .sandline-page .buybox-add-to-bag-btn {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 13px !important;
+  }
+  .sandline-page .product-perks-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  .sandline-page .product-perk-item {
+    padding: 10px 12px !important;
+  }
+
+  /* Cart & Checkout Pages */
+  .sandline-page .cart-wrap,
+  .sandline-page .checkout-wrap {
+    padding: 75px 16px 50px !important;
+  }
+  .sandline-page .checkout-wrap {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  .sandline-page .checkout-summary {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+  }
+  .sandline-page .cart-row {
+    padding: 12px 0 !important;
+    font-size: 13px !important;
+  }
+
+  /* Intro Splash on Mobile */
+  .sandline-intro-curtain .intro-brand {
+    font-size: clamp(32px, 10vw, 52px) !important;
+    letter-spacing: 0.1em !important;
+  }
+  .sandline-intro-curtain .intro-tagline {
+    font-size: 8.5px !important;
+    letter-spacing: 0.12em !important;
+  }
+  .sandline-intro-curtain .intro-skip-btn {
+    bottom: 18px !important;
+    right: 18px !important;
+    padding: 4px 10px !important;
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .sandline-page .footer-cols {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
 
