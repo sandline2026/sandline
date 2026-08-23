@@ -315,26 +315,28 @@ export default function Home() {
             </ul>
           </div>
           <div>
-            <h4>Info &amp; Care</h4>
+            <h4>Info &amp; Policies</h4>
             <ul>
+              <li><Link href="/shipping-returns" style={{ color: "inherit", textDecoration: "none" }}>Shipping &amp; Returns</Link></li>
               <li><Link href="/size-guide" style={{ color: "inherit", textDecoration: "none" }}>Size Guide</Link></li>
-              <li><Link href="/wishlist" style={{ color: "inherit", textDecoration: "none" }}>Saved Wishlist</Link></li>
-              <li><Link href="/cart" style={{ color: "inherit", textDecoration: "none" }}>Shopping Bag</Link></li>
+              <li><Link href="/privacy-policy" style={{ color: "inherit", textDecoration: "none" }}>Privacy Policy</Link></li>
+              <li><Link href="/terms" style={{ color: "inherit", textDecoration: "none" }}>Terms of Service</Link></li>
             </ul>
           </div>
           <div>
             <h4>Studio</h4>
             <ul>
+              <li><Link href="/story" style={{ color: "inherit", textDecoration: "none" }}>The Sandline Story</Link></li>
+              <li><Link href="/contact" style={{ color: "inherit", textDecoration: "none" }}>Contact &amp; Concierge</Link></li>
+              <li><a href="mailto:orders@sandline.store" style={{ color: "inherit", textDecoration: "none" }}>orders@sandline.store</a></li>
               <li><Link href="/admin" style={{ color: "inherit", textDecoration: "none" }}>Admin Portal</Link></li>
-              <li>Instagram (@sandline)</li>
-              <li>WhatsApp Support</li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© 2026 SANDLINE STUDIO — HANDCRAFTED IN INDIA</span>
-          <span>WORLDWIDE EXPRESS SHIPPING</span>
+          <span>© 2026 SANDLINE STUDIO — HANDCRAFTED IN JAIPUR, INDIA</span>
+          <span>WORLDWIDE EXPRESS SHIPPING • 7-DAY EXCHANGES</span>
         </div>
       </footer>
     </div>
