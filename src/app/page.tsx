@@ -5,6 +5,7 @@ import Link from "next/link";
 import CartLink from "@/components/CartLink";
 import WishlistLink from "@/components/WishlistLink";
 import IntroSplash from "@/components/IntroSplash";
+import MotionLookbook from "@/components/MotionLookbook";
 import "./sandline.css";
 
 export default function Home() {
@@ -139,14 +140,12 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="story-visual">
-            <svg className="loom" viewBox="0 0 300 300" fill="none">
-              <circle cx="150" cy="150" r="120" stroke="#E8A73B" strokeWidth="1" opacity="0.5" />
-              <circle cx="150" cy="150" r="90" stroke="#F6EFE3" strokeWidth="1" opacity="0.35" />
-              <path d="M60 190 C 90 120, 210 120, 240 190" stroke="#F6EFE3" strokeWidth="2" fill="none" />
-              <path d="M100 150 Q150 90 200 150 Q150 210 100 150 Z" fill="#FF7A54" opacity="0.85" />
-              <circle cx="150" cy="150" r="10" fill="#F6EFE3" />
-            </svg>
+          <div className="story-visual" style={{ padding: 0, overflow: "hidden", borderRadius: "20px" }}>
+            <img
+              src="/images/products/jaipur-blossom-embroidered-poplin-overshirt.jpg"
+              alt="Jaipur Atelier Craftsmanship"
+              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }}
+            />
           </div>
         </div>
       </section>
@@ -166,17 +165,17 @@ export default function Home() {
             className="collection-card reveal"
             style={{ display: "block", textDecoration: "none", color: "inherit" }}
           >
-            <span className="price-tag">from $58</span>
+            <span className="price-tag">from $36</span>
             <div className="art">
-              <svg viewBox="0 0 200 260" fill="none">
-                <path d="M100 20 L70 60 L60 240 L140 240 L130 60 Z" fill="#0E4B4A" opacity="0.9" />
-                <path d="M100 20 L70 60 L100 80 L130 60 Z" fill="#FF7A54" />
-                <line x1="60" y1="150" x2="140" y2="150" stroke="#F6EFE3" strokeWidth="1" opacity="0.4" />
-              </svg>
+              <img
+                src="/images/products/santorini-3d-floral-silk-slip-dress.jpg"
+                alt="The Wedding Night Edit"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
             </div>
             <div className="label">
               <div className="eyebrow">The Wedding Night Edit</div>
-              <h3>Long Silk Slips</h3>
+              <h3>Long Silk Slips &amp; Romantics</h3>
             </div>
           </Link>
 
@@ -186,19 +185,17 @@ export default function Home() {
             className="collection-card reveal"
             style={{ display: "block", textDecoration: "none", color: "inherit" }}
           >
-            <span className="price-tag">from $42</span>
+            <span className="price-tag">from $38</span>
             <div className="art">
-              <svg viewBox="0 0 200 260" fill="none">
-                <path d="M100 30 L65 65 L70 160 L130 160 L135 65 Z" fill="#FF7A54" opacity="0.92" />
-                <path d="M100 30 L65 65 L100 90 L135 65 Z" fill="#0E4B4A" />
-                <circle cx="100" cy="110" r="3" fill="#F6EFE3" />
-                <circle cx="85" cy="130" r="3" fill="#F6EFE3" />
-                <circle cx="115" cy="130" r="3" fill="#F6EFE3" />
-              </svg>
+              <img
+                src="/images/products/st-tropez-ruffle-tiered-skirt-co-ord-set.jpg"
+                alt="The Beach Party Edit"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
             </div>
             <div className="label">
               <div className="eyebrow">The Beach Party Edit</div>
-              <h3>Short Sundown Dresses</h3>
+              <h3>Sunlit Co-ords &amp; Tiered Ruffles</h3>
             </div>
           </Link>
 
@@ -208,21 +205,24 @@ export default function Home() {
             className="collection-card reveal"
             style={{ display: "block", textDecoration: "none", color: "inherit" }}
           >
-            <span className="price-tag">from $50</span>
+            <span className="price-tag">from $46</span>
             <div className="art">
-              <svg viewBox="0 0 200 260" fill="none">
-                <path d="M100 24 L68 58 L64 230 L136 230 L132 58 Z" fill="#E8A73B" opacity="0.92" />
-                <path d="M100 24 L68 58 L100 84 L132 58 Z" fill="#1B2420" />
-                <path d="M64 150 Q100 175 136 150" stroke="#1B2420" strokeWidth="1.5" fill="none" opacity="0.4" />
-              </svg>
+              <img
+                src="/images/products/riviera-crystal-pinstripe-tie-blouse.jpg"
+                alt="The Resort Evening Edit"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
             </div>
             <div className="label">
               <div className="eyebrow">The Resort Evening Edit</div>
-              <h3>Wrap &amp; Flow Dresses</h3>
+              <h3>Crystal Blouses &amp; Wide-Leg Denims</h3>
             </div>
           </Link>
         </div>
       </section>
+
+      {/* Runway in Motion / Dynamic Model Lookbook Section */}
+      <MotionLookbook />
 
       {/* Marquee Trust Banner */}
       <div className="marquee-wrap">
