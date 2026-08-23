@@ -6,6 +6,7 @@ import CartLink from "@/components/CartLink";
 import WishlistLink from "@/components/WishlistLink";
 import IntroSplash from "@/components/IntroSplash";
 import MotionLookbook from "@/components/MotionLookbook";
+import HeroModelShowcase from "@/components/HeroModelShowcase";
 import "./sandline.css";
 
 export default function Home() {
@@ -84,31 +85,31 @@ export default function Home() {
       <header className="hero">
         <div className="hero-bg"></div>
         <div className="horizon-line-deco"></div>
-        <div className="hero-eyebrow">
-          <span className="dot"></span>
-          <span className="eyebrow">✦ RESORTWEAR DESIGNED &amp; HAND-FINISHED IN JAIPUR • SHIPPED WORLDWIDE</span>
+        <div className="hero-content">
+          <div className="hero-eyebrow">
+            <span className="dot"></span>
+            <span className="eyebrow">✦ RESORTWEAR DESIGNED &amp; HAND-FINISHED IN JAIPUR • SHIPPED WORLDWIDE</span>
+          </div>
+          <h1>
+            Dresses cut for<br />
+            <em>where the tide</em><br />
+            meets the party.
+          </h1>
+          <p className="hero-sub">
+            Sandline designs ethereal slip silhouettes, lightweight silks, and sculpted wraps for honeymoons, beach weddings, and sundown gatherings from Bali to Mykonos.
+          </p>
+          <div className="hero-cta">
+            <Link className="btn" href="/shop">
+              Explore All Silhouettes →
+            </Link>
+            <Link className="btn ghost" href="#collections">
+              Discover The 3 Edits ↓
+            </Link>
+          </div>
         </div>
-        <h1>
-          Dresses cut for<br />
-          <em>where the tide</em><br />
-          meets the party.
-        </h1>
-        <p className="hero-sub">
-          Sandline designs ethereal slip silhouettes, lightweight silks, and sculpted wraps for honeymoons, beach weddings, and sundown gatherings from Bali to Mykonos.
-        </p>
-        <div className="hero-cta">
-          <Link className="btn" href="/shop">
-            Explore All Silhouettes →
-          </Link>
-          <Link className="btn ghost" href="#collections">
-            Discover The 3 Edits ↓
-          </Link>
-        </div>
-        <div className="hero-tag-cloud">
-          <div className="float-tag">✦ The Honeymoon Edit</div>
-          <div className="float-tag">✦ Beach Party Ready</div>
-          <div className="float-tag">✦ Ships to 80+ Countries</div>
-        </div>
+
+        {/* Hero Model Editorial Showcase */}
+        <HeroModelShowcase />
       </header>
 
       {/* Decorative Wave Separation */}
