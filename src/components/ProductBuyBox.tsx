@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import NotifyMeForm from "@/components/NotifyMeForm";
@@ -25,35 +26,97 @@ export default function ProductBuyBox({
   inStock,
   image,
 }: ProductBuyBoxProps) {
-  const { addToCart } = useCart();
+  const router = useRouter();
+  const { addToCart, applyCoupon } = useCart();
   const { toggleWishlist, isWishlisted } = useWishlist();
 
   const [selectedSize, setSelectedSize] = useState<string>(sizes[0] || "");
   const [selectedColor, setSelectedColor] = useState<string>(colors[0] || "");
   const [quantity, setQuantity] = useState<number>(1);
   const [isAdded, setIsAdded] = useState<boolean>(false);
+  const [showPriceBreakdown, setShowPriceBreakdown] = useState<boolean>(true);
+  const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const [showStickyBar, setShowStickyBar] = useState<boolean>(false);
 
+  const buyBoxRef = useRef<HTMLDivElement>(null);
   const wishlisted = isWishlisted(id);
+
+  // Calculate pricing
+  const couponDiscountVal = Math.round(price * 0.1 * 100) / 100;
+  const afterCoupon = price - couponDiscountVal;
+  const prepaidDiscountVal = Math.round(afterCoupon * 0.05 * 100) / 100;
+  const finalPrice = Math.round((afterCoupon - prepaidDiscountVal) * 100) / 100;
+  const totalSavings = Math.round((price - finalPrice) * 100) / 100;
+
+  // Track scroll for sticky bottom bar
+  useEffect(() => {
+    function handleScroll() {
+      if (!buyBoxRef.current) return;
+      const rect = buyBoxRef.current.getBoundingClientRect();
+      // Show sticky bar when user scrolls past the main buy box
+      if (rect.bottom < 0) {
+        setShowStickyBar(true);
+      } else {
+        setShowStickyBar(false);
+      }
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function handleAddToCart() {
     for (let i = 0; i < quantity; i++) {
-      addToCart({ id, name, price });
+      addToCart({
+        id,
+        name,
+        price,
+        image,
+        size: selectedSize || undefined,
+        color: selectedColor || undefined,
+      });
     }
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
   }
 
+  function handleBuyNow() {
+    addToCart({
+      id,
+      name,
+      price,
+      image,
+      size: selectedSize || undefined,
+      color: selectedColor || undefined,
+    });
+    router.push("/checkout");
+  }
+
+  function copyCoupon(code: string) {
+    navigator.clipboard.writeText(code);
+    setCopiedCode(code);
+    applyCoupon(code);
+    setTimeout(() => setCopiedCode(null), 2500);
+  }
+
   return (
-    <div className="product-buybox">
+    <div className="product-buybox" ref={buyBoxRef}>
+      {/* Prepaid Offer Alert */}
+      <div className="buybox-prepaid-banner">
+        <span className="banner-icon">🏷️</span>
+        <span className="banner-text">
+          Extra <strong>5% OFF</strong> on prepaid orders — applied automatically at checkout.
+        </span>
+      </div>
+
       {/* Size Selector */}
       {sizes.length > 0 && (
         <div className="buybox-option-group">
           <div className="buybox-option-header">
             <span className="buybox-option-label">
-              Select Size: <strong>{selectedSize || "None"}</strong>
+              SIZE: <strong>{selectedSize || "Select"}</strong>
             </span>
-            <Link href="/size-guide" className="buybox-size-guide-link">
-              Size Guide ↗
+            <Link href="/size-guide" className="buybox-find-size-pill">
+              Find your size →
             </Link>
           </div>
           <div className="buybox-swatch-row">
@@ -68,6 +131,15 @@ export default function ProductBuyBox({
               </button>
             ))}
           </div>
+
+          {/* Social Proof Fit Badge */}
+          <div className="buybox-fit-social-proof">
+            <span className="fit-indicator-dot" />
+            <span>
+              Not sure? <strong>80% of buyers</strong> say this fits true to size —{" "}
+              <Link href="/size-guide">see size chart</Link>
+            </span>
+          </div>
         </div>
       )}
 
@@ -76,7 +148,7 @@ export default function ProductBuyBox({
         <div className="buybox-option-group">
           <div className="buybox-option-header">
             <span className="buybox-option-label">
-              Color: <strong>{selectedColor || "None"}</strong>
+              COLOR: <strong>{selectedColor || "None"}</strong>
             </span>
           </div>
           <div className="buybox-swatch-row">
@@ -94,11 +166,102 @@ export default function ProductBuyBox({
         </div>
       )}
 
-      {/* Actions */}
+      {/* "You Actually Pay" Smart Pricing Breakdown */}
+      <div className="buybox-actual-pay-card">
+        <div
+          className="actual-pay-header"
+          onClick={() => setShowPriceBreakdown((prev) => !prev)}
+        >
+          <div className="actual-pay-title-group">
+            <span className="actual-pay-label">You actually pay</span>
+            <div className="actual-pay-prices">
+              <span className="final-price-bold">${finalPrice.toFixed(2)}</span>
+              <span className="original-strike">${price.toFixed(2)}</span>
+              <span className="savings-green-pill">Save ${totalSavings.toFixed(2)}</span>
+            </div>
+          </div>
+          <button type="button" className="actual-pay-toggle-link">
+            {showPriceBreakdown ? "See it how? ⌃" : "See it how? ⌄"}
+          </button>
+        </div>
+
+        {showPriceBreakdown && (
+          <div className="actual-pay-breakdown">
+            <div className="breakdown-row">
+              <span>Listed price</span>
+              <span>${price.toFixed(2)}</span>
+            </div>
+            <div className="breakdown-row discount-text">
+              <span>
+                <code className="coupon-inline-tag">NEW10</code> — 10% off
+              </span>
+              <span>-${couponDiscountVal.toFixed(2)}</span>
+            </div>
+            <div className="breakdown-row discount-text">
+              <span>Prepaid — extra 5% off</span>
+              <span>-${prepaidDiscountVal.toFixed(2)}</span>
+            </div>
+            <div className="breakdown-divider" />
+            <div className="breakdown-row breakdown-final-row">
+              <strong>Your final price</strong>
+              <strong>${finalPrice.toFixed(2)}</strong>
+            </div>
+            <div className="breakdown-explainer">
+              • <code>NEW10</code> gives 10% off on your first order.<br />
+              • Extra 5% is automatic for prepaid orders and stacks with codes.
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* "Offers For You" Card */}
+      <div className="buybox-offers-card">
+        <div className="offers-card-header">
+          <span>🎁</span>
+          <strong>OFFERS FOR YOU</strong>
+        </div>
+        <div className="offers-list">
+          <div className="offer-item">
+            <div className="offer-item-content">
+              <span className="offer-code-chip">NEW10</span>
+              <div className="offer-details">
+                <strong>10% OFF your first order</strong>
+                <span>Apply at checkout</span>
+              </div>
+            </div>
+            <button
+              type="button"
+              className={`offer-copy-btn ${copiedCode === "NEW10" ? "copied" : ""}`}
+              onClick={() => copyCoupon("NEW10")}
+            >
+              {copiedCode === "NEW10" ? "✓ COPIED" : "TAP TO COPY"}
+            </button>
+          </div>
+
+          <div className="offer-item">
+            <div className="offer-item-content">
+              <span className="offer-code-chip">SANDLINE5</span>
+              <div className="offer-details">
+                <strong>5% OFF entire order</strong>
+                <span>Special resort edit discount</span>
+              </div>
+            </div>
+            <button
+              type="button"
+              className={`offer-copy-btn ${copiedCode === "SANDLINE5" ? "copied" : ""}`}
+              onClick={() => copyCoupon("SANDLINE5")}
+            >
+              {copiedCode === "SANDLINE5" ? "✓ COPIED" : "TAP TO COPY"}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Action Buttons */}
       {inStock ? (
         <div className="buybox-actions-stack">
+          {/* Quantity and Add to Bag */}
           <div className="buybox-qty-cart-row">
-            {/* Quantity Selector */}
             <div className="buybox-qty-control">
               <button
                 type="button"
@@ -117,15 +280,23 @@ export default function ProductBuyBox({
               </button>
             </div>
 
-            {/* Add to Bag Button */}
             <button
               type="button"
               className="buybox-add-to-bag-btn"
               onClick={handleAddToCart}
             >
-              {isAdded ? "✓ Added to Bag" : "Add to Bag — $" + (price * quantity).toFixed(2)}
+              {isAdded ? "✓ Added to Bag" : "ADD TO BAG"}
             </button>
           </div>
+
+          {/* BUY NOW Button */}
+          <button
+            type="button"
+            className="buybox-buy-now-btn"
+            onClick={handleBuyNow}
+          >
+            BUY NOW
+          </button>
 
           {/* Wishlist Button */}
           <button
@@ -153,6 +324,37 @@ export default function ProductBuyBox({
           </button>
         </div>
       )}
+
+      {/* Sticky Bottom Floating Quick-Add Bar (Scrolls with user) */}
+      <div className={`buybox-sticky-floating-bar ${showStickyBar && inStock ? "visible" : ""}`}>
+        <div className="sticky-bar-content">
+          <div className="sticky-bar-perk">
+            <span>%</span>
+            <span>
+              Get it for <strong>${finalPrice.toFixed(2)}</strong> — Save <strong>${totalSavings.toFixed(2)}</strong> instantly with online payment
+            </span>
+          </div>
+
+          <div className="sticky-bar-action-row">
+            <div className="sticky-bar-price-info">
+              <span className="sticky-saving-text">Saving ${totalSavings.toFixed(2)}</span>
+              <div className="sticky-prices">
+                <strong>${finalPrice.toFixed(2)}</strong>
+                <span className="sticky-strike">${price.toFixed(2)}</span>
+                <span className="sticky-discount-badge">-15%</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="sticky-bar-add-btn"
+              onClick={handleAddToCart}
+            >
+              Add To Bag →
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

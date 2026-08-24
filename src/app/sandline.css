@@ -2161,5 +2161,1071 @@ body{
   }
 }
 
+/* ==========================================================================
+   ESCAPE-INSPIRED CART DRAWER & ENHANCED PDP STYLES
+   ========================================================================== */
 
+/* Nav Cart Button */
+.nav-cart-btn {
+  background: transparent;
+  border: 1px solid var(--ink);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+}
+.nav-cart-btn:hover {
+  background: var(--ink);
+  color: var(--sand);
+}
+.cart-nav-badge {
+  background: var(--papaya);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
+/* Cart Drawer Backdrop */
+.cart-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 20, 18, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.cart-drawer-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Cart Slide-Over Drawer */
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 460px;
+  background: #FAF8F5;
+  color: var(--ink);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cart-drawer.open {
+  transform: translateX(0);
+}
+
+/* Drawer Header */
+.cart-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+  background: #FAF8F5;
+}
+.cart-drawer-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.cart-drawer-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: rgba(27, 36, 32, 0.6);
+  font-weight: 400;
+}
+.cart-drawer-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--ink);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+.cart-drawer-close:hover {
+  background: rgba(27, 36, 32, 0.08);
+}
+
+/* Free Shipping Progress Tracker */
+.cart-shipping-banner {
+  background: #F2ECE1;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.shipping-progress-text,
+.shipping-unlocked-text {
+  font-size: 12.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.shipping-unlocked-text strong {
+  color: #106638;
+}
+.shipping-progress-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(27, 36, 32, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.shipping-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--papaya));
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/* Prepaid Alert */
+.cart-prepaid-alert {
+  background: #E8F5EE;
+  color: #0E5A33;
+  padding: 10px 24px;
+  font-size: 11.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(14, 90, 51, 0.12);
+}
+
+/* Drawer Body & Items */
+.cart-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+.cart-drawer-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: 40px 20px;
+}
+.empty-bag-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+.cart-drawer-empty h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.cart-drawer-empty p {
+  font-size: 13.5px;
+  color: rgba(27, 36, 32, 0.65);
+  margin-bottom: 24px;
+  max-width: 260px;
+}
+.btn-empty-browse {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--sand);
+  border: 1px solid var(--ink);
+  cursor: pointer;
+}
+
+.cart-drawer-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cart-drawer-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.cart-item-thumb {
+  width: 80px;
+  height: 106px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #EAE6DF;
+}
+.cart-item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cart-item-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: #888;
+}
+.cart-item-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cart-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.cart-item-name {
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.cart-item-remove-btn {
+  background: none;
+  border: none;
+  color: rgba(27, 36, 32, 0.45);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px;
+}
+.cart-item-remove-btn:hover {
+  color: var(--papaya);
+}
+.cart-item-variant {
+  font-size: 11.5px;
+  color: rgba(27, 36, 32, 0.65);
+  margin-top: 4px;
+}
+.cart-item-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.cart-qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: white;
+  overflow: hidden;
+}
+.cart-qty-stepper button {
+  background: none;
+  border: none;
+  width: 26px;
+  height: 26px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+.cart-qty-stepper span {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 0 6px;
+}
+.cart-item-price {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Drawer Footer */
+.cart-drawer-footer {
+  padding: 20px 24px 24px;
+  border-top: 1px solid var(--line);
+  background: #FAF8F5;
+}
+.drawer-promo-section {
+  margin-bottom: 16px;
+}
+.drawer-promo-form {
+  display: flex;
+  gap: 8px;
+}
+.drawer-promo-form input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: white;
+  font-size: 12px;
+  font-family: 'Space Mono', monospace;
+  text-transform: uppercase;
+}
+.drawer-promo-form button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--sand);
+  border: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+.drawer-applied-coupon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #E8F5EE;
+  color: #0E5A33;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.coupon-remove-link {
+  background: none;
+  border: none;
+  color: #0E5A33;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 11px;
+}
+.drawer-coupon-error {
+  color: #D9381E;
+  font-size: 11px;
+  margin-top: 6px;
+}
+.drawer-quick-coupons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.quick-coupon-label {
+  font-size: 11px;
+  color: rgba(27, 36, 32, 0.6);
+}
+.quick-coupon-chip {
+  background: white;
+  border: 1px dashed rgba(27, 36, 32, 0.25);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-family: 'Space Mono', monospace;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.quick-coupon-chip:hover {
+  border-color: var(--papaya);
+  background: #FFF4EE;
+  color: var(--papaya);
+}
+
+.drawer-price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 12.5px;
+}
+.drawer-price-row {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(27, 36, 32, 0.75);
+}
+.drawer-price-row.discount-row {
+  color: #D9381E;
+}
+.prepaid-green {
+  color: #106638;
+  font-weight: 600;
+}
+.drawer-price-row.total-row {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  align-items: flex-end;
+}
+.total-amount-box {
+  text-align: right;
+}
+.final-total {
+  font-size: 18px;
+  font-family: 'Space Mono', monospace;
+  display: block;
+}
+.total-note {
+  font-size: 10px;
+  color: rgba(27, 36, 32, 0.5);
+  font-weight: 400;
+}
+
+.drawer-cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.btn-drawer-checkout {
+  width: 100%;
+  padding: 16px;
+  text-align: center;
+  background: #141C19;
+  color: #FAF8F5;
+  border-radius: 999px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  text-decoration: none;
+}
+.btn-drawer-checkout:hover {
+  background: var(--papaya);
+  color: white;
+}
+.btn-drawer-continue {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: rgba(27, 36, 32, 0.6);
+  cursor: pointer;
+  padding: 6px;
+  text-decoration: underline;
+}
+
+.drawer-trust-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  color: rgba(27, 36, 32, 0.5);
+  margin-top: 14px;
+}
+
+/* ==========================================================================
+   PDP PRODUCT GALLERY & THUMBNAILS
+   ========================================================================== */
+.product-gallery-container {
+  display: flex;
+  gap: 16px;
+  position: sticky;
+  top: 100px;
+}
+.product-gallery-thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 68px;
+}
+.gallery-thumb-btn {
+  width: 68px;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+.gallery-thumb-btn.active {
+  border: 2px solid var(--ink);
+  transform: scale(1.04);
+}
+.gallery-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.product-gallery-main {
+  flex: 1;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--foam);
+  aspect-ratio: 3/4;
+}
+.gallery-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.gallery-sale-pill {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(20, 28, 25, 0.85);
+  backdrop-filter: blur(8px);
+  color: var(--gold);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 6px 12px;
+  border-radius: 999px;
+  z-index: 2;
+}
+
+/* PDP Price Header */
+.product-price-amount-group {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.product-original-price {
+  font-size: 16px;
+  text-decoration: line-through;
+  color: rgba(27, 36, 32, 0.45);
+  font-family: 'Space Mono', monospace;
+}
+.product-discount-pill {
+  background: #FFF0EB;
+  color: var(--papaya);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* PDP Prepaid Banner */
+.buybox-prepaid-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFF8E6;
+  border: 1px dashed rgba(232, 167, 59, 0.5);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #7A5200;
+  margin-bottom: 18px;
+}
+.banner-icon {
+  font-size: 14px;
+}
+
+/* Find Your Size Pill & Fit Social Proof */
+.buybox-find-size-pill {
+  background: #8A4F3D;
+  color: white !important;
+  font-size: 10.5px;
+  font-family: 'Space Mono', monospace;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-decoration: none !important;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s ease;
+}
+.buybox-find-size-pill:hover {
+  opacity: 0.9;
+}
+.buybox-fit-social-proof {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(27, 36, 32, 0.7);
+  margin-top: 8px;
+}
+.fit-indicator-dot {
+  width: 7px;
+  height: 7px;
+  background: #25D366;
+  border-radius: 50%;
+}
+.buybox-fit-social-proof a {
+  text-decoration: underline;
+  color: var(--ink);
+}
+
+/* "You Actually Pay" Accordion Card */
+.buybox-actual-pay-card {
+  background: #FDF9F2;
+  border: 1px solid rgba(232, 167, 59, 0.35);
+  border-radius: 12px;
+  margin: 18px 0;
+  overflow: hidden;
+}
+.actual-pay-header {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.actual-pay-label {
+  font-size: 11px;
+  color: rgba(27, 36, 32, 0.65);
+  display: block;
+  margin-bottom: 2px;
+}
+.actual-pay-prices {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.final-price-bold {
+  font-family: 'Space Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.original-strike {
+  font-size: 12px;
+  text-decoration: line-through;
+  color: rgba(27, 36, 32, 0.4);
+}
+.savings-green-pill {
+  background: #E8F5EE;
+  color: #0E5A33;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.actual-pay-toggle-link {
+  background: none;
+  border: none;
+  font-size: 11px;
+  color: #8A4F3D;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.actual-pay-breakdown {
+  padding: 0 16px 14px;
+  border-top: 1px dashed rgba(27, 36, 32, 0.1);
+  font-size: 11.5px;
+}
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  color: rgba(27, 36, 32, 0.7);
+}
+.breakdown-row.discount-text {
+  color: #D9381E;
+}
+.coupon-inline-tag {
+  background: #FFF0EB;
+  color: var(--papaya);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: 'Space Mono', monospace;
+}
+.breakdown-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 6px 0;
+}
+.breakdown-final-row {
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 700;
+}
+.breakdown-explainer {
+  font-size: 10px;
+  color: rgba(27, 36, 32, 0.55);
+  line-height: 1.5;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(27, 36, 32, 0.1);
+}
+
+/* Offers For You Card */
+.buybox-offers-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+.offers-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #8A4F3D;
+  margin-bottom: 12px;
+}
+.offers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.offer-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px dashed rgba(27, 36, 32, 0.2);
+  border-radius: 8px;
+  background: #FAF8F5;
+}
+.offer-item-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.offer-code-chip {
+  background: var(--ink);
+  color: var(--sand);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+.offer-details strong {
+  display: block;
+  font-size: 12px;
+  color: var(--ink);
+}
+.offer-details span {
+  font-size: 10px;
+  color: rgba(27, 36, 32, 0.55);
+}
+.offer-copy-btn {
+  background: none;
+  border: none;
+  color: #8A4F3D;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 6px;
+  text-decoration: underline;
+  transition: all 0.2s ease;
+}
+.offer-copy-btn.copied {
+  color: #106638;
+  text-decoration: none;
+}
+
+/* Buy Now Button */
+.buybox-buy-now-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+.buybox-buy-now-btn:hover {
+  background: var(--ink);
+  color: var(--sand);
+}
+
+/* PDP Trust Guarantees */
+.pdp-trust-guarantees {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin: 18px 0;
+  font-size: 12px;
+  color: rgba(27, 36, 32, 0.75);
+}
+.trust-guarantee-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.trust-icon {
+  font-size: 15px;
+}
+
+/* Sticky Bottom Floating Quick-Add Bar */
+.buybox-sticky-floating-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(250, 248, 245, 0.96);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(27, 36, 32, 0.12);
+  padding: 12px clamp(16px, 4vw, 48px);
+  z-index: 300;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+.buybox-sticky-floating-bar.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.sticky-bar-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.sticky-bar-perk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #E8F5EE;
+  color: #0E5A33;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+}
+.sticky-bar-action-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.sticky-bar-price-info {
+  text-align: right;
+}
+.sticky-saving-text {
+  display: block;
+  font-size: 10px;
+  color: #0E5A33;
+  font-weight: 600;
+}
+.sticky-prices {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.sticky-prices strong {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  color: var(--ink);
+}
+.sticky-strike {
+  font-size: 11px;
+  text-decoration: line-through;
+  color: rgba(27, 36, 32, 0.4);
+}
+.sticky-discount-badge {
+  background: #FFF0EB;
+  color: var(--papaya);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.sticky-bar-add-btn {
+  background: #141C19;
+  color: #FAF8F5;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+.sticky-bar-add-btn:hover {
+  background: var(--papaya);
+}
+
+@media (max-width: 768px) {
+  .product-gallery-container {
+    flex-direction: column-reverse;
+  }
+  .product-gallery-thumbs {
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .gallery-thumb-btn {
+    width: 54px;
+    height: 72px;
+    flex-shrink: 0;
+  }
+  .sticky-bar-perk {
+    display: none;
+  }
+  .sticky-bar-content {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   HOMEPAGE BRAND MANIFESTO & VIP DROP BANNER (ESCAPE STYLE)
+   ========================================================================== */
+.brand-manifesto-section {
+  padding: 80px clamp(24px, 5vw, 64px) 100px;
+  background: var(--sand);
+}
+.manifesto-inner {
+  max-width: 1100px;
+  margin: 0 auto 60px;
+}
+.manifesto-quote {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(28px, 4.2vw, 54px);
+  line-height: 1.15;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 54px;
+  max-width: 22ch;
+}
+.manifesto-quote strong {
+  font-weight: 700;
+  color: var(--lagoon);
+}
+.manifesto-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  border-top: 1px solid var(--line);
+  padding-top: 36px;
+}
+.manifesto-pillar-card .pillar-icon {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+.manifesto-pillar-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.manifesto-pillar-card p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(27, 36, 32, 0.72);
+}
+
+.drop-access-banner {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #0E4B4A;
+  color: #FAF8F5;
+  border-radius: 24px;
+  padding: clamp(36px, 6vw, 64px) clamp(24px, 5vw, 54px);
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(14, 75, 74, 0.2);
+}
+.drop-access-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 12px;
+}
+.drop-access-banner h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 5vw, 56px);
+  margin-bottom: 12px;
+  color: #FAF8F5;
+}
+.drop-access-banner p {
+  font-size: 15px;
+  color: rgba(250, 248, 245, 0.8);
+  max-width: 460px;
+  margin: 0 auto 28px;
+}
+.drop-access-form {
+  display: flex;
+  max-width: 440px;
+  margin: 0 auto;
+  gap: 8px;
+}
+.drop-access-form input {
+  flex: 1;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--ink);
+  font-size: 13px;
+  outline: none;
+}
+.drop-access-form button {
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: #141C19;
+  color: #FAF8F5;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.drop-access-form button:hover {
+  background: var(--papaya);
+  border-color: var(--papaya);
+}
+.drop-access-success {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 14px 20px;
+  border-radius: 12px;
+  color: var(--gold);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  max-width: 440px;
+  margin: 0 auto;
+}

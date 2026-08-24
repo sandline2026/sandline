@@ -266,13 +266,56 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Social Proof & Testimonial */}
-      <section>
-        <div className="testimonial reveal">
-          <h2>
-            "I wore the sunset dress for our honeymoon in Bali. The silk is unimaginably soft and strangers on the beach kept asking where I got it."
+      {/* Brand Manifesto & 3 Pillars Section (Escape Style) */}
+      <section className="brand-manifesto-section">
+        <div className="manifesto-inner reveal">
+          <h2 className="manifesto-quote">
+            When we <strong>promise a look</strong>, we <strong>deliver the exact piece</strong> you fell for — down to the last detail.
           </h2>
-          <div className="who">— Chloe M., Canggu, Indonesia (Verified Buyer)</div>
+
+          <div className="manifesto-pillars-grid">
+            <div className="manifesto-pillar-card">
+              <div className="pillar-icon">💨</div>
+              <h3>Cut to travel</h3>
+              <p>Crease-forgiving fabric that folds flat and looks composed straight from the carry-on.</p>
+            </div>
+
+            <div className="manifesto-pillar-card">
+              <div className="pillar-icon">🌿</div>
+              <h3>Made to last</h3>
+              <p>Natural fibres and considered construction. Pieces you'll reach for season after season.</p>
+            </div>
+
+            <div className="manifesto-pillar-card">
+              <div className="pillar-icon">📦</div>
+              <h3>Packed with care</h3>
+              <p>Shipped plastic-free in recyclable packaging directly from our Jaipur atelier.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* First Access To Every Drop Dark Green Banner */}
+        <div className="drop-access-banner reveal">
+          <span className="drop-access-eyebrow">JOIN THE LIST</span>
+          <h2>First access to every drop.</h2>
+          <p>No noise. Just new arrivals, the occasional edit, and a little sun in your inbox.</p>
+
+          {newsletterDone ? (
+            <div className="drop-access-success">
+              ✓ You're on the list! Early access invitations will arrive in your inbox.
+            </div>
+          ) : (
+            <form className="drop-access-form" onSubmit={handleNewsletterSubmit}>
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                required
+              />
+              <button type="submit">JOIN</button>
+            </form>
+          )}
         </div>
       </section>
 

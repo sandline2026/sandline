@@ -7,6 +7,7 @@ import WishlistButton from "@/components/WishlistButton";
 import ReviewForm from "@/components/ReviewForm";
 import PincodeCheck from "@/components/PincodeCheck";
 import ProductBuyBox from "@/components/ProductBuyBox";
+import ProductGallery from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
 import AccountNavButton from "@/components/AccountNavButton";
 import "../../sandline.css";
@@ -118,22 +119,11 @@ export default async function ProductDetail({
         <div className="product-detail">
           {/* Left Gallery Sticky Box */}
           <div className="product-gallery">
-            {hasPhoto ? (
-              <img src={product.images[0]} alt={product.name} />
-            ) : (
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background: "var(--foam)",
-                }}
-              >
-                {collectionArt[product.collection] || collectionArt.beach_party}
-              </div>
-            )}
+            <ProductGallery
+              images={product.images || []}
+              name={product.name}
+              fallbackArt={collectionArt[product.collection] || collectionArt.beach_party}
+            />
           </div>
 
           {/* Right Product Info Column */}
@@ -146,9 +136,15 @@ export default async function ProductDetail({
             <h1>{product.name}</h1>
 
             <div className="product-price-bar">
-              <span className="product-price-amount">
-                ${Number(product.selling_price_usd).toFixed(2)}
-              </span>
+              <div className="product-price-amount-group">
+                <span className="product-price-amount">
+                  ${Number(product.selling_price_usd).toFixed(2)}
+                </span>
+                <span className="product-original-price">
+                  ${(Number(product.selling_price_usd) * 1.3).toFixed(2)}
+                </span>
+                <span className="product-discount-pill">-30%</span>
+              </div>
               <span className="product-shipping-tag">
                 {inStock ? "In Stock • Ships Worldwide" : "Sold Out"}
               </span>
@@ -187,6 +183,22 @@ export default async function ProductDetail({
 
             {/* Delivery Pincode Checker */}
             <PincodeCheck />
+
+            {/* Trust Assurances (Escape Style) */}
+            <div className="pdp-trust-guarantees">
+              <div className="trust-guarantee-item">
+                <span className="trust-icon">💳</span>
+                <span>Prepaid & Card Payments Accepted</span>
+              </div>
+              <div className="trust-guarantee-item">
+                <span className="trust-icon">🔄</span>
+                <span>7 Days Hassle-Free Return & Exchange</span>
+              </div>
+              <div className="trust-guarantee-item">
+                <span className="trust-icon">📦</span>
+                <span>Free Worldwide Shipping on Orders Above $100</span>
+              </div>
+            </div>
 
             {/* Specifications Meta List */}
             <div className="product-meta-list">

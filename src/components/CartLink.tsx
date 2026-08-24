@@ -3,11 +3,17 @@
 import { useCart } from "@/context/CartContext";
 
 export default function CartLink() {
-  const { itemCount } = useCart();
+  const { itemCount, openCart } = useCart();
 
   return (
-    <a href="/cart">
-      Cart{itemCount > 0 ? ` (${itemCount})` : ""}
-    </a>
+    <button
+      type="button"
+      className="nav-cart-btn"
+      onClick={openCart}
+      aria-label="Open Shopping Bag"
+    >
+      <span className="cart-nav-label">BAG</span>
+      {itemCount > 0 && <span className="cart-nav-badge">{itemCount}</span>}
+    </button>
   );
 }

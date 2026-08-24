@@ -7,6 +7,9 @@ export type CartItem = {
   name: string;
   price: number;
   quantity: number;
+  image?: string | null;
+  size?: string;
+  color?: string;
 };
 
 export type AppliedCoupon = {
@@ -20,16 +23,21 @@ export type AppliedCoupon = {
 type CartContextType = {
   items: CartItem[];
   addToCart: (item: Omit<CartItem, "quantity">) => void;
-  removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
+  removeFromCart: (id: string, size?: string) => void;
+  updateQuantity: (id: string, quantity: number, size?: string) => void;
   clearCart: () => void;
   subtotal: number;
   discount: number;
+  prepaidDiscount: number;
   total: number;
   itemCount: number;
   appliedCoupon: AppliedCoupon | null;
   applyCoupon: (code: string) => Promise<{ success: boolean; error?: string }>;
   removeCoupon: () => void;
+  isCartOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -37,6 +45,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [appliedCoupon, setAppliedCoupon] = useState<AppliedCoupon | null>(null);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -73,29 +82,54 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [appliedCoupon, loaded]);
 
+  function openCart() {
+    setIsCartOpen(true);
+  }
+
+  function closeCart() {
+    setIsCartOpen(false);
+  }
+
+  function toggleCart() {
+    setIsCartOpen((prev) => !prev);
+  }
+
   function addToCart(item: Omit<CartItem, "quantity">) {
     setItems((prev) => {
-      const existing = prev.find((i) => i.id === item.id);
-      if (existing) {
-        return prev.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-        );
+      const matchIndex = prev.findIndex(
+        (i) => i.id === item.id && (item.size ? i.size === item.size : true)
+      );
+      if (matchIndex > -1) {
+        const next = [...prev];
+        next[matchIndex] = {
+          ...next[matchIndex],
+          quantity: next[matchIndex].quantity + 1,
+          image: item.image || next[matchIndex].image,
+        };
+        return next;
       }
       return [...prev, { ...item, quantity: 1 }];
     });
+    setIsCartOpen(true);
   }
 
-  function removeFromCart(id: string) {
-    setItems((prev) => prev.filter((i) => i.id !== id));
+  function removeFromCart(id: string, size?: string) {
+    setItems((prev) =>
+      prev.filter((i) => !(i.id === id && (size ? i.size === size : true)))
+    );
   }
 
-  function updateQuantity(id: string, quantity: number) {
+  function updateQuantity(id: string, quantity: number, size?: string) {
     if (quantity <= 0) {
-      removeFromCart(id);
+      removeFromCart(id, size);
       return;
     }
     setItems((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, quantity } : i))
+      prev.map((i) =>
+        i.id === id && (size ? i.size === size : true)
+          ? { ...i, quantity }
+          : i
+      )
     );
   }
 
@@ -117,6 +151,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     discount = Math.round(discount * 100) / 100;
   }
 
+  // 5% extra prepaid savings
+  const prepaidDiscount = Math.round((subtotal - discount) * 0.05 * 100) / 100;
   const total = Math.max(0, subtotal - discount);
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
@@ -159,11 +195,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
         clearCart,
         subtotal,
         discount,
+        prepaidDiscount,
         total,
         itemCount,
         appliedCoupon,
         applyCoupon,
         removeCoupon,
+        isCartOpen,
+        openCart,
+        closeCart,
+        toggleCart,
       }}
     >
       {children}
