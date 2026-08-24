@@ -116,13 +116,11 @@ export default async function ProductDetail({
         {/* Product Details Grid */}
         <div className="product-detail">
           {/* Left Gallery Sticky Box */}
-          <div className="product-gallery">
-            <ProductGallery
-              images={product.images || []}
-              name={product.name}
-              fallbackArt={collectionArt[product.collection] || collectionArt.beach_party}
-            />
-          </div>
+          <ProductGallery
+            images={product.images || []}
+            name={product.name}
+            fallbackArt={collectionArt[product.collection] || collectionArt.beach_party}
+          />
 
           {/* Right Product Info Column */}
           <div className="product-info">
