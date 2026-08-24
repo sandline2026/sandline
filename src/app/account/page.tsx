@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/../utils/supabase/client";
 import { useCart } from "@/context/CartContext";
-import "../../sandline.css";
+import "@/app/sandline.css";
 
 interface OrderItem {
   id: string;

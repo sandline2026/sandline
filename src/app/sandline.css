@@ -67,8 +67,27 @@ body{
   content:''; position:absolute; left:0; bottom:0; height:1px; width:0;
   background:var(--lagoon); transition:width 0.3s ease;
 }
-.sandline-page .nav-links a:hover::after{width:100%;}
-@media(max-width:720px){.sandline-page .nav-links{display:none;}}
+@media(max-width:720px){
+  .sandline-page nav{
+    padding:16px 18px;
+    background:rgba(250,248,245,0.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(27,36,32,0.08);
+  }
+  .sandline-page .nav-links{
+    display:flex;
+    gap:12px;
+    font-size:10px;
+    align-items:center;
+  }
+  .sandline-page .nav-links a[href="#story"],
+  .sandline-page .nav-links a[href="#contact"],
+  .sandline-page .nav-links a[href="/story"],
+  .sandline-page .nav-links a[href="/contact"],
+  .sandline-page .nav-links a[href="/size-guide"]{
+    display:none;
+  }
+}
 
 .sandline-page .hero{
   position:relative; min-height:100vh; display:grid; grid-template-columns:1.15fr 0.85fr;

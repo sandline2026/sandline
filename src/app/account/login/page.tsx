@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/../utils/supabase/client";
-import "../../sandline.css";
+import "@/app/sandline.css";
 
 function LoginContent() {
   const router = useRouter();
