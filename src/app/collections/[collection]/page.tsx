@@ -5,6 +5,7 @@ import AddToCartButton from "@/components/AddToCartButton";
 import WishlistButton from "@/components/WishlistButton";
 import CartLink from "@/components/CartLink";
 import SortSelect from "@/components/SortSelect";
+import AccountNavButton from "@/components/AccountNavButton";
 import "../../sandline.css";
 
 const collectionsMeta: Record<
@@ -129,14 +130,15 @@ export default async function CollectionPage({
     <div className="sandline-page">
       {/* Navigation */}
       <nav>
-        <a className="logo" href="/">
+        <Link className="logo" href="/">
           SAND<span>LINE</span>
-        </a>
+        </Link>
         <div className="nav-links">
-          <a href="/shop">Shop</a>
-          <a href="/size-guide">Size Guide</a>
-          <a href="/#story">Story</a>
-          <a href="/#contact">Contact</a>
+          <Link href="/shop">Shop</Link>
+          <Link href="/size-guide">Size Guide</Link>
+          <AccountNavButton />
+          <Link href="/story">Story</Link>
+          <Link href="/contact">Contact</Link>
           <CartLink />
         </div>
       </nav>

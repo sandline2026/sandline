@@ -7,6 +7,7 @@ import WishlistLink from "@/components/WishlistLink";
 import IntroSplash from "@/components/IntroSplash";
 import MotionLookbook from "@/components/MotionLookbook";
 import HeroModelShowcase from "@/components/HeroModelShowcase";
+import AccountNavButton from "@/components/AccountNavButton";
 import "./sandline.css";
 
 export default function Home() {
@@ -75,6 +76,7 @@ export default function Home() {
           <Link href="/shop">Shop</Link>
           <Link href="/size-guide">Size Guide</Link>
           <WishlistLink />
+          <AccountNavButton />
           <Link href="#story">Story</Link>
           <Link href="#contact">Contact</Link>
           <CartLink />

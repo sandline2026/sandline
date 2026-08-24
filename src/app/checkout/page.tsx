@@ -1,8 +1,8 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { createClient } from "@/../utils/supabase/client";
+import AccountNavButton from "@/components/AccountNavButton";
 import "../sandline.css";
 
 export default function CheckoutPage() {
@@ -22,6 +22,51 @@ export default function CheckoutPage() {
   const [couponInput, setCouponInput] = useState("");
   const [couponLoading, setCouponLoading] = useState(false);
   const [couponError, setCouponError] = useState("");
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    country: "India",
+    postalCode: "",
+  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    async function loadCustomer() {
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user?.email) {
+        setIsLoggedIn(true);
+        const { data: customer } = await supabase
+          .from("customers")
+          .select("*")
+          .eq("email", session.user.email)
+          .maybeSingle();
+
+        if (customer) {
+          setFormData({
+            fullName: customer.full_name || "",
+            email: customer.email || session.user.email,
+            phone: customer.phone || "",
+            address: customer.address_line || "",
+            city: customer.city || "",
+            country: customer.country || "India",
+            postalCode: customer.postal_code || "",
+          });
+        } else {
+          setFormData((prev) => ({
+            ...prev,
+            email: session.user.email || "",
+            fullName: session.user.user_metadata?.full_name || "",
+          }));
+        }
+      }
+    }
+    loadCustomer();
+  }, []);
 
   async function handleApplyCoupon(e: React.FormEvent) {
     e.preventDefault();
@@ -44,15 +89,13 @@ export default function CheckoutPage() {
     setLoading(true);
     setError("");
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const fullName = formData.get("fullName") as string;
-    const email = formData.get("email") as string;
-    const phone = (formData.get("phone") as string) || "";
-    const address = formData.get("address") as string;
-    const city = formData.get("city") as string;
-    const country = formData.get("country") as string;
-    const postalCode = formData.get("postalCode") as string;
+    const fullName = formData.fullName;
+    const email = formData.email;
+    const phone = formData.phone || "";
+    const address = formData.address;
+    const city = formData.city;
+    const country = formData.country;
+    const postalCode = formData.postalCode;
 
     const supabase = createClient();
 
@@ -66,8 +109,18 @@ export default function CheckoutPage() {
 
       if (existingCustomer) {
         customerId = existingCustomer.id;
-        if (phone) {
-          await supabase.from("customers").update({ phone }).eq("id", customerId);
+        if (phone || address) {
+          await supabase
+            .from("customers")
+            .update({
+              phone: phone || null,
+              address_line: address,
+              city,
+              country,
+              postal_code: postalCode,
+              full_name: fullName,
+            })
+            .eq("id", customerId);
         }
       } else {
         const { data: newCustomer, error: customerError } = await supabase
@@ -169,15 +222,21 @@ export default function CheckoutPage() {
   return (
     <div className="sandline-page">
       <nav>
-        <a className="logo" href="/">SAND<span>LINE</span></a>
+        <Link className="logo" href="/">SAND<span>LINE</span></Link>
         <div className="nav-links">
-          <a href="/shop">Shop</a>
-          <a href="/cart">Cart</a>
+          <Link href="/shop">Shop</Link>
+          <AccountNavButton />
+          <Link href="/cart">Cart</Link>
         </div>
       </nav>
 
       <div className="shop-header">
         <h1>Checkout.</h1>
+        {!isLoggedIn && (
+          <p style={{ fontSize: "13.5px", color: "#666", marginTop: "6px" }}>
+            Have a Sandline account? <Link href="/account/login?next=/checkout" style={{ color: "#1A1A1A", fontWeight: "600", textDecoration: "underline" }}>Sign in with OTP</Link> to auto-fill your saved address.
+          </p>
+        )}
       </div>
 
       {items.length === 0 ? (
@@ -185,13 +244,80 @@ export default function CheckoutPage() {
       ) : (
         <div className="checkout-wrap">
           <form className="checkout-form" onSubmit={handleSubmit}>
-            <label>Full name<input type="text" name="fullName" placeholder="e.g. Ansh Bhatia" required /></label>
-            <label>Email (for order confirmation)<input type="email" name="email" placeholder="e.g. ansh@example.com" required /></label>
-            <label>WhatsApp / Phone (for express courier tracking)<input type="tel" name="phone" placeholder="+91 98765 43210" required /></label>
-            <label>Street Address<input type="text" name="address" placeholder="Apartment, suite, street" required /></label>
-            <label>City<input type="text" name="city" required /></label>
-            <label>Country<input type="text" name="country" required /></label>
-            <label>Postal / ZIP code<input type="text" name="postalCode" required /></label>
+            <label>
+              Full name
+              <input
+                type="text"
+                name="fullName"
+                placeholder="e.g. Ansh Bhatia"
+                required
+                value={formData.fullName}
+                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+              />
+            </label>
+            <label>
+              Email (for order confirmation)
+              <input
+                type="email"
+                name="email"
+                placeholder="e.g. ansh@example.com"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </label>
+            <label>
+              WhatsApp / Phone (for express courier tracking)
+              <input
+                type="tel"
+                name="phone"
+                placeholder="+91 98765 43210"
+                required
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+            </label>
+            <label>
+              Street Address
+              <input
+                type="text"
+                name="address"
+                placeholder="Apartment, suite, street"
+                required
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              />
+            </label>
+            <label>
+              City
+              <input
+                type="text"
+                name="city"
+                required
+                value={formData.city}
+                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+              />
+            </label>
+            <label>
+              Country
+              <input
+                type="text"
+                name="country"
+                required
+                value={formData.country}
+                onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+              />
+            </label>
+            <label>
+              Postal / ZIP code
+              <input
+                type="text"
+                name="postalCode"
+                required
+                value={formData.postalCode}
+                onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+              />
+            </label>
 
             {error && <p style={{ color: "#c0392b", fontSize: "13px" }}>{error}</p>}
 

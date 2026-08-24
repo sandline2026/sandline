@@ -8,6 +8,7 @@ import ReviewForm from "@/components/ReviewForm";
 import PincodeCheck from "@/components/PincodeCheck";
 import ProductBuyBox from "@/components/ProductBuyBox";
 import AddToCartButton from "@/components/AddToCartButton";
+import AccountNavButton from "@/components/AccountNavButton";
 import "../../sandline.css";
 
 const collectionArt: Record<string, React.ReactElement> = {
@@ -83,14 +84,15 @@ export default async function ProductDetail({
     <div className="sandline-page">
       {/* Navbar */}
       <nav>
-        <a className="logo" href="/">
+        <Link className="logo" href="/">
           SAND<span>LINE</span>
-        </a>
+        </Link>
         <div className="nav-links">
-          <a href="/shop">Shop</a>
-          <a href="/size-guide">Size Guide</a>
-          <a href="/wishlist">Wishlist</a>
-          <a href="/#contact">Contact</a>
+          <Link href="/shop">Shop</Link>
+          <Link href="/size-guide">Size Guide</Link>
+          <AccountNavButton />
+          <Link href="/wishlist">Wishlist</Link>
+          <Link href="/contact">Contact</Link>
           <CartLink />
         </div>
       </nav>
