@@ -22,7 +22,7 @@ function LoginContent() {
   const supabase = createClient();
 
   useEffect(() => {
-    // Check if already logged in
+    // Check if already logged in or gets logged in via email link
     async function checkSession() {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
@@ -30,6 +30,14 @@ function LoginContent() {
       }
     }
     checkSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        router.push(nextUrl);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [nextUrl, router, supabase.auth]);
 
   useEffect(() => {
