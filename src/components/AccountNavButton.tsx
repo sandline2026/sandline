@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/../utils/supabase/client";
+import { useAuthModal } from "@/context/AuthModalContext";
 
 export default function AccountNavButton() {
   const [user, setUser] = useState<{ email: string; name?: string } | null>(null);
+  const { openAuthModal } = useAuthModal();
   const supabase = createClient();
 
   useEffect(() => {
@@ -37,15 +39,20 @@ export default function AccountNavButton() {
 
   if (user) {
     return (
-      <Link href="/account" style={{ color: "inherit", textDecoration: "none" }}>
-        Account 👤
+      <Link href="/account" className="nav-account-link" style={{ color: "inherit", textDecoration: "none" }}>
+        <span>ACCOUNT 👤</span>
       </Link>
     );
   }
 
   return (
-    <Link href="/account/login" style={{ color: "inherit", textDecoration: "none" }}>
-      Login 👤
-    </Link>
+    <button
+      type="button"
+      className="nav-auth-btn"
+      onClick={() => openAuthModal("phone")}
+      aria-label="Open Login & Offers"
+    >
+      <span>LOGIN 👤</span>
+    </button>
   );
 }

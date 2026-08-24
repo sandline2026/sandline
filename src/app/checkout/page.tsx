@@ -224,7 +224,7 @@ export default function CheckoutPage() {
   return (
     <div className="sandline-page">
       <nav>
-        <Link className="logo" href="/">SAND<span>LINE</span></Link>
+        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
         <div className="nav-links">
           <Link href="/shop">Shop</Link>
           <AccountNavButton />

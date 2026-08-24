@@ -18,9 +18,7 @@ export default async function CheckoutSuccess({
     return (
       <div className="sandline-page">
         <nav>
-          <Link className="logo" href="/">
-            SAND<span>LINE</span>
-          </Link>
+          <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
         </nav>
         <div className="shop-header">
           <h1>Something went wrong.</h1>
@@ -139,9 +137,7 @@ export default async function CheckoutSuccess({
   return (
     <div className="sandline-page">
       <nav>
-        <Link className="logo" href="/">
-          SAND<span>LINE</span>
-        </Link>
+        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
       </nav>
 
       <div

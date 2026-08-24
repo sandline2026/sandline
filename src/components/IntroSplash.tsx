@@ -30,12 +30,13 @@ export default function IntroSplash() {
       <div className="intro-bg-glow"></div>
 
       <div className="intro-content">
-        <div className="intro-sparkle">✦</div>
-        <h1 className="intro-brand">
-          SAND<span>LINE</span>
-        </h1>
-        <div className="intro-line"></div>
-        <p className="intro-tagline">RESORTWEAR • JAIPUR &amp; THE WORLD</p>
+        <div className="intro-logo-box">
+          <img
+            src="/images/logo-white-trimmed.png"
+            alt="SANDLINE Resort Wear"
+            className="intro-master-logo"
+          />
+        </div>
       </div>
 
       <button

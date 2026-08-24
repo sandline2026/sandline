@@ -146,9 +146,7 @@ function LoginContent() {
   return (
     <div className="sandline-page" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <nav>
-        <Link className="logo" href="/">
-          SAND<span>LINE</span>
-        </Link>
+        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
         <div className="nav-links">
           <Link href="/shop">Shop</Link>
           <Link href="/size-guide">Size Guide</Link>

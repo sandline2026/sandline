@@ -69,8 +69,12 @@ export default function Home() {
 
       {/* Main Navigation */}
       <nav>
-        <Link className="logo" href="/">
-          SAND<span>LINE</span>
+        <Link className="logo brand-logo-wrap" href="/" aria-label="SANDLINE Home">
+          <img
+            src="/images/logo-horizontal.png"
+            alt="SANDLINE Resort Wear"
+            className="site-brand-logo"
+          />
         </Link>
         <div className="nav-links">
           <Link href="/shop">Shop</Link>
@@ -346,7 +350,13 @@ export default function Home() {
 
         <div className="footer-cols">
           <div>
-            <div className="brand">SANDLINE</div>
+            <div className="footer-brand-logo-wrap">
+              <img
+                src="/images/logo-horizontal-white.png"
+                alt="SANDLINE"
+                className="footer-brand-logo"
+              />
+            </div>
             <p>
               Resort and beach dresses, designed and hand-finished in Jaipur, India — shipped to shores around the world.
             </p>

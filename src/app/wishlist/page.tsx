@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useWishlist } from "@/context/WishlistContext";
 import "../sandline.css";
 
@@ -9,7 +11,7 @@ export default function WishlistPage() {
   return (
     <div className="sandline-page">
       <nav>
-        <a className="logo" href="/">SAND<span>LINE</span></a>
+        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
         <div className="nav-links">
           <a href="/shop">Shop</a>
           <a href="/cart">Cart</a>

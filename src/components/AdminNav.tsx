@@ -37,7 +37,11 @@ export default function AdminNav() {
       <div className="admin-sidebar-top">
         <div className="brand">
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div className="brand-logo-icon">S</div>
+            <img
+              src="/images/logo-emblem-trimmed.png"
+              alt="SANDLINE"
+              style={{ width: "32px", height: "32px", objectFit: "contain" }}
+            />
             <div className="brand-name">
               SANDLINE
               <span className="brand-badge">Admin Studio</span>

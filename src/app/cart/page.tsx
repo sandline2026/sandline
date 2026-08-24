@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import "../sandline.css";
@@ -40,7 +42,7 @@ export default function CartPage() {
   return (
     <div className="sandline-page">
       <nav>
-        <a className="logo" href="/">SAND<span>LINE</span></a>
+        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
         <div className="nav-links">
           <a href="/shop">Shop</a>
           <a href="/#story">Story</a>
