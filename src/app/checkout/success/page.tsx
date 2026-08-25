@@ -10,11 +10,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export default async function CheckoutSuccess({
   searchParams,
 }: {
-  searchParams: Promise<{ session_id?: string }>;
+  searchParams: Promise<{ session_id?: string; order_id?: string }>;
 }) {
-  const { session_id } = await searchParams;
+  const { session_id, order_id } = await searchParams;
 
-  if (!session_id) {
+  if (!session_id && !order_id) {
     return (
       <div className="sandline-page">
         <nav>
@@ -35,98 +35,117 @@ export default async function CheckoutSuccess({
   let totalPaid = 0;
 
   try {
-    const session = await stripe.checkout.sessions.retrieve(session_id);
-    orderNumber = (session.metadata?.order_number as string) || "";
-    const orderId = session.metadata?.order_id as string;
-    const couponId = session.metadata?.coupon_id as string;
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
 
-    if (session.payment_status === "paid" && orderId) {
-      paid = true;
-      const cookieStore = await cookies();
-      const supabase = createClient(cookieStore);
+    if (order_id) {
+      // Direct Razorpay Order confirmation
+      const { data: rawOrder } = await supabase
+        .from("orders")
+        .select(`
+          *,
+          customers (full_name, email, address_line, city, postal_code, country),
+          order_items (quantity, unit_price_usd, size, color, products (name))
+        `)
+        .eq("id", order_id)
+        .single();
 
-      const amountTotal = (session.amount_total || 0) / 100;
-      totalPaid = amountTotal;
-      const estimatedFee = amountTotal * 0.029 + 0.3;
+      const orderDetails = rawOrder as any;
+      if (orderDetails) {
+        paid = orderDetails.status === "confirmed" || orderDetails.status === "pending";
+        orderNumber = orderDetails.order_number || "SL-" + order_id.slice(0, 8);
+        const customer = Array.isArray(orderDetails.customers) ? orderDetails.customers[0] : orderDetails.customers;
+        customerEmail = customer?.email || "";
+        customerName = customer?.full_name || "Valued Shopper";
+        totalPaid = Number(orderDetails.total_usd || 0);
+      }
+    } else if (session_id) {
+      // Stripe checkout session verification
+      const session = await stripe.checkout.sessions.retrieve(session_id);
+      orderNumber = (session.metadata?.order_number as string) || "";
+      const orderId = session.metadata?.order_id as string;
+      const couponId = session.metadata?.coupon_id as string;
 
-      // Update order status to confirmed
-      await supabase.from("orders").update({ status: "confirmed" }).eq("id", orderId);
+      if (session.payment_status === "paid" && orderId) {
+        paid = true;
+        const amountTotal = (session.amount_total || 0) / 100;
+        totalPaid = amountTotal;
+        const estimatedFee = amountTotal * 0.029 + 0.3;
 
-      // Check if payment was already recorded
-      const { data: existingPayment } = await supabase
-        .from("payments")
-        .select("id")
-        .eq("order_id", orderId)
-        .maybeSingle();
+        await supabase.from("orders").update({ status: "confirmed" }).eq("id", orderId);
 
-      if (!existingPayment) {
-        await supabase.from("payments").insert({
-          order_id: orderId,
-          gateway: "stripe",
-          gateway_transaction_id: session.payment_intent as string,
-          amount_usd: amountTotal,
-          gateway_fee_usd: Number(estimatedFee.toFixed(2)),
-          status: "paid",
-        });
+        const { data: existingPayment } = await supabase
+          .from("payments")
+          .select("id")
+          .eq("order_id", orderId)
+          .maybeSingle();
 
-        // Increment coupon used_count if a coupon was applied
-        if (couponId) {
-          const { data: couponRecord } = await supabase
-            .from("coupons")
-            .select("used_count")
-            .eq("id", couponId)
-            .maybeSingle();
-
-          if (couponRecord) {
-            await supabase
-              .from("coupons")
-              .update({ used_count: (couponRecord.used_count || 0) + 1 })
-              .eq("id", couponId);
-          }
-        }
-
-        // Fetch complete order, customer, and item details to send confirmation email
-        const { data: rawOrderDetails } = await supabase
-          .from("orders")
-          .select(`
-            *,
-            customers (full_name, email, address_line, city, postal_code, country),
-            order_items (quantity, unit_price_usd, size, color, products (name))
-          `)
-          .eq("id", orderId)
-          .single();
-
-        const orderDetails = rawOrderDetails as any;
-        const customer = Array.isArray(orderDetails?.customers)
-          ? orderDetails?.customers[0]
-          : orderDetails?.customers;
-
-        if (orderDetails && customer?.email) {
-          customerEmail = customer.email;
-          customerName = customer.full_name || "Valued Customer";
-
-          const itemsSummary = (orderDetails.order_items || []).map((oi: any) => ({
-            name: oi.products?.name || "Sandline Garment",
-            quantity: oi.quantity || 1,
-            price: Number(oi.unit_price_usd) || 0,
-            size: oi.size,
-            color: oi.color,
-          }));
-
-          // Send confirmation email
-          await sendOrderConfirmationEmail({
-            orderNumber: orderDetails.order_number || orderNumber,
-            customerName: customer.full_name || "Valued Shopper",
-            customerEmail: customer.email,
-            items: itemsSummary,
-            subtotal: Number(orderDetails.subtotal_usd || totalPaid),
-            discount: Number(orderDetails.discount_usd || 0),
-            total: Number(orderDetails.total_usd || totalPaid),
-            addressLine: customer.address_line,
-            city: customer.city,
-            postalCode: customer.postal_code,
-            country: customer.country,
+        if (!existingPayment) {
+          await supabase.from("payments").insert({
+            order_id: orderId,
+            gateway: "stripe",
+            gateway_transaction_id: session.payment_intent as string,
+            amount_usd: amountTotal,
+            gateway_fee_usd: Number(estimatedFee.toFixed(2)),
+            status: "paid",
           });
+
+          if (couponId) {
+            const { data: couponRecord } = await supabase
+              .from("coupons")
+              .select("used_count")
+              .eq("id", couponId)
+              .maybeSingle();
+
+            if (couponRecord) {
+              await supabase
+                .from("coupons")
+                .update({ used_count: (couponRecord.used_count || 0) + 1 })
+                .eq("id", couponId);
+            }
+          }
+
+          const { data: rawOrderDetails } = await supabase
+            .from("orders")
+            .select(`
+              *,
+              customers (full_name, email, address_line, city, postal_code, country),
+              order_items (quantity, unit_price_usd, size, color, products (name))
+            `)
+            .eq("id", orderId)
+            .single();
+
+          const orderDetails = rawOrderDetails as any;
+          const customer = Array.isArray(orderDetails?.customers)
+            ? orderDetails?.customers[0]
+            : orderDetails?.customers;
+
+          if (orderDetails && customer?.email) {
+            customerEmail = customer.email;
+            customerName = customer.full_name || "Valued Customer";
+
+            const itemsSummary = (orderDetails.order_items || []).map((oi: any) => ({
+              name: oi.products?.name || "Sandline Garment",
+              quantity: oi.quantity || 1,
+              price: Number(oi.unit_price_usd) || 0,
+              size: oi.size,
+              color: oi.color,
+            }));
+
+            await sendOrderConfirmationEmail({
+              orderNumber: orderDetails.order_number || orderNumber,
+              customerName: customer.full_name || "Valued Shopper",
+              customerEmail: customer.email,
+              items: itemsSummary,
+              subtotal: Number(orderDetails.subtotal_usd || totalPaid),
+              discount: Number(orderDetails.discount_usd || 0),
+              total: Number(orderDetails.total_usd || totalPaid),
+              addressLine: customer.address_line,
+              city: customer.city,
+              postalCode: customer.postal_code,
+              country: customer.country,
+            });
+          }
         }
       }
     }

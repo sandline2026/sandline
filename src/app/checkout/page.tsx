@@ -184,8 +184,8 @@ export default function CheckoutPage() {
           order_id: order.id,
           product_id: item.id,
           manufacturer_id: info.manufacturerId,
-          size: null,
-          color: null,
+          size: item.size || null,
+          color: item.color || null,
           quantity: item.quantity,
           unit_price_usd: item.price,
           unit_cost_inr: info.cost + info.dropship,
@@ -195,25 +195,96 @@ export default function CheckoutPage() {
       const { error: itemsError } = await supabase.from("order_items").insert(orderItems);
       if (itemsError) throw itemsError;
 
-      const res = await fetch("/api/checkout", {
+      // Load Razorpay Checkout Script
+      const isScriptLoaded = await new Promise<boolean>((resolve) => {
+        if (typeof window !== "undefined" && (window as any).Razorpay) {
+          resolve(true);
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+      });
+
+      if (!isScriptLoaded) {
+        throw new Error("Unable to load Razorpay. Please check your internet connection.");
+      }
+
+      // Create Razorpay Order
+      const res = await fetch("/api/razorpay/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           orderId: order.id,
           orderNumber,
-          items,
+          totalUsd: total,
           customerEmail: email,
-          couponCode: appliedCoupon?.code || null,
+          customerPhone: phone,
           couponId: appliedCoupon?.id || null,
-          discountAmount: discount,
         }),
       });
 
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      const rzpData = await res.json();
+      if (rzpData.error) throw new Error(rzpData.error);
 
-      clearCart();
-      window.location.href = data.url;
+      // Open Razorpay Payment Gateway Modal
+      const options = {
+        key: rzpData.keyId,
+        amount: rzpData.amount,
+        currency: rzpData.currency || "INR",
+        name: "SANDLINE",
+        description: `Order #${orderNumber} — Sandline Resortwear`,
+        image: "/images/logo-emblem-trimmed.png",
+        order_id: rzpData.orderId,
+        handler: async function (response: any) {
+          setLoading(true);
+          try {
+            const verifyRes = await fetch("/api/razorpay/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                order_id: order.id,
+                coupon_id: appliedCoupon?.id || null,
+                amount_usd: total,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+            if (verifyData.success) {
+              clearCart();
+              window.location.href = verifyData.redirectUrl || `/checkout/success?order_id=${order.id}`;
+            } else {
+              setError(verifyData.error || "Payment verification failed. Please contact concierge.");
+              setLoading(false);
+            }
+          } catch (err: unknown) {
+            const msg = err instanceof Error ? err.message : "Verification failed";
+            setError(msg);
+            setLoading(false);
+          }
+        },
+        prefill: {
+          name: fullName,
+          email: email,
+          contact: phone,
+        },
+        theme: {
+          color: "#141C19",
+        },
+        modal: {
+          ondismiss: function () {
+            setLoading(false);
+          },
+        },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Something went wrong. Please try again.";
       setError(message);
@@ -323,9 +394,14 @@ export default function CheckoutPage() {
 
             {error && <p style={{ color: "#c0392b", fontSize: "13px" }}>{error}</p>}
 
-            <button className="btn" type="submit" disabled={loading} style={{ marginTop: "20px" }}>
-              {loading ? "Redirecting to payment..." : `Pay — $${total.toFixed(2)}`}
+            <button className="btn" type="submit" disabled={loading} style={{ marginTop: "20px", width: "100%", padding: "16px" }}>
+              {loading ? "Launching Secure Payment..." : `Proceed to Pay — $${total.toFixed(2)} (₹${Math.round(total * 84.5)})`}
             </button>
+            <div style={{ marginTop: "12px", textAlign: "center", fontSize: "11.5px", color: "rgba(27,36,32,0.6)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+              <span>🔒 100% Secure Payment</span>
+              <span>•</span>
+              <span>UPI, GPay, PhonePe, Cards &amp; NetBanking</span>
+            </div>
           </form>
 
           <div className="checkout-summary">
