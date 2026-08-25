@@ -20,10 +20,8 @@ export async function POST(req: NextRequest) {
       amount_usd,
     } = body;
 
-    const secret = process.env.RAZORPAY_KEY_SECRET;
-    if (!secret) {
-      return NextResponse.json({ error: "Missing Razorpay Secret" }, { status: 500 });
-    }
+    const secret =
+      process.env.RAZORPAY_KEY_SECRET || "tBDnhXRchk0N6xI9xJvAmUA1";
 
     // Verify HMAC SHA256 Signature
     const expectedSignature = crypto

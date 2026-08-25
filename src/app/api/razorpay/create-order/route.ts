@@ -3,15 +3,12 @@ import Razorpay from "razorpay";
 
 export async function POST(req: NextRequest) {
   try {
-    const key_id = process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
-    const key_secret = process.env.RAZORPAY_KEY_SECRET;
-
-    if (!key_id || !key_secret) {
-      return NextResponse.json(
-        { error: "Razorpay credentials not configured" },
-        { status: 500 }
-      );
-    }
+    const key_id =
+      process.env.RAZORPAY_KEY_ID ||
+      process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
+      "rzp_test_TU4nG93amEXaQ3";
+    const key_secret =
+      process.env.RAZORPAY_KEY_SECRET || "tBDnhXRchk0N6xI9xJvAmUA1";
 
     const razorpay = new Razorpay({
       key_id,
