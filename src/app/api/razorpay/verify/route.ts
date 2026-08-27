@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     } = body;
 
     const secret =
-      process.env.RAZORPAY_KEY_SECRET || "tBDnhXRchk0N6xI9xJvAmUA1";
+      process.env.RAZORPAY_KEY_SECRET || "kMTinxwpvxofou5MONAUEmgb";
 
     // Verify HMAC SHA256 Signature
     const expectedSignature = crypto
