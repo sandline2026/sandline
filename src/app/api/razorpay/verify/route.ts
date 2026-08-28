@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { sendOrderConfirmationEmail } from "@/lib/email";
+import { dispatchAdminWhatsAppAudit } from "@/lib/whatsapp";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -75,7 +76,7 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        // 4. Send Confirmation Email via Resend
+        // 4. Send Confirmation Email & Admin Audit Notifications
         try {
           const { data: orderDetails } = await supabase
             .from("orders")
@@ -96,6 +97,7 @@ export async function POST(req: NextRequest) {
               color: item.color || null,
             }));
 
+            // Customer confirmation & Admin Audit Email
             await sendOrderConfirmationEmail({
               orderNumber: orderDetails.order_number || "SL-ORDER",
               customerName: orderDetails.customers.full_name || "Valued Client",
@@ -109,9 +111,27 @@ export async function POST(req: NextRequest) {
               postalCode: orderDetails.customers.postal_code || "",
               country: orderDetails.customers.country || "",
             });
+
+            // Admin WhatsApp Audit Dispatch
+            await dispatchAdminWhatsAppAudit({
+              orderNumber: orderDetails.order_number || "SL-ORDER",
+              customerName: orderDetails.customers.full_name || "Valued Client",
+              customerEmail: orderDetails.customers.email,
+              gateway: "Razorpay",
+              gatewayTransactionId: razorpay_payment_id,
+              amount: Number(orderDetails.total_usd || 0),
+              currency: "USD",
+              items,
+              shippingAddress: [
+                orderDetails.customers.address_line,
+                orderDetails.customers.city,
+                orderDetails.customers.postal_code,
+                orderDetails.customers.country,
+              ].filter(Boolean).join(", "),
+            });
           }
         } catch (emailErr) {
-          console.warn("Failed to send order email:", emailErr);
+          console.warn("Failed to send order email/audit alert:", emailErr);
         }
       }
     }

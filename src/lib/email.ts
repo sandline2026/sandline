@@ -204,10 +204,118 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationParams
     </html>
   `;
 
-  return sendEmailViaProvider({
+  // Send confirmation to customer
+  await sendEmailViaProvider({
     to: customerEmail,
     subject: `✨ Order Confirmed: #${orderNumber} | Sandline Studio`,
     html,
+  });
+
+  // Automatically dispatch Admin Audit Email
+  await sendAdminOrderAuditEmail({
+    ...params,
+    gateway: "Razorpay / Stripe",
+  });
+
+  return { success: true };
+}
+
+export interface AdminOrderAuditEmailParams extends OrderConfirmationParams {
+  gateway?: string;
+  gatewayTransactionId?: string;
+}
+
+export async function sendAdminOrderAuditEmail(params: AdminOrderAuditEmailParams) {
+  const adminEmail = process.env.ADMIN_EMAIL || "orders@sandline.store";
+  const {
+    orderNumber,
+    customerName,
+    customerEmail,
+    items,
+    subtotal,
+    discount,
+    total,
+    addressLine,
+    city,
+    postalCode,
+    country,
+    gateway = "Online Gateway",
+    gatewayTransactionId,
+  } = params;
+
+  const itemsRows = items
+    .map(
+      (item) => `
+      <tr style="border-bottom: 1px solid #E5E7EB;">
+        <td style="padding: 10px 0; font-size: 13.5px; color: #111827;">
+          <strong>${item.name}</strong>
+          ${item.size || item.color ? `<br/><span style="font-size: 12px; color: #6B7280;">Size: ${item.size || "N/A"} | Color: ${item.color || "Standard"}</span>` : ""}
+        </td>
+        <td style="padding: 10px 0; font-size: 13.5px; color: #374151; text-align: center;">${item.quantity}</td>
+        <td style="padding: 10px 0; font-size: 13.5px; color: #111827; text-align: right; font-weight: 600;">$${(item.price * item.quantity).toFixed(2)}</td>
+      </tr>
+    `
+    )
+    .join("");
+
+  const auditHtml = `
+    <!DOCTYPE html>
+    <html>
+      <head><meta charset="utf-8"/><title>Audit Alert: #${orderNumber}</title></head>
+      <body style="margin: 0; padding: 24px; background-color: #F3F4F6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="center">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 620px; background-color: #FFFFFF; border-radius: 12px; border: 1px solid #E5E7EB; padding: 32px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <tr>
+                  <td>
+                    <div style="background-color: #FEF3C7; border: 1px solid #FCD34D; color: #92400E; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px; display: inline-block;">
+                      🚨 LIVE AUDIT ALERT • NEW PAID ORDER
+                    </div>
+                    <h2 style="margin: 0 0 8px; color: #111827; font-size: 20px;">New Order Placed: #${orderNumber}</h2>
+                    <p style="margin: 0 0 20px; font-size: 14px; color: #4B5563;">A new luxury resortwear order has been confirmed and paid through <strong>${gateway}</strong>.</p>
+                    
+                    <div style="background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="4" style="font-size: 13.5px;">
+                        <tr><td style="color: #6B7280; width: 130px;">Client Name:</td><td><strong>${customerName}</strong></td></tr>
+                        <tr><td style="color: #6B7280;">Client Email:</td><td><a href="mailto:${customerEmail}" style="color: #2563EB;">${customerEmail}</a></td></tr>
+                        <tr><td style="color: #6B7280;">Shipping To:</td><td>${[addressLine, city, postalCode, country].filter(Boolean).join(", ") || "N/A"}</td></tr>
+                        <tr><td style="color: #6B7280;">Gateway / ID:</td><td>${gateway} ${gatewayTransactionId ? `(${gatewayTransactionId})` : ""}</td></tr>
+                        <tr><td style="color: #6B7280;">Total Paid:</td><td style="font-size: 16px; font-weight: bold; color: #059669;">$${total.toFixed(2)} USD</td></tr>
+                      </table>
+                    </div>
+
+                    <h4 style="margin: 0 0 10px; font-size: 13px; text-transform: uppercase; color: #6B7280; letter-spacing: 0.05em;">Items Ordered (${items.reduce((s, i) => s + i.quantity, 0)} Units):</h4>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+                      <thead>
+                        <tr style="border-bottom: 2px solid #E5E7EB; text-transform: uppercase; font-size: 11px; color: #6B7280;">
+                          <th align="left" style="padding-bottom: 6px;">Product</th>
+                          <th align="center" style="padding-bottom: 6px;">Qty</th>
+                          <th align="right" style="padding-bottom: 6px;">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>${itemsRows}</tbody>
+                    </table>
+
+                    <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid #E5E7EB;">
+                      <a href="https://sandline.store/admin/orders" style="background-color: #111827; color: #FFFFFF; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; display: inline-block;">
+                        Open Admin Portal &amp; Fulfill Order →
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>
+  `;
+
+  return sendEmailViaProvider({
+    to: adminEmail,
+    subject: `🚨 [AUDIT ALERT] New Order #${orderNumber} by ${customerName} ($${total.toFixed(2)})`,
+    html: auditHtml,
   });
 }
 

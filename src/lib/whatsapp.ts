@@ -146,3 +146,69 @@ Our India atelier just hand-finished a fresh limited batch. Grab your size befor
 
 Happy shopping! 🏖️`;
 }
+
+/**
+ * 6. Admin Order Audit Alert on WhatsApp
+ */
+export interface AdminOrderAuditParams {
+  orderNumber: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+  gateway: string;
+  gatewayTransactionId?: string;
+  amount: number;
+  currency?: string;
+  items: { name: string; quantity: number; size?: string | null; color?: string | null; price: number }[];
+  shippingAddress?: string;
+}
+
+export function getAdminOrderAuditWhatsAppMessage(params: AdminOrderAuditParams): string {
+  const itemsText = params.items
+    .map((i) => `• ${i.name} (x${i.quantity}) [${[i.size, i.color].filter(Boolean).join("/") || "Standard"}] - $${(i.price * i.quantity).toFixed(2)}`)
+    .join("\n");
+
+  return `🚨 *SANDLINE NEW ORDER AUDIT ALERT* 🚨
+━━━━━━━━━━━━━━━━━━━━━
+📦 *Order:* #${params.orderNumber}
+👤 *Client:* ${params.customerName}
+📧 *Email:* ${params.customerEmail}
+📞 *Phone:* ${params.customerPhone || "N/A"}
+💳 *Payment:* ${params.gateway.toUpperCase()} (${params.gatewayTransactionId || "Paid"})
+💰 *Total:* ${params.currency || "USD"} $${params.amount.toFixed(2)}
+📍 *Ship To:* ${params.shippingAddress || "Worldwide Express"}
+
+🛍️ *Items Ordered:*
+${itemsText}
+
+📊 *Admin Portal:* https://sandline.store/admin/orders
+━━━━━━━━━━━━━━━━━━━━━`;
+}
+
+export async function dispatchAdminWhatsAppAudit(params: AdminOrderAuditParams) {
+  const webhookUrl = process.env.ADMIN_WHATSAPP_WEBHOOK_URL;
+  const adminPhone = process.env.ADMIN_WHATSAPP_PHONE;
+  const message = getAdminOrderAuditWhatsAppMessage(params);
+
+  console.log(`[ADMIN WHATSAPP AUDIT DISPATCH] Order #${params.orderNumber}`);
+  console.log(message);
+
+  if (webhookUrl) {
+    try {
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone: adminPhone,
+          message,
+          orderNumber: params.orderNumber,
+          data: params,
+        }),
+      });
+    } catch (e) {
+      console.error("[WHATSAPP WEBHOOK ERROR]", e);
+    }
+  }
+
+  return { success: true, message };
+}

@@ -27,13 +27,13 @@ export async function PATCH(
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // Trigger status update email to customer if status changed
+    // Trigger status update email & WhatsApp to customer if status changed
     if (body.status) {
       const { data: rawOrder } = await supabase
         .from("orders")
         .select(`
           order_number,
-          customers (full_name, email)
+          customers (full_name, email, phone)
         `)
         .eq("id", id)
         .single();
