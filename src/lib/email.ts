@@ -86,7 +86,7 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationParams
                       SAND<span style="color: #FF7A54;">LINE</span>
                     </div>
                     <div style="font-family: 'Courier New', Courier, monospace; font-size: 10px; letter-spacing: 0.2em; color: rgba(246, 239, 227, 0.7); margin-top: 6px; text-transform: uppercase;">
-                      RESORTWEAR • JAIPUR &amp; THE WORLD
+                      RESORTWEAR • INDIA &amp; THE WORLD
                     </div>
                   </td>
                 </tr>
@@ -101,7 +101,7 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationParams
                       Thank you for your order, ${customerName || "there"}!
                     </h1>
                     <p style="margin: 0 0 24px; font-size: 14.5px; line-height: 1.6; color: #4B5563;">
-                      We're delighted to confirm your order <strong>#${orderNumber}</strong>. Each piece is crafted and inspected in our Jaipur atelier before its express journey across the ocean.
+                      We're delighted to confirm your order <strong>#${orderNumber}</strong>. Each piece is crafted and inspected in our India atelier before its express journey across the ocean.
                     </p>
 
                     <!-- Order Box Summary -->
@@ -178,7 +178,7 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationParams
                     <div style="border-left: 3px solid #D97706; background-color: #FFFBEB; padding: 14px 16px; border-radius: 4px; margin-bottom: 24px;">
                       <div style="font-size: 13px; font-weight: bold; color: #92400E; margin-bottom: 2px;">Estimated Dispatch: 24–48 Hours</div>
                       <div style="font-size: 12.5px; color: #B45309; line-height: 1.4;">
-                        Your parcel will ship via tracked international express courier. You will receive an email with tracking details as soon as it leaves Jaipur.
+                        Your parcel will ship via tracked international express courier. You will receive an email with tracking details as soon as it leaves India.
                       </div>
                     </div>
                   </td>
@@ -191,7 +191,7 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationParams
                       Have questions about your order? Reply directly to this email or reach us on WhatsApp.
                     </div>
                     <div style="font-size: 11px; color: #9CA3AF;">
-                      © 2026 Sandline Studio • Handcrafted in Jaipur, India • Shipped Worldwide
+                      © 2026 Sandline Studio • Handcrafted in India • Shipped Worldwide
                     </div>
                   </td>
                 </tr>
@@ -217,7 +217,7 @@ export async function sendOrderStatusUpdateEmail(params: OrderStatusUpdateParams
   const statusDescriptions: Record<string, { title: string; desc: string; color: string; badge: string }> = {
     shipped: {
       title: "Your order is on its way!",
-      desc: "Great news! Your Sandline pieces have been hand-checked, packaged, and dispatched from our Jaipur atelier via tracked international courier.",
+      desc: "Great news! Your Sandline pieces have been hand-checked, packaged, and dispatched from our India atelier via tracked international courier.",
       color: "#2563EB",
       badge: "In Transit / Shipped",
     },
@@ -229,7 +229,7 @@ export async function sendOrderStatusUpdateEmail(params: OrderStatusUpdateParams
     },
     processing: {
       title: "Your order is being prepared",
-      desc: "Our Jaipur atelier is currently hand-finishing and pressing your resortwear pieces. We will notify you once courier dispatch is underway.",
+      desc: "Our India atelier is currently hand-finishing and pressing your resortwear pieces. We will notify you once courier dispatch is underway.",
       color: "#4F46E5",
       badge: "Processing & Tailoring",
     },
@@ -326,7 +326,7 @@ export async function sendOrderStatusUpdateEmail(params: OrderStatusUpdateParams
                 <tr>
                   <td style="background-color: #F9FAFB; padding: 24px 32px; border-top: 1px solid #E9ECEF; text-align: center;">
                     <div style="font-size: 11px; color: #9CA3AF;">
-                      © 2026 Sandline Studio • Handcrafted in Jaipur, India • Shipped Worldwide
+                      © 2026 Sandline Studio • Handcrafted in India • Shipped Worldwide
                     </div>
                   </td>
                 </tr>

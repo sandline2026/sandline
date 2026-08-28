@@ -223,7 +223,7 @@ export default async function CheckoutSuccess({
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "11px", textTransform: "uppercase", color: "rgba(27,36,32,0.6)" }}>Estimated Dispatch</span>
-              <span style={{ fontSize: "13px", fontWeight: 600 }}>24–48 Hours from Jaipur</span>
+              <span style={{ fontSize: "13px", fontWeight: 600 }}>24–48 Hours from India</span>
             </div>
           </div>
         )}

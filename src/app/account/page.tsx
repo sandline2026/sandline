@@ -195,7 +195,7 @@ export default function CustomerAccountPage() {
             Loading Your Client Portal...
           </div>
           <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "12px", color: "#8C6D58" }}>
-            ✦ SANDLINE STUDIO JAIPUR
+            ✦ SANDLINE STUDIO INDIA
           </div>
         </div>
       </div>
@@ -427,7 +427,7 @@ export default function CustomerAccountPage() {
                           {order.tracking_number ? (
                             <span>Tracking: <strong>{order.carrier || "DHL Express"} #{order.tracking_number}</strong></span>
                           ) : (
-                            <span>✨ Handcrafted &amp; prepared at Jaipur Atelier</span>
+                            <span>✨ Handcrafted &amp; prepared in India</span>
                           )}
                         </div>
 

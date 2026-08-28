@@ -216,7 +216,7 @@ export default async function ProductDetail({
               </div>
               <div>
                 <span>Shipping Origin</span>
-                <span>Handcrafted & dispatched from Jaipur, India</span>
+                <span>Handcrafted &amp; dispatched from India</span>
               </div>
             </div>
 

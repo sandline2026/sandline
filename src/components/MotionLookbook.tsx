@@ -37,7 +37,7 @@ const LOOKBOOK_REEL: LookbookItem[] = [
   },
   {
     id: "3",
-    name: "Jaipur Blossom Cutwork Overshirt",
+    name: "Artisan Blossom Cutwork Overshirt",
     edit: "The Beach Party Edit",
     price: "$58.00",
     image: "/images/products/jaipur-blossom-embroidered-poplin-overshirt.jpg",

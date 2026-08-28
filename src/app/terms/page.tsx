@@ -46,7 +46,7 @@ export default function TermsPage() {
 
           <h2 style={{ fontFamily: "Fraunces, serif", fontSize: "22px", color: "#1A1A1A", marginBottom: "12px" }}>4. Governing Law</h2>
           <p style={{ marginBottom: "0" }}>
-            These terms are governed by and construed in accordance with the laws of India, subject to the jurisdiction of the courts of Jaipur, Rajasthan.
+            These terms are governed by and construed in accordance with the laws of India.
           </p>
 
         </div>

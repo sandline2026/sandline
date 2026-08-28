@@ -25,7 +25,7 @@ export default function ShippingReturnsPage() {
         <span className="eyebrow">WORLDWIDE DELIVERIES & COMPLIMENTARY EXCHANGES</span>
         <h1>Shipping & Returns.</h1>
         <p>
-          Handcrafted in our Jaipur atelier and dispatched with insured express couriers to your doorstep worldwide.
+          Handcrafted in our India atelier and dispatched with insured express couriers to your doorstep worldwide.
         </p>
       </div>
 

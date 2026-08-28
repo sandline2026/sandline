@@ -94,7 +94,7 @@ export default function ContactPage() {
           </h3>
           <p style={{ color: "#555", fontSize: "15px", lineHeight: "1.7", marginBottom: "8px" }}>
             <strong>Sandline Studio</strong><br />
-            Jaipur Design District, Rajasthan 302001, India
+            Atelier &amp; E-Commerce Division, India
           </p>
           <p style={{ color: "#888", fontSize: "13px" }}>
             Operating Hours: Monday – Saturday (9:00 AM – 7:00 PM IST). Dispatches worldwide daily.

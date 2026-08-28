@@ -3,7 +3,7 @@ import "../sandline.css";
 
 export const metadata = {
   title: "The Story — Sandline Studio",
-  description: "Handcrafted resortwear inspired by the golden shores of the Mediterranean and tailored with the artisan heritage of Jaipur.",
+  description: "Handcrafted resortwear inspired by the golden shores of the Mediterranean and tailored with the artisan heritage of India.",
 };
 
 export default function StoryPage() {
@@ -25,7 +25,7 @@ export default function StoryPage() {
         <span className="eyebrow">THE ARCHITECTURE OF LEISURE</span>
         <h1>The Sandline Story.</h1>
         <p>
-          Where coastal Mediterranean freedom meets the timeless textile craftsmanship of Jaipur.
+          Where coastal Mediterranean freedom meets the timeless textile craftsmanship of India.
         </p>
       </div>
 

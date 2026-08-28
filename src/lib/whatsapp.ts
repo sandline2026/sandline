@@ -36,12 +36,12 @@ Thank you for ordering with Sandline Studio! We're thrilled to confirm your orde
 
 🛍️ *Order Total:* $${total.toFixed(2)} USD
 🧵 *Pieces:* ${itemsSummary || "Hand-finished resort garments"}
-📍 *Origin:* Jaipur Atelier, India
+📍 *Origin:* India Atelier
 ✈️ *Dispatch:* Tracked International Express in 24–48 hours
 
 We will notify you on WhatsApp the moment your courier is dispatched. 
 
-View invoice: https://sandline-nine.vercel.app/shop
+View invoice: https://sandline.store/shop
 
 Have questions? Reply directly to this chat! 🏖️`;
 }
@@ -63,13 +63,13 @@ export function getWhatsAppShippingMessage({
   const name = customerName || "there";
   return `*SANDLINE DISPATCH UPDATE* ✈️📦
 
-Hey ${name}! Great news! Your Sandline order *#${orderNumber}* has been hand-checked, pressed, and dispatched from our Jaipur atelier.
+Hey ${name}! Great news! Your Sandline order *#${orderNumber}* has been hand-checked, pressed, and dispatched from our India atelier.
 
 🚚 *Carrier:* ${carrier || "Express Worldwide Courier"}
 🔎 *Tracking ID:* ${trackingNumber || "Tracked on dispatch"}
 ⏱️ *Estimated Delivery:* 7–10 Business Days
 
-Track your journey: https://sandline-nine.vercel.app/shop
+Track your journey: https://sandline.store/shop
 
 Enjoy the getaway! 🏖️`;
 }
@@ -111,11 +111,11 @@ export function getWhatsAppAbandonedCartMessage({
 
 Hey ${name}! We noticed you left ${itemsCount ? `${itemsCount} item(s)` : "your resort dress"} in your Sandline shopping bag. 
 
-Because our silk & linen pieces are crafted in limited batches in Jaipur, sizes sell out fast for the season.
+Because our silk & linen pieces are crafted in limited batches in India, sizes sell out fast for the season.
 
 🎁 *Here is 10% OFF for the next 24 hours:*
 Use code *${discountCode}* at checkout:
-👉 https://sandline-nine.vercel.app/cart
+👉 https://sandline.store/cart
 
 Complete your sunset wardrobe today! 🏖️`;
 }
@@ -134,14 +134,14 @@ export function getWhatsAppRestockAlertMessage({
 }): string {
   const name = customerName || "there";
   const link = productSlug
-    ? `https://sandline-nine.vercel.app/product/${productSlug}`
-    : "https://sandline-nine.vercel.app/shop";
+    ? `https://sandline.store/product/${productSlug}`
+    : "https://sandline.store/shop";
 
   return `*BACK IN STOCK ALERT* 🔔✨
 
 Hey ${name}! The *${productName}* you were waiting for is back in our inventory!
 
-Our Jaipur atelier just hand-finished a fresh limited batch. Grab your size before it sells out again:
+Our India atelier just hand-finished a fresh limited batch. Grab your size before it sells out again:
 👉 ${link}
 
 Happy shopping! 🏖️`;

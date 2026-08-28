@@ -94,7 +94,7 @@ export default function Home() {
         <div className="hero-content">
           <div className="hero-eyebrow">
             <span className="dot"></span>
-            <span className="eyebrow">✦ RESORTWEAR DESIGNED &amp; HAND-FINISHED IN JAIPUR • SHIPPED WORLDWIDE</span>
+            <span className="eyebrow">✦ RESORTWEAR DESIGNED &amp; HAND-FINISHED IN INDIA • SHIPPED WORLDWIDE</span>
           </div>
           <h1>
             Dresses cut for<br />
@@ -130,12 +130,12 @@ export default function Home() {
             <span className="eyebrow">The Sandline Story</span>
             <h2>Made in India. Worn on every beach.</h2>
             <p>
-              We work with trusted ateliers across Jaipur, India, each chosen for their generational craft in lightweight resortwear. Every Sandline piece is hand-finished and inspected before its journey across the ocean.
+              We work with trusted artisan ateliers across India, each chosen for their generational craft in lightweight resortwear. Every Sandline piece is hand-finished and inspected before its journey across the ocean.
             </p>
             <div className="story-stats">
               <div>
                 <div className="num">01</div>
-                <div className="lbl">Jaipur Atelier</div>
+                <div className="lbl">India Atelier</div>
               </div>
               <div>
                 <div className="num">40+</div>
@@ -150,7 +150,7 @@ export default function Home() {
           <div className="story-visual" style={{ padding: 0, overflow: "hidden", borderRadius: "20px" }}>
             <img
               src="/images/products/jaipur-blossom-embroidered-poplin-overshirt.jpg"
-              alt="Jaipur Atelier Craftsmanship"
+              alt="India Atelier Craftsmanship"
               style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }}
             />
           </div>
@@ -235,11 +235,11 @@ export default function Home() {
       <div className="marquee-wrap">
         <div className="marquee">
           <span>Worldwide Tracked Shipping</span>
-          <span>Handcrafted in Jaipur</span>
+          <span>Handcrafted in India</span>
           <span>Hassle-Free Exchanges</span>
           <span>Ethically Sourced Mulberry Silks</span>
           <span>Worldwide Tracked Shipping</span>
-          <span>Handcrafted in Jaipur</span>
+          <span>Handcrafted in India</span>
           <span>Hassle-Free Exchanges</span>
           <span>Ethically Sourced Mulberry Silks</span>
         </div>
@@ -265,7 +265,7 @@ export default function Home() {
           <div className="craft-item">
             <span className="num">03 / JOURNEY</span>
             <h3>Packed to travel light</h3>
-            <p>Wrinkle-resistant folding and express international courier from our Jaipur atelier straight to your resort.</p>
+            <p>Wrinkle-resistant folding and express international courier from our India atelier straight to your resort.</p>
           </div>
         </div>
       </section>
@@ -293,7 +293,7 @@ export default function Home() {
             <div className="manifesto-pillar-card">
               <div className="pillar-icon">📦</div>
               <h3>Packed with care</h3>
-              <p>Shipped plastic-free in recyclable packaging directly from our Jaipur atelier.</p>
+              <p>Shipped plastic-free in recyclable packaging directly from our India atelier.</p>
             </div>
           </div>
         </div>
@@ -358,7 +358,7 @@ export default function Home() {
               />
             </div>
             <p>
-              Resort and beach dresses, designed and hand-finished in Jaipur, India — shipped to shores around the world.
+              Resort and beach dresses, designed and hand-finished in India — shipped to shores around the world.
             </p>
           </div>
           <div>
@@ -391,7 +391,7 @@ export default function Home() {
         </div>
 
         <div className="footer-bottom">
-          <span>© 2026 SANDLINE STUDIO — HANDCRAFTED IN JAIPUR, INDIA</span>
+          <span>© 2026 SANDLINE STUDIO — HANDCRAFTED IN INDIA</span>
           <span>WORLDWIDE EXPRESS SHIPPING • 7-DAY EXCHANGES</span>
         </div>
       </footer>
