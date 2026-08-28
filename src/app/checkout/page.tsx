@@ -322,7 +322,7 @@ export default function CheckoutPage() {
               <input
                 type="text"
                 name="fullName"
-                placeholder="e.g. Ansh Bhatia"
+                placeholder="e.g. Elena Rostova"
                 required
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
@@ -333,7 +333,7 @@ export default function CheckoutPage() {
               <input
                 type="email"
                 name="email"
-                placeholder="e.g. ansh@example.com"
+                placeholder="name@example.com"
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
