@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import SiteNavbar from "@/components/SiteNavbar";
 import { createClient } from "@/../utils/supabase/client";
 import { useCart } from "@/context/CartContext";
 import "@/app/sandline.css";
@@ -205,15 +206,7 @@ export default function CustomerAccountPage() {
   return (
     <div className="sandline-page" style={{ minHeight: "100vh", background: "#FAF8F5" }}>
       {/* Top Navbar */}
-      <nav>
-        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
-        <div className="nav-links">
-          <Link href="/shop">Shop</Link>
-          <Link href="/size-guide">Size Guide</Link>
-          <Link href="/story">Story</Link>
-          <Link href="/cart">Cart</Link>
-        </div>
-      </nav>
+      <SiteNavbar currentPath="/account" />
 
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "140px 24px 80px" }}>
         

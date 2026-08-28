@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import AddToCartButton from "@/components/AddToCartButton";
 import WishlistButton from "@/components/WishlistButton";
+import WishlistLink from "@/components/WishlistLink";
 import CartLink from "@/components/CartLink";
 import SortSelect from "@/components/SortSelect";
 import AccountNavButton from "@/components/AccountNavButton";
@@ -133,10 +134,11 @@ export default async function CollectionPage({
         <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
         <div className="nav-links">
           <Link href="/shop">Shop</Link>
-          <Link href="/size-guide">Size Guide</Link>
-          <AccountNavButton />
           <Link href="/story">Story</Link>
+          <Link href="/size-guide">Size Guide</Link>
           <Link href="/contact">Contact</Link>
+          <WishlistLink />
+          <AccountNavButton />
           <CartLink />
         </div>
       </nav>

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import CartLink from "@/components/CartLink";
+import WishlistLink from "@/components/WishlistLink";
 import WishlistButton from "@/components/WishlistButton";
 import ReviewForm from "@/components/ReviewForm";
 import PincodeCheck from "@/components/PincodeCheck";
@@ -88,10 +89,11 @@ export default async function ProductDetail({
         <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
         <div className="nav-links">
           <Link href="/shop">Shop</Link>
+          <Link href="/story">Story</Link>
           <Link href="/size-guide">Size Guide</Link>
-          <AccountNavButton />
-          <Link href="/wishlist">Wishlist</Link>
           <Link href="/contact">Contact</Link>
+          <WishlistLink />
+          <AccountNavButton />
           <CartLink />
         </div>
       </nav>

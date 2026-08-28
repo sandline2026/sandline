@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SiteNavbar from "@/components/SiteNavbar";
 import "../sandline.css";
 
 export const metadata = {
@@ -9,17 +10,7 @@ export const metadata = {
 export default function StoryPage() {
   return (
     <div className="sandline-page">
-      <nav>
-        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
-        <div className="nav-links">
-          <Link href="/shop">Shop</Link>
-          <Link href="/size-guide">Size Guide</Link>
-          <Link href="/story" className="active">Story</Link>
-          <Link href="/contact">Contact</Link>
-          <Link href="/wishlist">Wishlist</Link>
-          <Link href="/cart">Cart</Link>
-        </div>
-      </nav>
+      <SiteNavbar currentPath="/story" />
 
       <div className="shop-header">
         <span className="eyebrow">THE ARCHITECTURE OF LEISURE</span>

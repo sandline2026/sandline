@@ -78,11 +78,11 @@ export default function Home() {
         </Link>
         <div className="nav-links">
           <Link href="/shop">Shop</Link>
+          <Link href="#story">Story</Link>
           <Link href="/size-guide">Size Guide</Link>
+          <Link href="#contact">Contact</Link>
           <WishlistLink />
           <AccountNavButton />
-          <Link href="#story">Story</Link>
-          <Link href="#contact">Contact</Link>
           <CartLink />
         </div>
       </nav>

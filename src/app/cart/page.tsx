@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
+import SiteNavbar from "@/components/SiteNavbar";
 import "../sandline.css";
 
 export default function CartPage() {
@@ -41,15 +42,7 @@ export default function CartPage() {
 
   return (
     <div className="sandline-page">
-      <nav>
-        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
-        <div className="nav-links">
-          <a href="/shop">Shop</a>
-          <a href="/#story">Story</a>
-          <a href="/#contact">Contact</a>
-          <a href="/cart">Cart</a>
-        </div>
-      </nav>
+      <SiteNavbar />
 
       <div className="shop-header">
         <h1>Your cart.</h1>

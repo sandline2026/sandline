@@ -1,17 +1,11 @@
 import Link from "next/link";
+import SiteNavbar from "@/components/SiteNavbar";
 import "../sandline.css";
 
 export default function SizeGuidePage() {
   return (
     <div className="sandline-page">
-      <nav>
-        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
-        <div className="nav-links">
-          <a href="/shop">Shop</a>
-          <a href="/#story">Story</a>
-          <a href="/#contact">Contact</a>
-        </div>
-      </nav>
+      <SiteNavbar currentPath="/size-guide" />
 
       <div className="shop-header">
         <h1>Find your fit.</h1>
