@@ -4578,6 +4578,234 @@ nav.sandline-site-navbar .mobile-top-actions {
   opacity: 1;
 }
 
+/* ==========================================================================
+   COMPLETE THE LOOK (RESORT STYLIST UPSELL WIDGET)
+   ========================================================================== */
+.complete-look-section {
+  margin: 48px 0 36px;
+  padding: 32px 28px;
+  background: #FAF8F5;
+  border: 1px solid #EAE6DF;
+  border-radius: 20px;
+}
+
+.complete-look-header {
+  margin-bottom: 24px;
+}
+
+.complete-look-eyebrow {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--papaya);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.complete-look-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  color: #111827;
+  margin: 0 0 6px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.complete-look-desc {
+  font-size: 13.5px;
+  color: rgba(27, 36, 32, 0.65);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.complete-look-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 640px) {
+  .complete-look-section {
+    padding: 22px 16px;
+    margin: 36px 0 24px;
+  }
+  .complete-look-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+.complete-look-card {
+  display: flex;
+  gap: 14px;
+  background: #FFFFFF;
+  border: 1px solid #EAE6DF;
+  border-radius: 14px;
+  padding: 12px;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.complete-look-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.complete-look-img-link {
+  width: 90px;
+  height: 115px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: block;
+}
+
+.complete-look-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.complete-look-card:hover .complete-look-img {
+  transform: scale(1.05);
+}
+
+.complete-look-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.complete-look-category {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--papaya);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.complete-look-name-link {
+  text-decoration: none;
+  color: inherit;
+}
+.complete-look-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 4px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.complete-look-name:hover {
+  color: var(--papaya);
+}
+
+.complete-look-price {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.complete-look-sizes {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.look-size-pill {
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid #EAE6DF;
+  background: #FAF8F5;
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.look-size-pill.active {
+  background: #111827;
+  color: #FFFFFF;
+  border-color: #111827;
+}
+
+.complete-look-add-btn {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #111827;
+  background: #FFFFFF;
+  color: #111827;
+  font-size: 11.5px;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.complete-look-add-btn:hover {
+  background: #111827;
+  color: #FFFFFF;
+}
+.complete-look-add-btn.added {
+  background: #059669;
+  border-color: #059669;
+  color: #FFFFFF;
+}
+
+.complete-look-bundle-bar {
+  background: #111827;
+  color: #FFFFFF;
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bundle-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 1px;
+  color: #FBBF24;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.bundle-text {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.bundle-cta-btn {
+  background: var(--papaya);
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+.bundle-cta-btn:hover {
+  opacity: 0.9;
+}
+
+
 
 
 

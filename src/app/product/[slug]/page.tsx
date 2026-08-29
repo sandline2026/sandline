@@ -12,6 +12,7 @@ import ProductGallery from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
 import ProductPrice from "@/components/ProductPrice";
 import SiteNavbar from "@/components/SiteNavbar";
+import CompleteTheLook from "@/components/CompleteTheLook";
 import "../../sandline.css";
 
 const collectionArt: Record<string, React.ReactElement> = {
@@ -82,6 +83,60 @@ export default async function ProductDetail({
     .neq("id", product.id)
     .eq("is_active", true)
     .limit(3);
+
+  // Fetch Smart Pairings for "Complete The Look"
+  const isHat = /hat|straw|fedora/i.test(product.name);
+  const isBottom = /jeans|denim|shorts|skirt|culotte/i.test(product.name);
+  const isTop = /top|blouse|shirt|cami|halter/i.test(product.name);
+
+  let pairings: any[] = [];
+  if (isHat) {
+    const { data: dressPairings } = await supabase
+      .from("products")
+      .select("id, name, slug, selling_price_usd, images, sizes, collection")
+      .neq("id", product.id)
+      .eq("is_active", true)
+      .ilike("name", "%dress%")
+      .limit(2);
+    pairings = dressPairings || [];
+  } else if (isBottom) {
+    const { data: topPairings } = await supabase
+      .from("products")
+      .select("id, name, slug, selling_price_usd, images, sizes, collection")
+      .neq("id", product.id)
+      .eq("is_active", true)
+      .or("name.ilike.%top%,name.ilike.%hat%,name.ilike.%blouse%")
+      .limit(2);
+    pairings = topPairings || [];
+  } else if (isTop) {
+    const { data: bottomPairings } = await supabase
+      .from("products")
+      .select("id, name, slug, selling_price_usd, images, sizes, collection")
+      .neq("id", product.id)
+      .eq("is_active", true)
+      .or("name.ilike.%jeans%,name.ilike.%skirt%,name.ilike.%shorts%")
+      .limit(2);
+    pairings = bottomPairings || [];
+  } else {
+    const { data: defaultPairings } = await supabase
+      .from("products")
+      .select("id, name, slug, selling_price_usd, images, sizes, collection")
+      .neq("id", product.id)
+      .eq("is_active", true)
+      .or("name.ilike.%hat%,name.ilike.%straw%,name.ilike.%jacket%,name.ilike.%top%")
+      .limit(2);
+    pairings = defaultPairings || [];
+  }
+
+  const completeLookItems = (pairings || []).map((p: any) => ({
+    id: p.id,
+    name: p.name,
+    slug: p.slug,
+    price: Number(p.selling_price_usd) || 0,
+    image: p.images?.[0] || "/images/products/st-tropez-pearl-straw-hat-1.jpg",
+    category: p.collection ? p.collection.replace(/_/g, " ") : "Resort Pairing",
+    sizes: p.sizes || [],
+  }));
 
   return (
     <div className="sandline-page">
@@ -213,6 +268,20 @@ export default async function ProductDetail({
                 <span>Handcrafted &amp; dispatched from India</span>
               </div>
             </div>
+
+            {/* Complete The Look Resort Stylist Pairing */}
+            {completeLookItems.length > 0 && (
+              <CompleteTheLook
+                currentProduct={{
+                  id: product.id,
+                  name: product.name,
+                  price: Number(product.selling_price_usd) || 0,
+                  image: product.images?.[0] || "/images/products/santorini-3d-floral-silk-slip-dress.jpg",
+                  sizes: product.sizes || [],
+                }}
+                pairings={completeLookItems}
+              />
+            )}
 
             {/* Customer Reviews Section */}
             <div className="reviews-section">
