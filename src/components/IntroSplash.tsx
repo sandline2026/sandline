@@ -32,7 +32,7 @@ export default function IntroSplash() {
       <div className="intro-content">
         <div className="intro-logo-box">
           <img
-            src="/images/logo-white-trimmed.png"
+            src="/images/logo-splash-master.png"
             alt="SANDLINE Resort Wear"
             className="intro-master-logo"
           />
