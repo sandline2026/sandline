@@ -63,24 +63,22 @@ function LoginContent() {
     setMessage("");
 
     try {
-      const { error: otpError } = await supabase.auth.signInWithOtp({
-        email: email.trim().toLowerCase(),
-        options: {
-          shouldCreateUser: true,
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`,
-        },
+      const res = await fetch("/api/auth/send-email-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
       });
 
-      if (otpError) {
-        console.warn("Supabase OTP send notice:", otpError.message);
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error || "Failed to send access code.");
       }
 
       setStep("otp");
-      setMessage(`A 6-digit access code was sent to ${email.trim().toLowerCase()} (Instant test code: 123456)`);
+      setMessage(`A 6-digit access code was sent to ${email.trim().toLowerCase()}! Check your inbox.`);
       setResendTimer(60);
     } catch (err: any) {
-      setStep("otp");
-      setMessage(`Enter verification code (Instant test code: 123456)`);
+      setError(err.message || "Failed to send access code. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -97,40 +95,24 @@ function LoginContent() {
     setError("");
 
     try {
-      if (otp.trim() === "123456" || otp.trim() === "000000") {
-        setMessage("Verified successfully!");
-        setTimeout(() => {
-          router.push(nextUrl);
-        }, 500);
-        return;
-      }
-
-      const { data, error: verifyError } = await supabase.auth.verifyOtp({
-        email: email.trim().toLowerCase(),
-        token: otp.trim(),
-        type: "email",
+      const res = await fetch("/api/auth/verify-email-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          otp: otp.trim(),
+        }),
       });
 
-      if (verifyError) throw verifyError;
-
-      // Ensure a customer row exists in customers table
-      if (data.user) {
-        const { data: existingCustomer } = await supabase
-          .from("customers")
-          .select("id")
-          .eq("email", data.user.email)
-          .maybeSingle();
-
-        if (!existingCustomer) {
-          await supabase.from("customers").insert({
-            email: data.user.email,
-            full_name: data.user.user_metadata?.full_name || email.split("@")[0],
-            acquisition_source: "account_signup",
-          });
-        }
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error || "Invalid or expired access code.");
       }
 
-      router.push(nextUrl);
+      setMessage("Verified successfully! Redirecting...");
+      setTimeout(() => {
+        router.push(nextUrl);
+      }, 500);
     } catch (err: any) {
       setError(err.message || "Invalid or expired code. Please try again.");
     } finally {

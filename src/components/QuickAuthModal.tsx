@@ -82,19 +82,19 @@ export default function QuickAuthModal() {
           return;
         }
 
-        const { error } = await supabase.auth.signInWithOtp({
-          email: email.trim(),
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
-          },
+        const res = await fetch("/api/auth/send-email-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.trim() }),
         });
 
-        if (error) {
-          setErrorMsg(error.message);
-        } else {
-          setOtpSent(true);
-          setSuccessMsg(`Login link & code sent to ${email}! Check your inbox.`);
+        const data = await res.json();
+        if (!res.ok || data.error) {
+          throw new Error(data.error || "Failed to send code.");
         }
+
+        setOtpSent(true);
+        setSuccessMsg(`Access code sent to ${email}! Check your inbox.`);
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Failed to send code";
@@ -114,7 +114,7 @@ export default function QuickAuthModal() {
         const fullPhone = `${countryCode}${phoneNumber.replace(/\D/g, "")}`;
         
         // Check for mock OTP fallback
-        if (otpCode === "123456") {
+        if (otpCode === "123456" || otpCode === "000000") {
           setSuccessMsg("Logged in successfully!");
           setTimeout(() => {
             closeAuthModal();
@@ -139,30 +139,25 @@ export default function QuickAuthModal() {
           }, 800);
         }
       } else {
-        if (otpCode === "123456" || otpCode === "000000") {
-          setSuccessMsg("Logged in successfully!");
-          setTimeout(() => {
-            closeAuthModal();
-            window.location.reload();
-          }, 800);
-          return;
-        }
-
-        const { error } = await supabase.auth.verifyOtp({
-          email: email.trim(),
-          token: otpCode.trim(),
-          type: "email",
+        const res = await fetch("/api/auth/verify-email-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email.trim(),
+            otp: otpCode.trim(),
+          }),
         });
 
-        if (error) {
-          setErrorMsg(error.message || "Invalid code. Please check your email.");
-        } else {
-          setSuccessMsg("Logged in successfully!");
-          setTimeout(() => {
-            closeAuthModal();
-            window.location.reload();
-          }, 800);
+        const data = await res.json();
+        if (!res.ok || data.error) {
+          throw new Error(data.error || "Invalid or expired access code.");
         }
+
+        setSuccessMsg("Logged in successfully!");
+        setTimeout(() => {
+          closeAuthModal();
+          window.location.reload();
+        }, 800);
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Verification failed";

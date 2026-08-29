@@ -454,6 +454,93 @@ export async function sendOrderStatusUpdateEmail(params: OrderStatusUpdateParams
   });
 }
 
+export async function sendOtpVerificationEmail({
+  email,
+  otp,
+}: {
+  email: string;
+  otp: string;
+}) {
+  const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Your Sandline Access Code</title>
+      </head>
+      <body style="margin: 0; padding: 0; background-color: #FAF8F5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #FAF8F5; padding: 40px 12px;">
+          <tr>
+            <td align="center">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 520px; background-color: #FFFFFF; border-radius: 16px; overflow: hidden; border: 1px solid #EAE6DF; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+                
+                <!-- Brand Header -->
+                <tr>
+                  <td align="center" style="background-color: #111827; padding: 36px 20px;">
+                    <div style="font-family: Georgia, serif; font-size: 26px; font-weight: bold; color: #F6EFE3; letter-spacing: 0.15em;">
+                      SAND<span style="color: #FF7A54;">LINE</span>
+                    </div>
+                    <div style="font-family: 'Courier New', Courier, monospace; font-size: 10px; letter-spacing: 0.2em; color: rgba(246, 239, 227, 0.7); margin-top: 6px; text-transform: uppercase;">
+                      RESORTWEAR • CLIENT ACCESS
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Content Body -->
+                <tr>
+                  <td style="padding: 36px 32px 28px; text-align: center;">
+                    <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.12em; color: #D97706; margin-bottom: 8px;">
+                      ✦ INSTANT VERIFICATION CODE
+                    </div>
+                    <h1 style="margin: 0 0 12px; font-size: 22px; color: #111827; font-family: Georgia, serif;">
+                      Your One-Time Access Code
+                    </h1>
+                    <p style="margin: 0 0 28px; font-size: 14.5px; line-height: 1.6; color: #4B5563;">
+                      Use the 6-digit access code below to sign in securely to your <strong>Sandline Studio</strong> account:
+                    </p>
+
+                    <!-- 6-Digit Code Box -->
+                    <div style="background: linear-gradient(180deg, #FAF8F5 0%, #F5F1EB 100%); border: 2px dashed #111827; border-radius: 14px; padding: 20px 24px; margin: 0 auto 28px; display: inline-block;">
+                      <div style="font-family: 'Courier New', Courier, monospace; font-size: 36px; font-weight: 800; letter-spacing: 10px; color: #111827; margin-right: -10px;">
+                        ${otp}
+                      </div>
+                    </div>
+
+                    <div style="font-size: 12.5px; color: #6B7280; margin-bottom: 20px;">
+                      ⏱️ This code is valid for <strong>10 minutes</strong>. Do not share it with anyone.
+                    </div>
+
+                    <div style="border-top: 1px solid #EAE6DF; padding-top: 20px; font-size: 12px; color: #9CA3AF; line-height: 1.5;">
+                      If you did not request this login code, you can safely disregard this email.
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                  <td style="background-color: #F9FAFB; padding: 20px 24px; border-top: 1px solid #EAE6DF; text-align: center;">
+                    <div style="font-size: 11px; color: #9CA3AF;">
+                      © 2026 Sandline Studio • Handcrafted in India • Shipped Worldwide
+                    </div>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>
+  `;
+
+  return sendEmailViaProvider({
+    to: email,
+    subject: `🔐 Your Sandline Access Code: ${otp}`,
+    html,
+  });
+}
+
 async function sendEmailViaProvider({
   to,
   subject,
