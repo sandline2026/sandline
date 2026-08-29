@@ -2,13 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  buildWhatsAppLink,
-  getWhatsAppOrderConfirmationMessage,
-  getWhatsAppShippingMessage,
-  getWhatsAppDeliveredMessage,
-  getWhatsAppAbandonedCartMessage,
-} from "@/lib/whatsapp";
 
 export interface OrderItem {
   id: string;
@@ -339,97 +332,17 @@ export default function AdminOrdersTable({
                 </div>
               </div>
 
-              {/* WhatsApp Quick Customer Assistant */}
-              <div style={{ background: "#ECFDF5", border: "1px solid #A7F3D0", borderRadius: "12px", padding: "18px 20px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexWrap: "wrap", gap: "8px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span style={{ fontSize: "16px" }}>📲</span>
-                    <h3 style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", color: "#065F46", margin: 0, letterSpacing: "0.04em" }}>
-                      1-Click WhatsApp Customer Outreach
-                    </h3>
-                  </div>
-                  {activeOrder.customers?.phone ? (
-                    <span style={{ fontSize: "12.5px", fontFamily: "monospace", color: "#047857", fontWeight: 700 }}>
-                      📞 {activeOrder.customers.phone}
-                    </span>
-                  ) : (
-                    <span style={{ fontSize: "11px", color: "#6B7280" }}>
-                      (No phone on file — prompts for number on send)
-                    </span>
-                  )}
+              {/* Automated Customer Email Notification Status */}
+              <div style={{ background: "#F0FDF4", border: "1px solid #BBF7D0", borderRadius: "12px", padding: "16px 20px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                  <span style={{ fontSize: "16px" }}>✉️</span>
+                  <h3 style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", color: "#166534", margin: 0, letterSpacing: "0.04em" }}>
+                    Automated Email Notifications (Active)
+                  </h3>
                 </div>
-
-                <p style={{ fontSize: "12px", color: "#064E3B", margin: "0 0 12px", lineHeight: 1.4 }}>
-                  Click to launch WhatsApp Web/App with pre-formatted luxury message:
+                <p style={{ fontSize: "12.5px", color: "#14532D", margin: 0, lineHeight: 1.5 }}>
+                  When you update status to <strong>Dispatched</strong>, <strong>Shipped</strong>, or <strong>Delivered</strong>, an official branded update email is automatically sent to <strong>{activeOrder.customers?.email || "customer"}</strong>.
                 </p>
-
-                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                  <a
-                    href={buildWhatsAppLink(
-                      activeOrder.customers?.phone || "",
-                      getWhatsAppOrderConfirmationMessage({
-                        orderNumber: activeOrder.order_number,
-                        customerName: activeOrder.customers?.full_name,
-                        total: Number(activeOrder.total_usd || 0),
-                        itemsSummary: activeOrder.order_items?.map((i) => i.products?.name).filter(Boolean).join(", "),
-                      })
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="admin-btn admin-btn-sm"
-                    style={{ background: "#059669", borderColor: "#059669", color: "#FFFFFF", textDecoration: "none", fontSize: "11.5px" }}
-                  >
-                    🧾 Send Receipt / Invoice
-                  </a>
-
-                  <a
-                    href={buildWhatsAppLink(
-                      activeOrder.customers?.phone || "",
-                      getWhatsAppShippingMessage({
-                        orderNumber: activeOrder.order_number,
-                        customerName: activeOrder.customers?.full_name,
-                      })
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="admin-btn admin-btn-sm"
-                    style={{ background: "#2563EB", borderColor: "#2563EB", color: "#FFFFFF", textDecoration: "none", fontSize: "11.5px" }}
-                  >
-                    ✈️ Dispatched Tracking
-                  </a>
-
-                  <a
-                    href={buildWhatsAppLink(
-                      activeOrder.customers?.phone || "",
-                      getWhatsAppDeliveredMessage({
-                        orderNumber: activeOrder.order_number,
-                        customerName: activeOrder.customers?.full_name,
-                      })
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="admin-btn admin-btn-sm"
-                    style={{ background: "#047857", borderColor: "#047857", color: "#FFFFFF", textDecoration: "none", fontSize: "11.5px" }}
-                  >
-                    🏖️ Delivered Alert
-                  </a>
-
-                  <a
-                    href={buildWhatsAppLink(
-                      activeOrder.customers?.phone || "",
-                      getWhatsAppAbandonedCartMessage({
-                        customerName: activeOrder.customers?.full_name,
-                        itemsCount: activeOrder.order_items?.length || 1,
-                      })
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="admin-btn admin-btn-sm"
-                    style={{ background: "#D97706", borderColor: "#D97706", color: "#FFFFFF", textDecoration: "none", fontSize: "11.5px" }}
-                  >
-                    🎁 Abandoned Cart (10% OFF)
-                  </a>
-                </div>
               </div>
 
               {/* Customer & Shipping Information */}

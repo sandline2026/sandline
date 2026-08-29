@@ -2,7 +2,6 @@ import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { sendOrderConfirmationEmail } from "@/lib/email";
-import { dispatchAdminWhatsAppAudit } from "@/lib/whatsapp";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -109,24 +108,6 @@ export async function POST(req: NextRequest) {
               city: orderDetails.customers.city || "",
               postalCode: orderDetails.customers.postal_code || "",
               country: orderDetails.customers.country || "",
-            });
-
-            // Admin WhatsApp Audit Dispatch
-            await dispatchAdminWhatsAppAudit({
-              orderNumber: orderDetails.order_number || "SL-ORDER",
-              customerName: orderDetails.customers.full_name || "Valued Client",
-              customerEmail: orderDetails.customers.email,
-              gateway: "Stripe",
-              gatewayTransactionId: session.payment_intent as string,
-              amount: Number(orderDetails.total_usd || 0),
-              currency: "USD",
-              items,
-              shippingAddress: [
-                orderDetails.customers.address_line,
-                orderDetails.customers.city,
-                orderDetails.customers.postal_code,
-                orderDetails.customers.country,
-              ].filter(Boolean).join(", "),
             });
           }
         }
