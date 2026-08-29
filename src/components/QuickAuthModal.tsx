@@ -8,9 +8,6 @@ export default function QuickAuthModal() {
   const { isOpen, closeAuthModal } = useAuthModal();
   const supabase = createClient();
 
-  const [authMethod, setAuthMethod] = useState<"phone" | "email">("phone");
-  const [countryCode, setCountryCode] = useState("+91");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otpCode, setOtpCode] = useState("");
@@ -75,60 +72,36 @@ export default function QuickAuthModal() {
     return () => subscription.unsubscribe();
   }, [isOpen, closeAuthModal, supabase]);
 
-  async function handleSendOtp(e: React.FormEvent) {
+  async function handleSendEmailLink(e: React.FormEvent) {
     e.preventDefault();
+    if (!email || !email.includes("@")) {
+      setErrorMsg("Please enter a valid Gmail / Email address.");
+      return;
+    }
+
     setErrorMsg("");
     setSuccessMsg("");
     setLoading(true);
 
     try {
-      if (authMethod === "phone") {
-        if (!phoneNumber || phoneNumber.length < 8) {
-          setErrorMsg("Please enter a valid mobile number.");
-          setLoading(false);
-          return;
-        }
+      // 1. Send direct Supabase 1-Click Magic Link
+      await supabase.auth.signInWithOtp({
+        email: email.trim().toLowerCase(),
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=/account`,
+          shouldCreateUser: true,
+        },
+      });
 
-        const fullPhone = `${countryCode}${phoneNumber.replace(/\D/g, "")}`;
-        const { error } = await supabase.auth.signInWithOtp({
-          phone: fullPhone,
-        });
+      // 2. Trigger luxury email code via Resend in parallel
+      fetch("/api/auth/send-email-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+      }).catch(() => {});
 
-        if (error) {
-          // If SMS provider not fully enabled, allow mock OTP in development/demo mode
-          console.warn("Supabase SMS OTP fallback:", error.message);
-          setOtpSent(true);
-          setSuccessMsg(`OTP sent to ${fullPhone}! (Use code: 123456)`);
-        } else {
-          setOtpSent(true);
-          setSuccessMsg(`Verification code sent to ${fullPhone}!`);
-        }
-      } else {
-        if (!email || !email.includes("@")) {
-          setErrorMsg("Please enter a valid email address.");
-          setLoading(false);
-          return;
-        }
-
-        // 1. Send direct Supabase 1-Click Magic Link
-        const { error: sbError } = await supabase.auth.signInWithOtp({
-          email: email.trim().toLowerCase(),
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback?next=/account`,
-            shouldCreateUser: true,
-          },
-        });
-
-        // 2. Also trigger luxury access code email in parallel
-        fetch("/api/auth/send-email-otp", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.trim().toLowerCase() }),
-        }).catch(() => {});
-
-        setOtpSent(true);
-        setSuccessMsg(`Magic Link sent to ${email}! Click "Sign In" in your email to login.`);
-      }
+      setOtpSent(true);
+      setSuccessMsg(`Magic Link sent to ${email.trim().toLowerCase()}!`);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Failed to send link";
       setErrorMsg(message);
@@ -139,59 +112,34 @@ export default function QuickAuthModal() {
 
   async function handleVerifyOtp(e: React.FormEvent) {
     e.preventDefault();
+    if (!otpCode.trim() || otpCode.trim().length < 6) {
+      setErrorMsg("Please enter the 6-digit access code.");
+      return;
+    }
+
     setErrorMsg("");
     setLoading(true);
 
     try {
-      if (authMethod === "phone") {
-        const fullPhone = `${countryCode}${phoneNumber.replace(/\D/g, "")}`;
-        
-        // Check for mock OTP fallback
-        if (otpCode === "123456" || otpCode === "000000") {
-          setSuccessMsg("Logged in successfully!");
-          setTimeout(() => {
-            closeAuthModal();
-            window.location.reload();
-          }, 1000);
-          return;
-        }
+      const res = await fetch("/api/auth/verify-email-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          otp: otpCode.trim(),
+        }),
+      });
 
-        const { error } = await supabase.auth.verifyOtp({
-          phone: fullPhone,
-          token: otpCode.trim(),
-          type: "sms",
-        });
-
-        if (error) {
-          setErrorMsg(error.message || "Invalid OTP code.");
-        } else {
-          setSuccessMsg("Logged in successfully!");
-          setTimeout(() => {
-            closeAuthModal();
-            window.location.reload();
-          }, 800);
-        }
-      } else {
-        const res = await fetch("/api/auth/verify-email-otp", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email.trim(),
-            otp: otpCode.trim(),
-          }),
-        });
-
-        const data = await res.json();
-        if (!res.ok || data.error) {
-          throw new Error(data.error || "Invalid or expired access code.");
-        }
-
-        setSuccessMsg("Logged in successfully!");
-        setTimeout(() => {
-          closeAuthModal();
-          window.location.reload();
-        }, 800);
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error || "Invalid or expired access code.");
       }
+
+      setSuccessMsg("Logged in successfully!");
+      setTimeout(() => {
+        closeAuthModal();
+        window.location.reload();
+      }, 700);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Verification failed";
       setErrorMsg(message);
@@ -215,25 +163,24 @@ export default function QuickAuthModal() {
       if (error) throw error;
 
       if (data?.url) {
-        // Pre-flight check if provider is enabled to prevent raw JSON error screen
         try {
           const testRes = await fetch(data.url);
           if (!testRes.ok) {
             const resJson = await testRes.json().catch(() => null);
             if (resJson?.msg && resJson.msg.includes("provider is not enabled")) {
-              setErrorMsg("Google Sign-In is being activated in Supabase. Please enter your Mobile / Email above for instant 1-tap OTP login!");
+              setErrorMsg("Google Sign-In is active via Email Link above. Enter your Gmail for instant 1-click login!");
               setLoading(false);
               return;
             }
           }
         } catch {
-          // If CORS prevents read, proceed to URL normally
+          // If CORS prevents pre-flight, proceed normally
         }
 
         window.location.href = data.url;
       }
     } catch (err: unknown) {
-      setErrorMsg("Please enter your Mobile Number or Email above for instant 1-tap login!");
+      setErrorMsg("Please enter your Gmail / Email above for instant 1-click login!");
       setLoading(false);
     }
   }
@@ -296,75 +243,46 @@ export default function QuickAuthModal() {
 
         {/* Right Side: Auth Form */}
         <div className="auth-modal-form-side">
-          {/* Method Switcher */}
-          <div className="auth-method-tabs">
-            <button
-              type="button"
-              className={`auth-tab-btn ${authMethod === "phone" ? "active" : ""}`}
-              onClick={() => {
-                setAuthMethod("phone");
-                setOtpSent(false);
-                setErrorMsg("");
-              }}
-            >
-              Mobile OTP
-            </button>
-            <button
-              type="button"
-              className={`auth-tab-btn ${authMethod === "email" ? "active" : ""}`}
-              onClick={() => {
-                setAuthMethod("email");
-                setOtpSent(false);
-                setErrorMsg("");
-              }}
-            >
-              Email / Google
-            </button>
-          </div>
-
           {!otpSent ? (
-            /* Step 1: Input Mobile / Email */
-            <form onSubmit={handleSendOtp} className="auth-input-form">
-              {authMethod === "phone" ? (
-                <div className="auth-phone-input-wrap">
-                  <div className="phone-prefix-box">
-                    <select
-                      value={countryCode}
-                      onChange={(e) => setCountryCode(e.target.value)}
-                      className="country-code-select"
-                    >
-                      <option value="+91">🇮🇳 +91</option>
-                      <option value="+1">🇺🇸 +1</option>
-                      <option value="+44">🇬🇧 +44</option>
-                      <option value="+971">🇦🇪 +971</option>
-                      <option value="+61">🇦🇺 +61</option>
-                      <option value="+65">🇸🇬 +65</option>
-                      <option value="+33">🇫🇷 +33</option>
-                    </select>
-                  </div>
-                  <input
-                    type="tel"
-                    placeholder="Enter Mobile Number"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="phone-num-field"
-                    autoFocus
-                    required
-                  />
-                </div>
-              ) : (
+            /* Step 1: Input Email + Google Sign-In */
+            <form onSubmit={handleSendEmailLink} className="auth-input-form" style={{ marginTop: "10px" }}>
+              <div style={{ marginBottom: "16px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontFamily: "'Space Mono', monospace",
+                    fontSize: "11px",
+                    letterSpacing: "0.5px",
+                    color: "#111827",
+                    marginBottom: "8px",
+                    textTransform: "uppercase",
+                    fontWeight: 700,
+                  }}
+                >
+                  Enter Your Email (Gmail / Any Email)
+                </label>
                 <div className="auth-email-input-wrap">
                   <input
                     type="email"
-                    placeholder="name@example.com"
+                    placeholder="yourname@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="email-field"
                     autoFocus
                     required
+                    style={{
+                      width: "100%",
+                      padding: "14px 16px",
+                      borderRadius: "12px",
+                      border: "1px solid #D5D1CA",
+                      fontSize: "15px",
+                      background: "#FAF8F5",
+                      color: "#111827",
+                      boxSizing: "border-box",
+                    }}
                   />
                 </div>
-              )}
+              </div>
 
               {errorMsg && <p className="auth-error-msg">{errorMsg}</p>}
               {successMsg && <p className="auth-success-msg">{successMsg}</p>}
@@ -373,12 +291,26 @@ export default function QuickAuthModal() {
                 type="submit"
                 className="btn-auth-submit"
                 disabled={loading}
+                style={{
+                  width: "100%",
+                  background: "#111827",
+                  color: "#FFFFFF",
+                  padding: "15px 24px",
+                  borderRadius: "30px",
+                  fontSize: "13.5px",
+                  fontWeight: "700",
+                  border: "none",
+                  cursor: loading ? "not-allowed" : "pointer",
+                  fontFamily: "'Space Mono', monospace",
+                  letterSpacing: "0.5px",
+                  textTransform: "uppercase",
+                }}
               >
-                {loading ? "Sending Code..." : "Submit & Send OTP"}
+                {loading ? "Sending Link..." : "Send 1-Click Sign-In Link →"}
               </button>
 
               {/* Notification Consent Checkbox */}
-              <label className="auth-consent-label">
+              <label className="auth-consent-label" style={{ marginTop: "14px", display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "#666" }}>
                 <input
                   type="checkbox"
                   checked={notifyConsent}
@@ -386,14 +318,14 @@ export default function QuickAuthModal() {
                 />
                 <span>
                   Notify me with offers &amp; updates{" "}
-                  <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+                  <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: "#111827", textDecoration: "underline" }}>
                     Read details
                   </a>
                 </span>
               </label>
 
               {/* Google 1-Tap Option */}
-              <div className="auth-divider">
+              <div className="auth-divider" style={{ margin: "20px 0" }}>
                 <span>OR</span>
               </div>
 
@@ -402,6 +334,21 @@ export default function QuickAuthModal() {
                 className="btn-google-login"
                 onClick={handleGoogleLogin}
                 disabled={loading}
+                style={{
+                  width: "100%",
+                  background: "#FFFFFF",
+                  color: "#111827",
+                  padding: "13px 20px",
+                  borderRadius: "30px",
+                  fontSize: "13.5px",
+                  fontWeight: "600",
+                  border: "1px solid #D5D1CA",
+                  cursor: loading ? "not-allowed" : "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "10px",
+                }}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24">
                   <path
@@ -425,101 +372,103 @@ export default function QuickAuthModal() {
               </button>
             </form>
           ) : (
-            /* Step 2: Verification / Magic Link View */
-            authMethod === "email" ? (
-              <div style={{ textAlign: "center", padding: "10px 0 10px" }}>
-                <div style={{ fontSize: "44px", marginBottom: "12px" }}>✉️</div>
-                <h4 style={{ fontSize: "19px", fontWeight: "600", color: "#111827", marginBottom: "8px", fontFamily: "Georgia, serif" }}>
-                  Sign-In Link Sent!
-                </h4>
-                <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.6", marginBottom: "24px" }}>
-                  We sent a 1-click magic link to <strong>{email}</strong>.<br/>
-                  Open your email and click <strong>&quot;Sign in&quot;</strong> to login instantly without entering any code!
+            /* Step 2: Sign-In Link Sent & 1-Tap Gmail Button */
+            <div style={{ textAlign: "center", padding: "10px 0 10px" }}>
+              <div style={{ fontSize: "44px", marginBottom: "12px" }}>✉️</div>
+              <h4 style={{ fontSize: "20px", fontWeight: "600", color: "#111827", marginBottom: "8px", fontFamily: "Georgia, serif" }}>
+                Sign-In Link Sent!
+              </h4>
+              <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.6", marginBottom: "20px" }}>
+                We sent a 1-click magic link to <strong>{email}</strong>.<br/>
+                Open your email and click <strong>&quot;Sign in&quot;</strong> to login instantly!
+              </p>
+
+              <a
+                href="https://mail.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-block",
+                  textDecoration: "none",
+                  padding: "14px 32px",
+                  background: "#111827",
+                  color: "#FFFFFF",
+                  borderRadius: "30px",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  marginBottom: "20px",
+                  fontFamily: "'Space Mono', monospace",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                Open Gmail Inbox ↗
+              </a>
+
+              {/* Optional 6-digit access code verify box */}
+              <div style={{ background: "#FAF8F5", border: "1px solid #EAE6DF", borderRadius: "14px", padding: "16px", marginTop: "10px" }}>
+                <p style={{ fontSize: "12px", color: "#666", margin: "0 0 10px" }}>
+                  Or enter your 6-digit access code:
                 </p>
-
-                <a
-                  href="https://mail.google.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-auth-submit"
-                  style={{
-                    display: "inline-block",
-                    textDecoration: "none",
-                    padding: "14px 28px",
-                    background: "#111827",
-                    color: "white",
-                    borderRadius: "30px",
-                    fontWeight: "600",
-                    fontSize: "14px",
-                    marginBottom: "20px",
-                  }}
-                >
-                  Open Gmail Inbox →
-                </a>
-
-                {errorMsg && <p className="auth-error-msg">{errorMsg}</p>}
-                {successMsg && <p className="auth-success-msg">{successMsg}</p>}
-
-                <div className="otp-resend-row" style={{ marginTop: "16px" }}>
-                  <span>Didn&apos;t receive link?</span>
+                <form onSubmit={handleVerifyOtp} style={{ display: "flex", gap: "8px" }}>
+                  <input
+                    type="text"
+                    maxLength={6}
+                    placeholder="• • • • • •"
+                    value={otpCode}
+                    onChange={(e) => setOtpCode(e.target.value.replace(/\s+/g, ""))}
+                    style={{
+                      flex: 1,
+                      padding: "10px 12px",
+                      borderRadius: "10px",
+                      border: "1px solid #D5D1CA",
+                      fontSize: "16px",
+                      letterSpacing: "3px",
+                      textAlign: "center",
+                      fontFamily: "'Space Mono', monospace",
+                      background: "#FFFFFF",
+                      color: "#111827",
+                    }}
+                  />
                   <button
-                    type="button"
-                    onClick={handleSendOtp}
+                    type="submit"
                     disabled={loading}
-                    className="resend-otp-btn"
+                    style={{
+                      background: "#111827",
+                      color: "#FFFFFF",
+                      padding: "10px 18px",
+                      borderRadius: "10px",
+                      border: "none",
+                      fontSize: "12px",
+                      fontWeight: "700",
+                      cursor: "pointer",
+                      fontFamily: "'Space Mono', monospace",
+                    }}
                   >
-                    Resend Email Link
+                    {loading ? "..." : "Verify"}
                   </button>
-                </div>
+                </form>
               </div>
-            ) : (
-              <form onSubmit={handleVerifyOtp} className="auth-otp-form">
-                <div className="otp-head">
-                  <h4>Enter Verification Code</h4>
-                  <p>
-                    We&apos;ve sent a code to <strong>{countryCode} {phoneNumber}</strong>
-                  </p>
-                </div>
 
-                <input
-                  type="text"
-                  maxLength={6}
-                  placeholder="• • • • • •"
-                  value={otpCode}
-                  onChange={(e) => setOtpCode(e.target.value)}
-                  className="otp-code-input"
-                  autoFocus
-                  required
-                />
+              {errorMsg && <p className="auth-error-msg" style={{ marginTop: "12px" }}>{errorMsg}</p>}
+              {successMsg && <p className="auth-success-msg" style={{ marginTop: "12px" }}>{successMsg}</p>}
 
-                {errorMsg && <p className="auth-error-msg">{errorMsg}</p>}
-                {successMsg && <p className="auth-success-msg">{successMsg}</p>}
-
+              <div className="otp-resend-row" style={{ marginTop: "16px", fontSize: "12.5px", color: "#666" }}>
+                <span>Didn&apos;t receive link? </span>
                 <button
-                  type="submit"
-                  className="btn-auth-submit"
+                  type="button"
+                  onClick={handleSendEmailLink}
                   disabled={loading}
+                  className="resend-otp-btn"
+                  style={{ background: "none", border: "none", color: "#D97706", fontWeight: "700", cursor: "pointer", textDecoration: "underline" }}
                 >
-                  {loading ? "Verifying..." : "Verify & Sign In"}
+                  Resend Email
                 </button>
-
-                <div className="otp-resend-row">
-                  <span>Didn&apos;t receive code?</span>
-                  <button
-                    type="button"
-                    onClick={handleSendOtp}
-                    disabled={loading}
-                    className="resend-otp-btn"
-                  >
-                    Resend OTP
-                  </button>
-                </div>
-              </form>
-            )
+              </div>
+            </div>
           )}
 
           {/* Secure Badge */}
-          <div className="auth-modal-footer-badge">
+          <div className="auth-modal-footer-badge" style={{ marginTop: "24px" }}>
             <span>🔒 256-Bit SSL Encrypted</span>
             <span>•</span>
             <span>Powered by <strong>Sandline Pass</strong></span>
