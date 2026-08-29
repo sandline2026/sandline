@@ -176,16 +176,36 @@ export default function QuickAuthModal() {
     setLoading(true);
     setErrorMsg("");
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
+          skipBrowserRedirect: true,
         },
       });
-      if (error) setErrorMsg(error.message);
+
+      if (error) throw error;
+
+      if (data?.url) {
+        // Pre-flight check if provider is enabled to prevent raw JSON error screen
+        try {
+          const testRes = await fetch(data.url);
+          if (!testRes.ok) {
+            const resJson = await testRes.json().catch(() => null);
+            if (resJson?.msg && resJson.msg.includes("provider is not enabled")) {
+              setErrorMsg("Google Sign-In is being activated in Supabase. Please enter your Mobile / Email above for instant 1-tap OTP login!");
+              setLoading(false);
+              return;
+            }
+          }
+        } catch {
+          // If CORS prevents read, proceed to URL normally
+        }
+
+        window.location.href = data.url;
+      }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Google login failed";
-      setErrorMsg(message);
+      setErrorMsg("Please enter your Mobile Number or Email above for instant 1-tap login!");
       setLoading(false);
     }
   }

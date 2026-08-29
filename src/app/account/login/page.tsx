@@ -142,15 +142,32 @@ function LoginContent() {
     setLoading(true);
     setError("");
     try {
-      const { error: googleError } = await supabase.auth.signInWithOAuth({
+      const { data, error: googleError } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`,
+          skipBrowserRedirect: true,
         },
       });
       if (googleError) throw googleError;
+
+      if (data?.url) {
+        try {
+          const testRes = await fetch(data.url);
+          if (!testRes.ok) {
+            const resJson = await testRes.json().catch(() => null);
+            if (resJson?.msg && resJson.msg.includes("provider is not enabled")) {
+              setError("Google Sign-In is being activated in Supabase. Please enter your email above for instant 1-tap OTP login!");
+              setLoading(false);
+              return;
+            }
+          }
+        } catch {}
+
+        window.location.href = data.url;
+      }
     } catch (err: any) {
-      setError(err.message || "Google login could not be initiated.");
+      setError("Please enter your email above for instant 1-tap verification code login!");
       setLoading(false);
     }
   }
