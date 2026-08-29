@@ -6,6 +6,7 @@ import WishlistButton from "@/components/WishlistButton";
 import SortSelect from "@/components/SortSelect";
 import ProductPrice from "@/components/ProductPrice";
 import SiteNavbar from "@/components/SiteNavbar";
+import MobileFilterDrawer from "@/components/MobileFilterDrawer";
 import "../sandline.css";
 
 const collectionLabel: Record<string, string> = {
@@ -24,9 +25,14 @@ const collectionTabs = [
 export default async function Shop({
   searchParams,
 }: {
-  searchParams?: Promise<{ sort?: string }>;
+  searchParams?: Promise<{
+    sort?: string;
+    sizes?: string;
+    fabric?: string;
+    colors?: string;
+  }>;
 }) {
-  const sp = await searchParams;
+  const sp = (await searchParams) || {};
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
@@ -36,13 +42,42 @@ export default async function Shop({
     .eq("is_active", true)
     .order("created_at", { ascending: false });
 
-  let products = rawProducts || [];
+  let allProducts = rawProducts || [];
+  let products = [...allProducts];
 
-  if (sp?.sort === "price_asc") {
+  const activeSizes = sp.sizes ? sp.sizes.split(",").filter(Boolean) : [];
+  const activeFabrics = sp.fabric ? sp.fabric.split(",").filter(Boolean) : [];
+  const activeColors = sp.colors ? sp.colors.split(",").filter(Boolean) : [];
+
+  if (activeSizes.length > 0) {
+    products = products.filter((p: any) =>
+      p.sizes?.some((s: string) => activeSizes.includes(s))
+    );
+  }
+  if (activeColors.length > 0) {
+    products = products.filter((p: any) =>
+      p.colors?.some((c: string) => activeColors.includes(c))
+    );
+  }
+  if (activeFabrics.length > 0) {
+    products = products.filter((p: any) => activeFabrics.includes(p.fabric));
+  }
+
+  if (sp.sort === "price_asc") {
     products = [...products].sort((a: any, b: any) => a.selling_price_usd - b.selling_price_usd);
-  } else if (sp?.sort === "price_desc") {
+  } else if (sp.sort === "price_desc") {
     products = [...products].sort((a: any, b: any) => b.selling_price_usd - a.selling_price_usd);
   }
+
+  const allSizes = Array.from(
+    new Set((allProducts || []).flatMap((p: any) => p.sizes || []))
+  );
+  const allColors = Array.from(
+    new Set((allProducts || []).flatMap((p: any) => p.colors || []))
+  );
+  const allFabrics = Array.from(
+    new Set((allProducts || []).map((p: any) => p.fabric).filter(Boolean))
+  );
 
   return (
     <div className="sandline-page">
@@ -75,12 +110,22 @@ export default async function Shop({
       </section>
 
       {/* Main Catalog Container */}
-      <div style={{ padding: "36px clamp(24px, 5vw, 64px) 120px" }}>
+      <div className="catalog-main-container">
         <div className="collection-topbar">
           <div className="collection-count">
             Showing <strong>{products.length}</strong> {products.length === 1 ? "silhouette" : "silhouettes"}
           </div>
-          <SortSelect />
+          <div className="collection-actions-bar">
+            <MobileFilterDrawer
+              allSizes={allSizes}
+              allFabrics={allFabrics}
+              allColors={allColors}
+              activeSizes={activeSizes}
+              activeFabrics={activeFabrics}
+              activeColors={activeColors}
+            />
+            <SortSelect />
+          </div>
         </div>
 
         {error && <p style={{ color: "var(--red)", marginBottom: "20px" }}>Error: {error.message}</p>}

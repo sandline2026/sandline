@@ -6,6 +6,7 @@ import WishlistButton from "@/components/WishlistButton";
 import SortSelect from "@/components/SortSelect";
 import ProductPrice from "@/components/ProductPrice";
 import SiteNavbar from "@/components/SiteNavbar";
+import MobileFilterDrawer from "@/components/MobileFilterDrawer";
 import "../../sandline.css";
 
 const collectionsMeta: Record<
@@ -233,7 +234,18 @@ export default async function CollectionPage({
             <div className="collection-count">
               Showing <strong>{products.length}</strong> {products.length === 1 ? "silhouette" : "silhouettes"}
             </div>
-            <SortSelect collection={collection} />
+            <div className="collection-actions-bar">
+              <MobileFilterDrawer
+                allSizes={allSizes}
+                allFabrics={allFabrics}
+                allColors={allColors}
+                activeSizes={activeSizes}
+                activeFabrics={activeFabrics}
+                activeColors={activeColors}
+                collectionSlug={collection}
+              />
+              <SortSelect collection={collection} />
+            </div>
           </div>
 
           {products.length > 0 ? (
