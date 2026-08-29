@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { useCurrency } from "@/context/CurrencyContext";
 import NotifyMeForm from "@/components/NotifyMeForm";
 
 interface ProductBuyBoxProps {
@@ -29,6 +30,7 @@ export default function ProductBuyBox({
   const router = useRouter();
   const { addToCart, applyCoupon } = useCart();
   const { toggleWishlist, isWishlisted } = useWishlist();
+  const { formatPrice } = useCurrency();
 
   const [selectedSize, setSelectedSize] = useState<string>(sizes[0] || "");
   const [selectedColor, setSelectedColor] = useState<string>(colors[0] || "");
@@ -175,9 +177,9 @@ export default function ProductBuyBox({
           <div className="actual-pay-title-group">
             <span className="actual-pay-label">You actually pay</span>
             <div className="actual-pay-prices">
-              <span className="final-price-bold">${finalPrice.toFixed(2)}</span>
-              <span className="original-strike">${price.toFixed(2)}</span>
-              <span className="savings-green-pill">Save ${totalSavings.toFixed(2)}</span>
+              <span className="final-price-bold">{formatPrice(finalPrice)}</span>
+              <span className="original-strike">{formatPrice(price)}</span>
+              <span className="savings-green-pill">Save {formatPrice(totalSavings)}</span>
             </div>
           </div>
           <button type="button" className="actual-pay-toggle-link">
@@ -189,22 +191,22 @@ export default function ProductBuyBox({
           <div className="actual-pay-breakdown">
             <div className="breakdown-row">
               <span>Listed price</span>
-              <span>${price.toFixed(2)}</span>
+              <span>{formatPrice(price)}</span>
             </div>
             <div className="breakdown-row discount-text">
               <span>
                 <code className="coupon-inline-tag">NEW10</code> — 10% off
               </span>
-              <span>-${couponDiscountVal.toFixed(2)}</span>
+              <span>-{formatPrice(couponDiscountVal)}</span>
             </div>
             <div className="breakdown-row discount-text">
               <span>Prepaid — extra 5% off</span>
-              <span>-${prepaidDiscountVal.toFixed(2)}</span>
+              <span>-{formatPrice(prepaidDiscountVal)}</span>
             </div>
             <div className="breakdown-divider" />
             <div className="breakdown-row breakdown-final-row">
               <strong>Your final price</strong>
-              <strong>${finalPrice.toFixed(2)}</strong>
+              <strong>{formatPrice(finalPrice)}</strong>
             </div>
             <div className="breakdown-explainer">
               • <code>NEW10</code> gives 10% off on your first order.<br />
@@ -331,16 +333,16 @@ export default function ProductBuyBox({
           <div className="sticky-bar-perk">
             <span>%</span>
             <span>
-              Get it for <strong>${finalPrice.toFixed(2)}</strong> — Save <strong>${totalSavings.toFixed(2)}</strong> instantly with online payment
+              Get it for <strong>{formatPrice(finalPrice)}</strong> — Save <strong>{formatPrice(totalSavings)}</strong> instantly with online payment
             </span>
           </div>
 
           <div className="sticky-bar-action-row">
             <div className="sticky-bar-price-info">
-              <span className="sticky-saving-text">Saving ${totalSavings.toFixed(2)}</span>
+              <span className="sticky-saving-text">Saving {formatPrice(totalSavings)}</span>
               <div className="sticky-prices">
-                <strong>${finalPrice.toFixed(2)}</strong>
-                <span className="sticky-strike">${price.toFixed(2)}</span>
+                <strong>{formatPrice(finalPrice)}</strong>
+                <span className="sticky-strike">{formatPrice(price)}</span>
                 <span className="sticky-discount-badge">-15%</span>
               </div>
             </div>

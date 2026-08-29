@@ -8,6 +8,7 @@ import IntroSplash from "@/components/IntroSplash";
 import MotionLookbook from "@/components/MotionLookbook";
 import HeroModelShowcase from "@/components/HeroModelShowcase";
 import AccountNavButton from "@/components/AccountNavButton";
+import CurrencySelector from "@/components/CurrencySelector";
 import "./sandline.css";
 
 export default function Home() {
@@ -81,6 +82,7 @@ export default function Home() {
           <Link href="#story">Story</Link>
           <Link href="/size-guide">Size Guide</Link>
           <Link href="#contact">Contact</Link>
+          <CurrencySelector variant="navbar" />
           <WishlistLink />
           <AccountNavButton />
           <CartLink />
@@ -390,8 +392,12 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="footer-bottom">
+        <div className="footer-bottom" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
           <span>© 2026 SANDLINE STUDIO — HANDCRAFTED IN INDIA</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <span style={{ fontSize: "11px", letterSpacing: "0.5px", opacity: 0.7, fontFamily: "'Space Mono', monospace" }}>CURRENCY:</span>
+            <CurrencySelector variant="footer" />
+          </div>
           <span>WORLDWIDE EXPRESS SHIPPING • 7-DAY EXCHANGES</span>
         </div>
       </footer>

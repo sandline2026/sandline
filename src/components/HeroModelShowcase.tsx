@@ -1,13 +1,12 @@
-"use client";
-
 import { useState } from "react";
 import Link from "next/link";
+import { useCurrency } from "@/context/CurrencyContext";
 
 interface HeroLook {
   id: string;
   name: string;
   edit: string;
-  price: string;
+  priceUsd: number;
   image: string;
   slug: string;
   badge: string;
@@ -18,7 +17,7 @@ const HERO_LOOKS: HeroLook[] = [
     id: "1",
     name: "Santorini 3D Floral Slip",
     edit: "The Wedding Night Edit",
-    price: "$78.00",
+    priceUsd: 78.0,
     image: "/images/products/santorini-3d-floral-silk-slip-dress.jpg",
     slug: "santorini-3d-floral-silk-slip-dress",
     badge: "✦ Featured Atelier Look",
@@ -27,7 +26,7 @@ const HERO_LOOKS: HeroLook[] = [
     id: "2",
     name: "Riviera Crystal Blouse",
     edit: "The Resort Evening Edit",
-    price: "$72.00",
+    priceUsd: 72.0,
     image: "/images/products/riviera-crystal-pinstripe-tie-blouse.jpg",
     slug: "riviera-crystal-pinstripe-tie-blouse",
     badge: "✦ Hand-Embellished",
@@ -36,7 +35,7 @@ const HERO_LOOKS: HeroLook[] = [
     id: "3",
     name: "St. Tropez Ruffle Co-ord",
     edit: "The Beach Party Edit",
-    price: "$64.00",
+    priceUsd: 64.0,
     image: "/images/products/st-tropez-ruffle-tiered-skirt-co-ord-set.jpg",
     slug: "st-tropez-ruffle-tiered-skirt-co-ord-set",
     badge: "✦ Sunlit Linen",
@@ -44,6 +43,7 @@ const HERO_LOOKS: HeroLook[] = [
 ];
 
 export default function HeroModelShowcase() {
+  const { formatPrice } = useCurrency();
   const [selectedLook, setSelectedLook] = useState<HeroLook>(HERO_LOOKS[0]);
 
   return (
@@ -69,7 +69,7 @@ export default function HeroModelShowcase() {
           </div>
 
           <div className="hero-floating-pill top-right price-badge">
-            {selectedLook.price}
+            {formatPrice(selectedLook.priceUsd)}
           </div>
 
           {/* Bottom Card Details */}

@@ -3,10 +3,12 @@
 import Link from "next/link";
 import SiteNavbar from "@/components/SiteNavbar";
 import { useWishlist } from "@/context/WishlistContext";
+import { useCurrency } from "@/context/CurrencyContext";
 import "../sandline.css";
 
 export default function WishlistPage() {
   const { items, toggleWishlist } = useWishlist();
+  const { formatPrice } = useCurrency();
 
   return (
     <div className="sandline-page">
@@ -25,7 +27,7 @@ export default function WishlistPage() {
           <div className="collection-product-grid">
             {items.map((item) => (
               <div className="collection-card" key={item.id}>
-                <span className="price-tag">${item.price}</span>
+                <span className="price-tag">{formatPrice(Number(item.price))}</span>
                 <a href={`/product/${item.id}`} className="collection-card-link">
                   <div className="art">
                     {item.image ? (

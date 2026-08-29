@@ -6,6 +6,7 @@ import Link from "next/link";
 import SiteNavbar from "@/components/SiteNavbar";
 import { createClient } from "@/../utils/supabase/client";
 import { useCart } from "@/context/CartContext";
+import { useCurrency } from "@/context/CurrencyContext";
 import "@/app/sandline.css";
 
 interface OrderItem {
@@ -49,6 +50,7 @@ interface CustomerProfile {
 export default function CustomerAccountPage() {
   const router = useRouter();
   const { addToCart } = useCart();
+  const { formatPrice } = useCurrency();
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState("");
   const [profile, setProfile] = useState<CustomerProfile | null>(null);
@@ -371,7 +373,7 @@ export default function CustomerAccountPage() {
 
                         <div style={{ textAlign: "right" }}>
                           <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "18px", fontWeight: "700", color: "#1A1A1A" }}>
-                            ${Number(order.total_usd).toFixed(2)} USD
+                            {formatPrice(Number(order.total_usd))}
                           </div>
                           <div style={{ fontSize: "12px", color: "#8C6D58" }}>
                             Complimentary Express Delivery
@@ -408,7 +410,7 @@ export default function CustomerAccountPage() {
                               </div>
                             </div>
                             <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "14px", fontWeight: "600", color: "#1A1A1A" }}>
-                              ${(item.unit_price_usd * item.quantity).toFixed(2)}
+                              {formatPrice(item.unit_price_usd * item.quantity)}
                             </div>
                           </div>
                         ))}

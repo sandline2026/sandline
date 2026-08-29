@@ -7,6 +7,8 @@ import WishlistLink from "@/components/WishlistLink";
 import CartLink from "@/components/CartLink";
 import SortSelect from "@/components/SortSelect";
 import AccountNavButton from "@/components/AccountNavButton";
+import CurrencySelector from "@/components/CurrencySelector";
+import ProductPrice from "@/components/ProductPrice";
 import "../sandline.css";
 
 const collectionLabel: Record<string, string> = {
@@ -55,6 +57,7 @@ export default async function Shop({
           <Link href="/story">Story</Link>
           <Link href="/size-guide">Size Guide</Link>
           <Link href="/contact">Contact</Link>
+          <CurrencySelector variant="navbar" />
           <WishlistLink />
           <AccountNavButton />
           <CartLink />
@@ -107,9 +110,10 @@ export default async function Shop({
                 <div className="product-grid-card" key={product.id}>
                   {/* Image Box */}
                   <div className="product-card-image-box">
-                    <span className="floating-price-tag">
-                      ${Number(product.selling_price_usd).toFixed(2)}
-                    </span>
+                    <ProductPrice
+                      priceUsd={Number(product.selling_price_usd)}
+                      className="floating-price-tag"
+                    />
 
                     <WishlistButton
                       id={product.id}

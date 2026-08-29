@@ -11,6 +11,8 @@ import ProductBuyBox from "@/components/ProductBuyBox";
 import ProductGallery from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
 import AccountNavButton from "@/components/AccountNavButton";
+import CurrencySelector from "@/components/CurrencySelector";
+import ProductPrice from "@/components/ProductPrice";
 import "../../sandline.css";
 
 const collectionArt: Record<string, React.ReactElement> = {
@@ -92,6 +94,7 @@ export default async function ProductDetail({
           <Link href="/story">Story</Link>
           <Link href="/size-guide">Size Guide</Link>
           <Link href="/contact">Contact</Link>
+          <CurrencySelector variant="navbar" />
           <WishlistLink />
           <AccountNavButton />
           <CartLink />
@@ -135,12 +138,14 @@ export default async function ProductDetail({
 
             <div className="product-price-bar">
               <div className="product-price-amount-group">
-                <span className="product-price-amount">
-                  ${Number(product.selling_price_usd).toFixed(2)}
-                </span>
-                <span className="product-original-price">
-                  ${(Number(product.selling_price_usd) * 1.3).toFixed(2)}
-                </span>
+                <ProductPrice
+                  priceUsd={Number(product.selling_price_usd)}
+                  className="product-price-amount"
+                />
+                <ProductPrice
+                  priceUsd={Number(product.selling_price_usd) * 1.3}
+                  className="product-original-price"
+                />
                 <span className="product-discount-pill">-30%</span>
               </div>
               <span className="product-shipping-tag">

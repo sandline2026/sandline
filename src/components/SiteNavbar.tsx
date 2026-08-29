@@ -4,6 +4,7 @@ import Link from "next/link";
 import CartLink from "@/components/CartLink";
 import WishlistLink from "@/components/WishlistLink";
 import AccountNavButton from "@/components/AccountNavButton";
+import CurrencySelector from "@/components/CurrencySelector";
 
 interface SiteNavbarProps {
   currentPath?: string;
@@ -25,6 +26,7 @@ export default function SiteNavbar({ currentPath }: SiteNavbarProps) {
         <Link href="/story">Story</Link>
         <Link href="/size-guide">Size Guide</Link>
         <Link href="/contact">Contact</Link>
+        <CurrencySelector variant="navbar" />
         <WishlistLink />
         <AccountNavButton />
         <CartLink />

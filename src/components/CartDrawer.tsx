@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { useCurrency } from "@/context/CurrencyContext";
 
 const FREE_SHIPPING_THRESHOLD = 100;
 
 export default function CartDrawer() {
+  const { formatPrice } = useCurrency();
   const {
     items,
     removeFromCart,
@@ -118,7 +120,7 @@ export default function CartDrawer() {
             <div className="shipping-progress-text">
               <span>✈️</span>
               <span>
-                Add <strong>${amountToFreeShipping.toFixed(2)}</strong> more for <strong>FREE Shipping</strong>
+                Add <strong>{formatPrice(amountToFreeShipping)}</strong> more for <strong>FREE Shipping</strong>
               </span>
             </div>
           )}
@@ -206,7 +208,7 @@ export default function CartDrawer() {
 
                       {/* Item Price */}
                       <div className="cart-item-price">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        {formatPrice(item.price * item.quantity)}
                       </div>
                     </div>
                   </div>
@@ -226,7 +228,7 @@ export default function CartDrawer() {
                   <div className="coupon-tag-info">
                     <span>✓ Coupon <strong>{appliedCoupon.code}</strong> Applied</span>
                     <span className="coupon-saved-val">
-                      (-${discount.toFixed(2)})
+                      (-{formatPrice(discount)})
                     </span>
                   </div>
                   <button
@@ -281,22 +283,22 @@ export default function CartDrawer() {
             <div className="drawer-price-breakdown">
               <div className="drawer-price-row">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
               {discount > 0 && (
                 <div className="drawer-price-row discount-row">
                   <span>Discount ({appliedCoupon?.code})</span>
-                  <span>-${discount.toFixed(2)}</span>
+                  <span>-{formatPrice(discount)}</span>
                 </div>
               )}
               <div className="drawer-price-row">
                 <span>Prepaid Savings (Extra 5%)</span>
-                <span className="prepaid-green">-${prepaidDiscount.toFixed(2)}</span>
+                <span className="prepaid-green">-{formatPrice(prepaidDiscount)}</span>
               </div>
               <div className="drawer-price-row total-row">
                 <span>Estimated Total</span>
                 <div className="total-amount-box">
-                  <span className="final-total">${(total - prepaidDiscount).toFixed(2)}</span>
+                  <span className="final-total">{formatPrice(total - prepaidDiscount)}</span>
                   <span className="total-note">Incl. all taxes</span>
                 </div>
               </div>

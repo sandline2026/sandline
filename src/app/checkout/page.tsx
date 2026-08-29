@@ -3,11 +3,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { useCurrency } from "@/context/CurrencyContext";
 import { createClient } from "@/../utils/supabase/client";
 import AccountNavButton from "@/components/AccountNavButton";
+import CurrencySelector from "@/components/CurrencySelector";
 import "../sandline.css";
 
 export default function CheckoutPage() {
+  const { formatPrice } = useCurrency();
   const {
     items,
     subtotal,
@@ -298,6 +301,7 @@ export default function CheckoutPage() {
         <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
         <div className="nav-links">
           <Link href="/shop">Shop</Link>
+          <CurrencySelector variant="navbar" />
           <AccountNavButton />
           <Link href="/cart">Cart</Link>
         </div>
@@ -329,18 +333,18 @@ export default function CheckoutPage() {
               />
             </label>
             <label>
-              Email (for order confirmation)
+              Email address
               <input
                 type="email"
                 name="email"
-                placeholder="name@example.com"
+                placeholder="elena@example.com"
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
             </label>
             <label>
-              WhatsApp / Phone (for express courier tracking)
+              Mobile Phone
               <input
                 type="tel"
                 name="phone"
@@ -351,11 +355,11 @@ export default function CheckoutPage() {
               />
             </label>
             <label>
-              Street Address
+              Delivery address
               <input
                 type="text"
                 name="address"
-                placeholder="Apartment, suite, street"
+                placeholder="House / Flat No., Street, Landmark"
                 required
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
@@ -395,7 +399,7 @@ export default function CheckoutPage() {
             {error && <p style={{ color: "#c0392b", fontSize: "13px" }}>{error}</p>}
 
             <button className="btn" type="submit" disabled={loading} style={{ marginTop: "20px", width: "100%", padding: "16px" }}>
-              {loading ? "Launching Secure Payment..." : `Proceed to Pay — $${total.toFixed(2)} (₹${Math.round(total * 84.5)})`}
+              {loading ? "Launching Secure Payment..." : `Proceed to Pay — ${formatPrice(total)}`}
             </button>
             <div style={{ marginTop: "12px", textAlign: "center", fontSize: "11.5px", color: "rgba(27,36,32,0.6)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
               <span>🔒 100% Secure Payment</span>
@@ -408,7 +412,7 @@ export default function CheckoutPage() {
             {items.map((item) => (
               <div className="cart-row" key={item.id}>
                 <div className="cart-row-name">{item.name} × {item.quantity}</div>
-                <div className="cart-row-price">${(item.price * item.quantity).toFixed(2)}</div>
+                <div className="cart-row-price">{formatPrice(item.price * item.quantity)}</div>
               </div>
             ))}
 
@@ -420,7 +424,7 @@ export default function CheckoutPage() {
                     <span>Coupon: </span>
                     <strong>{appliedCoupon.code}</strong>
                     <span style={{ fontSize: "12px", opacity: 0.85, marginLeft: "4px" }}>
-                      ({appliedCoupon.discount_type === "percentage" ? `${appliedCoupon.discount_value}% off` : `$${appliedCoupon.discount_value} off`})
+                      ({appliedCoupon.discount_type === "percentage" ? `${appliedCoupon.discount_value}% off` : `${formatPrice(appliedCoupon.discount_value)} off`})
                     </span>
                   </div>
                   <button className="promo-remove-btn" onClick={removeCoupon}>
@@ -451,19 +455,19 @@ export default function CheckoutPage() {
 
             <div className="cart-subtotal" style={{ fontSize: "15px", marginTop: "12px" }}>
               <span style={{ color: "rgba(27,36,32,0.7)" }}>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>{formatPrice(subtotal)}</span>
             </div>
 
             {discount > 0 && (
               <div className="cart-discount-row">
                 <span>Discount ({appliedCoupon?.code})</span>
-                <span>-${discount.toFixed(2)}</span>
+                <span>-{formatPrice(discount)}</span>
               </div>
             )}
 
             <div className="cart-total-row">
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>{formatPrice(total)}</span>
             </div>
           </div>
         </div>

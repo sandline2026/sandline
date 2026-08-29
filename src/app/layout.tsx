@@ -3,6 +3,7 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { AuthModalProvider } from "@/context/AuthModalContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 import FlashSaleBanner from "@/components/FlashSaleBanner";
 import CartDrawer from "@/components/CartDrawer";
 import QuickAuthModal from "@/components/QuickAuthModal";
@@ -33,17 +34,19 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <FlashSaleBanner />
-        <CartProvider>
-          <WishlistProvider>
-            <AuthModalProvider>
-              <AuthHashHandler />
-              {children}
-              <CartDrawer />
-              <QuickAuthModal />
-            </AuthModalProvider>
-          </WishlistProvider>
-        </CartProvider>
+        <CurrencyProvider>
+          <FlashSaleBanner />
+          <CartProvider>
+            <WishlistProvider>
+              <AuthModalProvider>
+                <AuthHashHandler />
+                {children}
+                <CartDrawer />
+                <QuickAuthModal />
+              </AuthModalProvider>
+            </WishlistProvider>
+          </CartProvider>
+        </CurrencyProvider>
       </body>
     </html>
   );

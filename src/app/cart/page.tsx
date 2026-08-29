@@ -4,10 +4,12 @@ import Link from "next/link";
 
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
+import { useCurrency } from "@/context/CurrencyContext";
 import SiteNavbar from "@/components/SiteNavbar";
 import "../sandline.css";
 
 export default function CartPage() {
+  const { formatPrice } = useCurrency();
   const {
     items,
     removeFromCart,
@@ -64,7 +66,7 @@ export default function CartPage() {
                     <span>{item.quantity}</span>
                     <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
                   </div>
-                  <div className="cart-row-price">${(item.price * item.quantity).toFixed(2)}</div>
+                  <div className="cart-row-price">{formatPrice(item.price * item.quantity)}</div>
                   <button className="cart-row-remove" onClick={() => removeFromCart(item.id)}>
                     Remove
                   </button>
@@ -81,7 +83,7 @@ export default function CartPage() {
                       <span>Coupon: </span>
                       <strong>{appliedCoupon.code}</strong>
                       <span style={{ fontSize: "12px", opacity: 0.85, marginLeft: "4px" }}>
-                        ({appliedCoupon.discount_type === "percentage" ? `${appliedCoupon.discount_value}% off` : `$${appliedCoupon.discount_value} off`})
+                        ({appliedCoupon.discount_type === "percentage" ? `${appliedCoupon.discount_value}% off` : `${formatPrice(appliedCoupon.discount_value)} off`})
                       </span>
                     </div>
                     <button className="promo-remove-btn" onClick={removeCoupon}>
@@ -112,19 +114,19 @@ export default function CartPage() {
 
               <div className="cart-subtotal" style={{ fontSize: "16px", marginTop: "16px" }}>
                 <span style={{ color: "rgba(27,36,32,0.7)" }}>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
 
               {discount > 0 && (
                 <div className="cart-discount-row">
                   <span>Discount ({appliedCoupon?.code})</span>
-                  <span>-${discount.toFixed(2)}</span>
+                  <span>-{formatPrice(discount)}</span>
                 </div>
               )}
 
               <div className="cart-total-row">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>{formatPrice(total)}</span>
               </div>
 
               <a className="btn" href="/checkout" style={{ display: "block", textAlign: "center", marginTop: "24px" }}>
