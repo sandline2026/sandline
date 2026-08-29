@@ -276,13 +276,14 @@ export default function CheckoutPage() {
           email: email,
           contact: phone,
         },
-        theme: {
-          color: "#141C19",
-        },
         modal: {
+          confirm_close: true,
           ondismiss: function () {
             setLoading(false);
           },
+        },
+        theme: {
+          color: "#141C19",
         },
       };
 
@@ -401,10 +402,15 @@ export default function CheckoutPage() {
             <button className="btn" type="submit" disabled={loading} style={{ marginTop: "20px", width: "100%", padding: "16px" }}>
               {loading ? "Launching Secure Payment..." : `Proceed to Pay — ${formatPrice(total)}`}
             </button>
-            <div style={{ marginTop: "12px", textAlign: "center", fontSize: "11.5px", color: "rgba(27,36,32,0.6)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
-              <span>🔒 100% Secure Payment</span>
-              <span>•</span>
-              <span>UPI, GPay, PhonePe, Cards &amp; NetBanking</span>
+            <div style={{ marginTop: "14px", textAlign: "center", fontSize: "11.5px", color: "rgba(27,36,32,0.7)", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <span>🔒 100% Encrypted &amp; Secure Checkout</span>
+                <span>•</span>
+                <span>UPI, GPay &amp; NetBanking</span>
+              </div>
+              <div style={{ fontSize: "10.5px", color: "rgba(27,36,32,0.55)" }}>
+                💳 Accepts all Indian &amp; International Cards (Visa, Mastercard, Amex, Diner's)
+              </div>
             </div>
           </form>
 
