@@ -9,6 +9,7 @@ import MotionLookbook from "@/components/MotionLookbook";
 import HeroModelShowcase from "@/components/HeroModelShowcase";
 import AccountNavButton from "@/components/AccountNavButton";
 import CurrencySelector from "@/components/CurrencySelector";
+import MobileDestinationBar from "@/components/MobileDestinationBar";
 import "./sandline.css";
 
 export default function Home() {
@@ -119,6 +120,9 @@ export default function Home() {
         {/* Hero Model Editorial Showcase */}
         <HeroModelShowcase />
       </header>
+
+      {/* Editorial Destination Bar & Tabs (Escape Mobile Style) */}
+      <MobileDestinationBar />
 
       {/* Decorative Wave Separation */}
       <svg className="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ marginTop: "-2px" }}>
