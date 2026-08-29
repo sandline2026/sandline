@@ -6,15 +6,14 @@ export async function POST(req: NextRequest) {
     const { password, secretAnswer } = await req.json();
 
     const expectedPassword = process.env.ADMIN_PASSWORD || "sandline2026";
-    const expectedSecret = (process.env.ADMIN_SECURITY_ANSWER || "jaipur").trim().toLowerCase();
+    const expectedSecret = (process.env.ADMIN_SECURITY_ANSWER || "kashipur").trim().toLowerCase();
 
     const normalizedProvidedSecret = (secretAnswer || "").trim().toLowerCase();
 
     const isPasswordValid = password === expectedPassword;
     const isSecretValid =
       normalizedProvidedSecret === expectedSecret ||
-      normalizedProvidedSecret === "jaipur" ||
-      normalizedProvidedSecret === "pink city";
+      normalizedProvidedSecret === "kashipur";
 
     if (isPasswordValid && isSecretValid) {
       const cookieStore = await cookies();
