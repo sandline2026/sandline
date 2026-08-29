@@ -427,7 +427,6 @@ export default function Home() {
               <li><Link href="/story" style={{ color: "inherit", textDecoration: "none" }}>The Sandline Story</Link></li>
               <li><Link href="/contact" style={{ color: "inherit", textDecoration: "none" }}>Contact &amp; Concierge</Link></li>
               <li><a href="mailto:sandlinestudio.in@sandline.store" style={{ color: "inherit", textDecoration: "none" }}>sandlinestudio.in@sandline.store</a></li>
-              <li><Link href="/admin" style={{ color: "inherit", textDecoration: "none" }}>Admin Portal</Link></li>
             </ul>
           </div>
         </div>
