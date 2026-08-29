@@ -3456,22 +3456,25 @@ body{
 
 /* Intro Curtain Logo */
 .intro-logo-box {
-  max-width: 320px;
-  width: 80vw;
+  max-width: 260px;
+  width: 70vw;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .intro-master-logo {
   width: 100%;
+  max-width: 260px;
+  max-height: 260px;
   height: auto;
   object-fit: contain;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  filter: drop-shadow(0 4px 14px rgba(232, 167, 59, 0.2));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
   animation: introLogoPulse 2.4s ease-in-out infinite alternate;
 }
 @keyframes introLogoPulse {
   0% { transform: scale(0.99); opacity: 0.96; }
-  100% { transform: scale(1.01); opacity: 1; filter: drop-shadow(0 6px 20px rgba(232, 167, 59, 0.35)); }
+  100% { transform: scale(1.01); opacity: 1; filter: drop-shadow(0 4px 12px rgba(232, 167, 59, 0.3)); }
 }
 
 /* Nav Auth Button */
