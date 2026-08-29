@@ -35,57 +35,86 @@ body{
 }
 .sandline-page ::selection{background:var(--papaya); color:var(--sand);}
 
-#horizon-wrap{
-  position:fixed; top:0; left:0; right:0; height:3px; z-index:500; pointer-events:none;
-}
-#horizon-track{ position:absolute; inset:0; background:var(--line); }
-#horizon-fill{
-  position:absolute; top:0; left:0; bottom:0; width:0%;
-  background:linear-gradient(90deg, var(--gold), var(--papaya), var(--lagoon));
-  transition:width 0.05s linear;
-}
-#sun{
-  position:fixed; top:-9px; left:0%; width:20px; height:20px; border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, #fff6df, var(--gold) 60%, var(--papaya) 100%);
-  box-shadow:0 0 18px rgba(232,167,59,0.65); z-index:501; transform:translateX(-50%);
-  transition:left 0.05s linear; pointer-events:none;
+#horizon-wrap,
+#sun {
+  display: none !important;
 }
 
-.sandline-page nav{
-  position:fixed; top:3px; left:0; right:0; z-index:400;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:26px clamp(24px,5vw,64px) 0;
+.sandline-page nav,
+nav.sandline-site-navbar {
+  position: fixed;
+  top: 36px;
+  left: 0;
+  right: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px clamp(24px, 5vw, 64px);
+  background: rgba(250, 248, 245, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(27, 36, 32, 0.08);
 }
-.sandline-page .logo{ font-family:'Fraunces', serif; font-weight:600; font-size:20px; letter-spacing:0.01em; }
-.sandline-page .logo span{color:var(--papaya);}
-.sandline-page .nav-links{
-  display:flex; gap:32px; font-family:'Space Mono', monospace; font-size:11px;
-  letter-spacing:0.1em; text-transform:uppercase;
+.sandline-page .logo,
+nav.sandline-site-navbar .logo {
+  display: inline-flex;
+  align-items: center;
 }
-.sandline-page .nav-links a{position:relative; padding-bottom:4px;}
-.sandline-page .nav-links a::after{
-  content:''; position:absolute; left:0; bottom:0; height:1px; width:0;
-  background:var(--lagoon); transition:width 0.3s ease;
+.sandline-page .nav-links,
+nav.sandline-site-navbar .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
-.sandline-page .mobile-hamburger-btn {
+.sandline-page .nav-links a,
+nav.sandline-site-navbar .nav-links a {
+  position: relative;
+  padding-bottom: 4px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.sandline-page .nav-links a::after,
+nav.sandline-site-navbar .nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  background: var(--lagoon);
+  transition: width 0.3s ease;
+}
+.sandline-page .nav-links a:hover::after,
+nav.sandline-site-navbar .nav-links a:hover::after {
+  width: 100%;
+}
+.sandline-page .mobile-hamburger-btn,
+nav.sandline-site-navbar .mobile-hamburger-btn {
   display: none;
 }
-.sandline-page .mobile-top-actions {
+.sandline-page .mobile-top-actions,
+nav.sandline-site-navbar .mobile-top-actions {
   display: none;
 }
 
 @media (max-width: 768px) {
   .sandline-page nav,
   nav.sandline-site-navbar {
-    padding: 10px 16px !important;
-    background: rgba(250, 248, 245, 0.95) !important;
+    top: 32px !important;
+    padding: 8px 16px !important;
+    background: rgba(250, 248, 245, 0.96) !important;
     backdrop-filter: blur(14px) !important;
     -webkit-backdrop-filter: blur(14px) !important;
     border-bottom: 1px solid rgba(27, 36, 32, 0.08) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    height: 54px !important;
+    height: 52px !important;
     box-sizing: border-box !important;
   }
 
@@ -3870,6 +3899,12 @@ body{
   display: none;
 }
 
+/* Mobile bottom bar and destination marquee HIDDEN by default on Desktop */
+.mobile-bottom-navbar,
+.mobile-destination-section {
+  display: none !important;
+}
+
 @media (max-width: 768px) {
   /* Add bottom padding to body so content does not get covered */
   body {
@@ -3877,7 +3912,7 @@ body{
   }
 
   .mobile-bottom-navbar {
-    display: flex;
+    display: flex !important;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -3953,6 +3988,7 @@ body{
 
   /* Destination & Sub-Category Section */
   .mobile-destination-section {
+    display: block !important;
     background: #FAF8F5;
     border-top: 1px solid #EAE6DF;
     border-bottom: 1px solid #EAE6DF;
