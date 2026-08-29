@@ -56,6 +56,20 @@ export const CURRENCIES: Record<CurrencyCode, CurrencyConfig> = {
   },
 };
 
+export function mapCountryToCurrency(countryCode: string): CurrencyCode {
+  const code = countryCode.trim().toUpperCase();
+  if (code === "IN") return "INR";
+  if (code === "GB" || code === "UK") return "GBP";
+  if (["AE", "SA", "QA", "KW", "OM", "BH"].includes(code)) return "AED";
+  if ([
+    "FR", "DE", "IT", "ES", "NL", "BE", "AT", "CH", "SE", "NO",
+    "DK", "FI", "PT", "GR", "IE", "PL", "CZ", "HU", "RO", "BG"
+  ].includes(code)) {
+    return "EUR";
+  }
+  return "USD";
+}
+
 interface CurrencyContextType {
   currency: CurrencyCode;
   currencyConfig: CurrencyConfig;
@@ -66,29 +80,22 @@ interface CurrencyContextType {
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
-function detectUserCurrency(): CurrencyCode {
+function detectClientTzCurrency(): CurrencyCode {
   if (typeof window === "undefined") return "INR";
 
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
     const locale = navigator.language || "";
 
-    // India detection
     if (tz === "Asia/Kolkata" || tz === "Asia/Calcutta" || locale.includes("en-IN") || locale.includes("hi-IN")) {
       return "INR";
     }
-
-    // UK detection
     if (tz.includes("London") || locale.includes("en-GB")) {
       return "GBP";
     }
-
-    // UAE / Gulf detection
     if (tz.includes("Dubai") || tz.includes("Abu_Dhabi") || locale.includes("ar-AE")) {
       return "AED";
     }
-
-    // Europe detection
     if (
       tz.includes("Europe") ||
       locale.includes("fr-") ||
@@ -98,8 +105,6 @@ function detectUserCurrency(): CurrencyCode {
     ) {
       return "EUR";
     }
-
-    // Default to USD for USA & international
     return "USD";
   } catch {
     return "INR";
@@ -108,23 +113,56 @@ function detectUserCurrency(): CurrencyCode {
 
 export function CurrencyProvider({ children }: { children: ReactNode }) {
   const [currency, setCurrencyState] = useState<CurrencyCode>("INR");
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("sandline_currency") as CurrencyCode | null;
-    if (saved && CURRENCIES[saved]) {
-      setCurrencyState(saved);
-    } else {
-      const auto = detectUserCurrency();
-      setCurrencyState(auto);
-      localStorage.setItem("sandline_currency", auto);
+    // 1. Check if user already manually selected currency
+    const manualCurrency = localStorage.getItem("sandline_currency_manual") as CurrencyCode | null;
+    if (manualCurrency && CURRENCIES[manualCurrency]) {
+      setCurrencyState(manualCurrency);
+      return;
     }
-    setIsLoaded(true);
+
+    // 2. Instant fast local detection (<1ms)
+    const fastDetected = detectClientTzCurrency();
+    setCurrencyState(fastDetected);
+
+    // 3. Real-time Live IP Geo-Detection in background
+    async function fetchLiveLocation() {
+      try {
+        const res = await fetch("/api/geo");
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.country) {
+            const detected = mapCountryToCurrency(data.country);
+            setCurrencyState(detected);
+            localStorage.setItem("sandline_currency", detected);
+            return;
+          }
+        }
+
+        // Fallback to public client IP lookup
+        const publicRes = await fetch("https://api.country.is/", { signal: AbortSignal.timeout(2500) });
+        if (publicRes.ok) {
+          const pData = await publicRes.json();
+          if (pData?.country) {
+            const detected = mapCountryToCurrency(pData.country);
+            setCurrencyState(detected);
+            localStorage.setItem("sandline_currency", detected);
+          }
+        }
+      } catch (err) {
+        console.warn("Auto geo-tag fallback:", err);
+      }
+    }
+
+    fetchLiveLocation();
   }, []);
 
   function setCurrency(code: CurrencyCode) {
     if (CURRENCIES[code]) {
       setCurrencyState(code);
+      // Mark as manually selected so it remembers user's explicit preference
+      localStorage.setItem("sandline_currency_manual", code);
       localStorage.setItem("sandline_currency", code);
     }
   }
@@ -159,7 +197,6 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
 export function useCurrency() {
   const ctx = useContext(CurrencyContext);
   if (!ctx) {
-    // Fallback safe context if used outside provider
     return {
       currency: "INR" as CurrencyCode,
       currencyConfig: CURRENCIES.INR,
