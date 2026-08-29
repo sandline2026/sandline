@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/../utils/supabase/server";
-import { cookies } from "next/headers";
+import { createClient } from "@supabase/supabase-js";
 import { sendOrderStatusUpdateEmail } from "@/lib/email";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+);
 
 export async function PATCH(
   req: NextRequest,
@@ -10,8 +14,6 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await req.json();
-    const cookieStore = await cookies();
-    const supabase = createClient(cookieStore);
 
     const updatePayload: Record<string, any> = {};
     if (body.status !== undefined) {
@@ -27,24 +29,35 @@ export async function PATCH(
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // Trigger status update email & WhatsApp to customer if status changed
+    // Trigger status update email to customer
     if (body.status) {
       const { data: rawOrder } = await supabase
         .from("orders")
         .select(`
           order_number,
-          customers (full_name, email, phone)
+          customer_id,
+          customers (full_name, email)
         `)
         .eq("id", id)
         .single();
 
       const order = rawOrder as any;
-      const customer = Array.isArray(order?.customers) ? order?.customers[0] : order?.customers;
+      let customer = Array.isArray(order?.customers) ? order?.customers[0] : order?.customers;
+
+      if (!customer?.email && order?.customer_id) {
+        const { data: custData } = await supabase
+          .from("customers")
+          .select("full_name, email")
+          .eq("id", order.customer_id)
+          .single();
+        if (custData) customer = custData;
+      }
 
       if (order && customer?.email) {
+        console.log(`[ORDER STATUS EMAIL] Dispatching to ${customer.email} for order #${order.order_number} (${body.status})`);
         await sendOrderStatusUpdateEmail({
           orderNumber: order.order_number || id.slice(0, 8),
-          customerName: customer.full_name || "Valued Shopper",
+          customerName: customer.full_name || "Valued Client",
           customerEmail: customer.email,
           newStatus: body.status,
           trackingNumber: body.trackingNumber,
