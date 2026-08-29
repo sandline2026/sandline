@@ -27,8 +27,6 @@ export default function IntroSplash() {
       className={`sandline-intro-curtain ${stage === "fly" ? "fly-away" : ""}`}
       aria-hidden="true"
     >
-      <div className="intro-bg-glow"></div>
-
       <div className="intro-content">
         <div className="intro-logo-box">
           <img
