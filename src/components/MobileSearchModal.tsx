@@ -55,33 +55,20 @@ export default function MobileSearchModal({ isOpen, onClose }: MobileSearchModal
     const timer = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/admin/products`);
+        const res = await fetch(`/api/products/search?q=${encodeURIComponent(query)}`);
         if (res.ok) {
-          const all: SearchProduct[] = await res.json();
-          const q = query.toLowerCase().trim();
-          const words = q.replace(/[^\w\s]/g, " ").split(/\s+/).filter(Boolean);
-
-          const filtered = all
-            .filter((p: SearchProduct) => {
-              const nameLower = (p.name || "").toLowerCase();
-              const collLower = (p.collection || "").toLowerCase().replace(/_/g, " ");
-              const fabricLower = ((p as any).fabric || "").toLowerCase();
-              const fullText = `${nameLower} ${collLower} ${fabricLower}`;
-
-              // Match if all search words appear in the product details, or any word matches
-              const allMatch = words.every((w) => fullText.includes(w));
-              const someMatch = words.some((w) => nameLower.includes(w) || collLower.includes(w));
-              return allMatch || someMatch;
-            })
-            .slice(0, 10);
-          setProducts(filtered);
+          const data = await res.json();
+          setProducts(data.products || []);
+        } else {
+          setProducts([]);
         }
       } catch (err) {
         console.error("Search error:", err);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
-    }, 200);
+    }, 150);
 
     return () => clearTimeout(timer);
   }, [query]);
