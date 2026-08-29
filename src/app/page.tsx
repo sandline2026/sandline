@@ -11,6 +11,7 @@ import AccountNavButton from "@/components/AccountNavButton";
 import CurrencySelector from "@/components/CurrencySelector";
 import MobileDestinationBar from "@/components/MobileDestinationBar";
 import MobileMenuDrawer from "@/components/MobileMenuDrawer";
+import InstagramFeed from "@/components/InstagramFeed";
 import "./sandline.css";
 
 export default function Home() {
@@ -360,6 +361,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Instagram Vacation Lookbook & "Shop The Look" Feed */}
+      <InstagramFeed />
+
       {/* Sunset VIP Newsletter & Footer */}
       <footer id="contact">
         <div className="footer-cta">
@@ -417,11 +421,12 @@ export default function Home() {
             </ul>
           </div>
           <div>
-            <h4>Studio</h4>
+            <h4>Studio &amp; Social</h4>
             <ul>
+              <li><a href="https://www.instagram.com/sandline.store" target="_blank" rel="noopener noreferrer" style={{ color: "var(--gold)", textDecoration: "none", fontWeight: 600 }}>Instagram: @sandline.store ↗</a></li>
               <li><Link href="/story" style={{ color: "inherit", textDecoration: "none" }}>The Sandline Story</Link></li>
               <li><Link href="/contact" style={{ color: "inherit", textDecoration: "none" }}>Contact &amp; Concierge</Link></li>
-              <li><a href="mailto:orders@sandline.store" style={{ color: "inherit", textDecoration: "none" }}>orders@sandline.store</a></li>
+              <li><a href="mailto:sandlinestudio.in@sandline.store" style={{ color: "inherit", textDecoration: "none" }}>sandlinestudio.in@sandline.store</a></li>
               <li><Link href="/admin" style={{ color: "inherit", textDecoration: "none" }}>Admin Portal</Link></li>
             </ul>
           </div>

@@ -4036,4 +4036,366 @@ body{
   }
 }
 
+/* ==========================================================================
+   INSTAGRAM VACATION LOOKBOOK & "SHOP THE LOOK" GRID
+   ========================================================================== */
+.instagram-feed-section {
+  padding: 80px clamp(24px, 5vw, 64px) 100px;
+  background: var(--sand);
+  border-top: 1px solid var(--line);
+}
+
+.instagram-feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.insta-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--papaya);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.insta-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.15;
+}
+
+.insta-subtitle {
+  font-size: 14px;
+  color: rgba(27, 36, 32, 0.7);
+  max-width: 520px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.insta-follow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: #111827;
+  color: #FFFFFF;
+  font-family: 'Space Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+.insta-follow-btn:hover {
+  background: var(--papaya);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(232, 167, 59, 0.25);
+}
+
+.instagram-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1100px) {
+  .instagram-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+}
+@media (max-width: 600px) {
+  .instagram-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+.insta-grid-item {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--foam);
+  aspect-ratio: 1 / 1.25;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.insta-grid-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(27, 36, 32, 0.12);
+}
+
+.insta-img-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.insta-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.insta-grid-item:hover .insta-img-wrap img {
+  transform: scale(1.06);
+}
+
+.insta-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17, 24, 39, 0.8) 0%, rgba(17, 24, 39, 0.2) 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px;
+}
+.insta-grid-item:hover .insta-overlay {
+  opacity: 1;
+}
+
+.insta-location-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #111827;
+  align-self: flex-start;
+  font-family: 'Space Mono', monospace;
+}
+
+.insta-shop-pill {
+  background: #FFFFFF;
+  color: #111827;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.insta-icon-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111827;
+}
+
+/* "Shop The Look" Modal */
+.shop-look-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.shop-look-modal-card {
+  background: #FAF8F5;
+  border-radius: 24px;
+  max-width: 780px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-look-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #EAE6DF;
+  background: #FFFFFF;
+}
+
+.shop-look-user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.shop-look-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FAF8F5;
+  border: 1px solid #EAE6DF;
+  overflow: hidden;
+  padding: 4px;
+}
+.shop-look-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.shop-look-username {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+.shop-look-loc {
+  font-size: 11px;
+  color: #666;
+  font-family: 'Space Mono', monospace;
+}
+
+.shop-look-close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #888;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.shop-look-body {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  overflow-y: auto;
+}
+@media (max-width: 680px) {
+  .shop-look-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.shop-look-photo-side {
+  background: #F0ECE6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shop-look-photo-side img {
+  width: 100%;
+  height: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+.shop-look-info-side {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.shop-look-tagline {
+  font-family: 'Space Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--papaya);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.shop-look-prod-title {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  color: #111827;
+  margin: 0 0 10px;
+  line-height: 1.25;
+}
+
+.shop-look-caption {
+  font-size: 13.5px;
+  color: #4B5563;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.shop-look-price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 10px 14px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #EAE6DF;
+}
+.shop-look-price-row .price-label {
+  font-size: 12px;
+  color: #888;
+  font-family: 'Space Mono', monospace;
+}
+.shop-look-price-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.shop-look-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shop-look-cta-btn {
+  background: #111827;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 13px 18px;
+  border-radius: 30px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.shop-look-cta-btn:hover {
+  background: var(--papaya);
+}
+
+.shop-look-insta-link {
+  text-align: center;
+  font-size: 12px;
+  color: #6B7280;
+  text-decoration: none;
+  padding: 6px;
+  font-weight: 500;
+}
+.shop-look-insta-link:hover {
+  color: #111827;
+  text-decoration: underline;
+}
+
+
 
