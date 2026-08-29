@@ -10,9 +10,8 @@ import PincodeCheck from "@/components/PincodeCheck";
 import ProductBuyBox from "@/components/ProductBuyBox";
 import ProductGallery from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
-import AccountNavButton from "@/components/AccountNavButton";
-import CurrencySelector from "@/components/CurrencySelector";
 import ProductPrice from "@/components/ProductPrice";
+import SiteNavbar from "@/components/SiteNavbar";
 import "../../sandline.css";
 
 const collectionArt: Record<string, React.ReactElement> = {
@@ -87,19 +86,7 @@ export default async function ProductDetail({
   return (
     <div className="sandline-page">
       {/* Navbar */}
-      <nav>
-        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
-        <div className="nav-links">
-          <Link href="/shop">Shop</Link>
-          <Link href="/story">Story</Link>
-          <Link href="/size-guide">Size Guide</Link>
-          <Link href="/contact">Contact</Link>
-          <CurrencySelector variant="navbar" />
-          <WishlistLink />
-          <AccountNavButton />
-          <CartLink />
-        </div>
-      </nav>
+      <SiteNavbar />
 
       {/* Main Container */}
       <div className="product-detail-wrap">

@@ -3,12 +3,9 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import AddToCartButton from "@/components/AddToCartButton";
 import WishlistButton from "@/components/WishlistButton";
-import WishlistLink from "@/components/WishlistLink";
-import CartLink from "@/components/CartLink";
 import SortSelect from "@/components/SortSelect";
-import AccountNavButton from "@/components/AccountNavButton";
-import CurrencySelector from "@/components/CurrencySelector";
 import ProductPrice from "@/components/ProductPrice";
+import SiteNavbar from "@/components/SiteNavbar";
 import "../../sandline.css";
 
 const collectionsMeta: Record<
@@ -132,19 +129,7 @@ export default async function CollectionPage({
   return (
     <div className="sandline-page">
       {/* Navigation */}
-      <nav>
-        <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
-        <div className="nav-links">
-          <Link href="/shop">Shop</Link>
-          <Link href="/story">Story</Link>
-          <Link href="/size-guide">Size Guide</Link>
-          <Link href="/contact">Contact</Link>
-          <CurrencySelector variant="navbar" />
-          <WishlistLink />
-          <AccountNavButton />
-          <CartLink />
-        </div>
-      </nav>
+      <SiteNavbar currentPath={`/collections/${collection}`} />
 
       {/* Collection Hero Header */}
       <section className="collection-hero-wrap">

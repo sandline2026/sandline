@@ -67,25 +67,53 @@ body{
   content:''; position:absolute; left:0; bottom:0; height:1px; width:0;
   background:var(--lagoon); transition:width 0.3s ease;
 }
-@media(max-width:720px){
-  .sandline-page nav{
-    padding:16px 18px;
-    background:rgba(250,248,245,0.92);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid rgba(27,36,32,0.08);
+.sandline-page .mobile-hamburger-btn {
+  display: none;
+}
+.sandline-page .mobile-top-actions {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sandline-page nav,
+  nav.sandline-site-navbar {
+    padding: 10px 16px !important;
+    background: rgba(250, 248, 245, 0.95) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border-bottom: 1px solid rgba(27, 36, 32, 0.08) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 54px !important;
+    box-sizing: border-box !important;
   }
-  .sandline-page .nav-links{
-    display:flex;
-    gap:12px;
-    font-size:10px;
-    align-items:center;
+
+  .sandline-page .mobile-hamburger-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    color: #111827;
   }
-  .sandline-page .nav-links a[href="#story"],
-  .sandline-page .nav-links a[href="#contact"],
-  .sandline-page .nav-links a[href="/story"],
-  .sandline-page .nav-links a[href="/contact"],
-  .sandline-page .nav-links a[href="/size-guide"]{
-    display:none;
+
+  .sandline-page .desktop-only-nav {
+    display: none !important;
+  }
+
+  .sandline-page .mobile-top-actions {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .site-brand-logo {
+    height: 22px !important;
+    width: auto !important;
+    object-fit: contain;
   }
 }
 
@@ -1923,22 +1951,12 @@ body{
 
   /* Navbar on Mobile */
   .sandline-page .logo {
-    font-size: 18px !important;
-  }
-  .sandline-page .nav-links {
-    display: flex !important;
-    gap: 10px !important;
-    font-size: 10px !important;
+    display: flex;
     align-items: center;
+    justify-content: center;
   }
-  .sandline-page .nav-links a:not([href="/shop"]):not([href*="cart"]):not([href*="wishlist"]) {
+  .sandline-page .desktop-only-nav {
     display: none !important;
-  }
-  .sandline-page .nav-links a {
-    padding: 4px 8px;
-    background: var(--foam);
-    border-radius: 999px;
-    border: 1px solid var(--line);
   }
 
   /* Hero Section */
