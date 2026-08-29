@@ -30,6 +30,7 @@ export default async function Shop({
     sizes?: string;
     fabric?: string;
     colors?: string;
+    category?: string;
   }>;
 }) {
   const sp = (await searchParams) || {};
@@ -48,6 +49,36 @@ export default async function Shop({
   const activeSizes = sp.sizes ? sp.sizes.split(",").filter(Boolean) : [];
   const activeFabrics = sp.fabric ? sp.fabric.split(",").filter(Boolean) : [];
   const activeColors = sp.colors ? sp.colors.split(",").filter(Boolean) : [];
+
+  const activeCategory = sp.category ? sp.category.toLowerCase().trim() : null;
+
+  if (activeCategory) {
+    if (activeCategory === "dresses") {
+      products = products.filter((p: any) =>
+        /dress|gown|slip|maxi|midi/i.test(p.name)
+      );
+    } else if (activeCategory === "sets" || activeCategory === "matching_sets") {
+      products = products.filter((p: any) =>
+        /set|co-ord|palazzo/i.test(p.name)
+      );
+    } else if (activeCategory === "jeans" || activeCategory === "denim") {
+      products = products.filter((p: any) =>
+        /jeans|denim|pintuck|flare/i.test(p.name)
+      );
+    } else if (activeCategory === "tops") {
+      products = products.filter((p: any) =>
+        /top|blouse|shirt|cami|halter|pullover|bralette/i.test(p.name)
+      );
+    } else if (activeCategory === "bottoms") {
+      products = products.filter((p: any) =>
+        /shorts|skirt|culotte|bermuda/i.test(p.name)
+      );
+    } else if (activeCategory === "accessories") {
+      products = products.filter((p: any) =>
+        /hat|straw|fedora|accessory/i.test(p.name)
+      );
+    }
+  }
 
   if (activeSizes.length > 0) {
     products = products.filter((p: any) =>

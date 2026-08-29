@@ -12,6 +12,7 @@ import CurrencySelector from "@/components/CurrencySelector";
 import MobileDestinationBar from "@/components/MobileDestinationBar";
 import MobileMenuDrawer from "@/components/MobileMenuDrawer";
 import InstagramFeed from "@/components/InstagramFeed";
+import ShopByCategory from "@/components/ShopByCategory";
 import "./sandline.css";
 
 export default function Home() {
@@ -155,6 +156,9 @@ export default function Home() {
 
       {/* Editorial Destination Bar & Tabs (Escape Mobile Style) */}
       <MobileDestinationBar />
+
+      {/* Shop By Category 2-Column Luxury Grid */}
+      <ShopByCategory />
 
       {/* Decorative Wave Separation */}
       <svg className="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ marginTop: "-2px" }}>
