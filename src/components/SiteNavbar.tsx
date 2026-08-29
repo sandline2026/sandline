@@ -53,10 +53,10 @@ export default function SiteNavbar({ currentPath }: SiteNavbarProps) {
           <CartLink />
         </div>
 
-        {/* Mobile Top Right Actions (Currency + Wishlist on mobile) */}
+        {/* Mobile Top Right Actions (Currency + Wishlist icon on mobile) */}
         <div className="mobile-top-actions">
           <CurrencySelector variant="navbar" />
-          <WishlistLink />
+          <WishlistLink variant="icon" />
         </div>
       </nav>
 
