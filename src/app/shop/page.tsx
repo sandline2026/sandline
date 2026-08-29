@@ -153,10 +153,6 @@ export default async function Shop({
                       variant="icon"
                     />
 
-                    {isOutOfStock && (
-                      <span className="floating-sold-out-tag">Sold Out</span>
-                    )}
-
                     <Link href={`/product/${product.slug}`}>
                       {hasPhoto ? (
                         <img
@@ -210,13 +206,13 @@ export default async function Shop({
                           style={{
                             textAlign: "center",
                             textDecoration: "none",
-                            background: "var(--foam)",
-                            color: "var(--ink)",
-                            border: "1px solid var(--line)",
+                            background: "#FAF8F5",
+                            color: "#888888",
+                            border: "1px solid #EAE6DF",
                             display: "block",
                           }}
                         >
-                          Notify Me When Back
+                          Sold Out
                         </Link>
                       ) : (
                         <AddToCartButton

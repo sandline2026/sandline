@@ -251,9 +251,10 @@ export default async function ProductDetail({
               return (
                 <div className="product-grid-card" key={p.id}>
                   <div className="product-card-image-box">
-                    <span className="floating-price-tag">
-                      ${Number(p.selling_price_usd).toFixed(2)}
-                    </span>
+                    <ProductPrice
+                      priceUsd={Number(p.selling_price_usd)}
+                      className="floating-price-tag"
+                    />
 
                     <WishlistButton
                       id={p.id}
@@ -262,10 +263,6 @@ export default async function ProductDetail({
                       image={pHasPhoto ? p.images[0] : null}
                       variant="icon"
                     />
-
-                    {pOutOfStock && (
-                      <span className="floating-sold-out-tag">Sold Out</span>
-                    )}
 
                     <Link href={`/product/${p.slug}`}>
                       {pHasPhoto ? (
@@ -309,6 +306,7 @@ export default async function ProductDetail({
                         id={p.id}
                         name={p.name}
                         price={p.selling_price_usd}
+                        isOutOfStock={pOutOfStock}
                       />
                     </div>
                   </div>
