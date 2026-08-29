@@ -329,6 +329,28 @@ export default function AdminOrdersTable({
                       </option>
                     ))}
                   </select>
+
+                  <button
+                    type="button"
+                    onClick={() => handleStatusChange(activeOrder.id, activeOrder.status)}
+                    disabled={updating}
+                    style={{
+                      background: "#111827",
+                      color: "#FFFFFF",
+                      border: "none",
+                      padding: "7px 12px",
+                      borderRadius: "8px",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      cursor: "pointer",
+                      fontFamily: "'Space Mono', monospace",
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {updating ? "Sending..." : "✉️ Send Email"}
+                  </button>
                 </div>
               </div>
 
