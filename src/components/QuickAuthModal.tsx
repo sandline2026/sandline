@@ -47,6 +47,34 @@ export default function QuickAuthModal() {
     };
   }, [isOpen]);
 
+  // Auto-detect login when user clicks "Sign In" link in email
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user && isOpen) {
+        setSuccessMsg("Logged in successfully! Welcome back.");
+        setTimeout(() => {
+          closeAuthModal();
+        }, 600);
+      }
+    });
+
+    if (typeof window !== "undefined" && window.location.hash.includes("access_token")) {
+      supabase.auth.getSession().then(({ data }) => {
+        if (data.session) {
+          setSuccessMsg("Logged in successfully! Welcome back.");
+          setTimeout(() => {
+            closeAuthModal();
+            window.history.replaceState(null, "", window.location.pathname + window.location.search);
+          }, 600);
+        }
+      });
+    }
+
+    return () => subscription.unsubscribe();
+  }, [isOpen, closeAuthModal, supabase]);
+
   async function handleSendOtp(e: React.FormEvent) {
     e.preventDefault();
     setErrorMsg("");
