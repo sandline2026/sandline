@@ -63,22 +63,27 @@ function LoginContent() {
     setMessage("");
 
     try {
-      const res = await fetch("/api/auth/send-email-otp", {
+      // 1. Send direct Supabase 1-Click Magic Link
+      await supabase.auth.signInWithOtp({
+        email: email.trim().toLowerCase(),
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`,
+          shouldCreateUser: true,
+        },
+      });
+
+      // 2. Also trigger luxury email in parallel
+      fetch("/api/auth/send-email-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim().toLowerCase() }),
-      });
-
-      const data = await res.json();
-      if (!res.ok || data.error) {
-        throw new Error(data.error || "Failed to send access code.");
-      }
+      }).catch(() => {});
 
       setStep("otp");
-      setMessage(`A 6-digit access code was sent to ${email.trim().toLowerCase()}! Check your inbox.`);
+      setMessage(`Magic Sign-In link sent to ${email.trim().toLowerCase()}!`);
       setResendTimer(60);
     } catch (err: any) {
-      setError(err.message || "Failed to send access code. Please try again.");
+      setError(err.message || "Failed to send link. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -296,7 +301,7 @@ function LoginContent() {
                     boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
                   }}
                 >
-                  {loading ? "Sending Code..." : "Send 6-Digit Access Code →"}
+                  {loading ? "Sending Magic Link..." : "Send 1-Click Sign-In Link →"}
                 </button>
               </form>
 
@@ -351,115 +356,103 @@ function LoginContent() {
                 }}
               >
                 <span>⚡</span>
-                <span>No password required. You will receive an instant verification code in your inbox.</span>
+                <span>No password needed. You will receive an instant 1-click login link in your inbox.</span>
               </div>
             </div>
           ) : (
-            /* Step 2: OTP Verification */
-            <form onSubmit={handleVerifyOtp}>
-              <div style={{ marginBottom: "20px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                  <label
-                    style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: "11px",
-                      letterSpacing: "0.5px",
-                      color: "#1A1A1A",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    6-Digit Code
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setStep("email");
-                      setOtp("");
-                      setError("");
-                    }}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      color: "#8C6D58",
-                      fontSize: "12px",
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                      padding: 0,
-                    }}
-                  >
-                    Change Email
-                  </button>
-                </div>
-                <input
-                  type="text"
-                  required
-                  maxLength={8}
-                  placeholder="• • • • • •"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\s+/g, ""))}
-                  autoFocus
-                  style={{
-                    width: "100%",
-                    padding: "14px 16px",
-                    borderRadius: "12px",
-                    border: "1px solid #D5D1CA",
-                    fontSize: "22px",
-                    letterSpacing: "8px",
-                    textAlign: "center",
-                    fontFamily: "'Space Mono', monospace",
-                    outline: "none",
-                    background: "#FAF8F5",
-                    color: "#1A1A1A",
-                    boxSizing: "border-box",
-                  }}
-                />
-              </div>
+            /* Step 2: Magic Link Sent Confirmation */
+            <div style={{ textAlign: "center", padding: "10px 0" }}>
+              <div style={{ fontSize: "44px", marginBottom: "12px" }}>✉️</div>
+              <h2 style={{ fontSize: "20px", color: "#111827", marginBottom: "8px", fontFamily: "Georgia, serif" }}>
+                Sign-In Link Sent!
+              </h2>
+              <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.6", marginBottom: "24px" }}>
+                We sent a 1-click magic link to <strong>{email}</strong>.<br/>
+                Open your email and click <strong>&quot;Sign in&quot;</strong> to login instantly without entering any code!
+              </p>
 
-              <button
-                type="submit"
-                disabled={loading}
+              <a
+                href="https://mail.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  width: "100%",
-                  background: "#1A1A1A",
+                  display: "inline-block",
+                  textDecoration: "none",
+                  padding: "15px 32px",
+                  background: "#111827",
                   color: "white",
-                  padding: "15px 24px",
                   borderRadius: "30px",
-                  fontSize: "14px",
                   fontWeight: "600",
-                  border: "none",
-                  cursor: loading ? "not-allowed" : "pointer",
-                  transition: "all 0.2s ease",
-                  fontFamily: "'Space Mono', monospace",
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase",
-                  marginBottom: "16px",
+                  fontSize: "14px",
+                  marginBottom: "24px",
+                  boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
                 }}
               >
-                {loading ? "Verifying..." : "Verify & Access Dashboard →"}
-              </button>
+                Open Gmail Inbox →
+              </a>
 
-              <div style={{ textAlign: "center", fontSize: "13px", color: "#777" }}>
-                {resendTimer > 0 ? (
-                  <span>Resend code in {resendTimer}s</span>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={handleSendOtp}
+              <div style={{ background: "#FAF8F5", border: "1px solid #EAE6DF", borderRadius: "14px", padding: "18px", marginTop: "10px" }}>
+                <p style={{ fontSize: "12.5px", color: "#666", margin: "0 0 12px" }}>
+                  Or enter your 6-digit access code below:
+                </p>
+                <form onSubmit={handleVerifyOtp} style={{ display: "flex", gap: "10px" }}>
+                  <input
+                    type="text"
+                    maxLength={8}
+                    placeholder="• • • • • •"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value.replace(/\s+/g, ""))}
                     style={{
-                      background: "none",
+                      flex: 1,
+                      padding: "12px 14px",
+                      borderRadius: "10px",
+                      border: "1px solid #D5D1CA",
+                      fontSize: "18px",
+                      letterSpacing: "4px",
+                      textAlign: "center",
+                      fontFamily: "'Space Mono', monospace",
+                      outline: "none",
+                      background: "white",
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    style={{
+                      background: "#111827",
+                      color: "white",
+                      padding: "12px 20px",
+                      borderRadius: "10px",
                       border: "none",
-                      color: "#1A1A1A",
+                      fontSize: "13px",
                       fontWeight: "600",
                       cursor: "pointer",
-                      textDecoration: "underline",
-                      padding: 0,
                     }}
                   >
-                    Resend Code
+                    {loading ? "..." : "Verify"}
                   </button>
-                )}
+                </form>
               </div>
-            </form>
+
+              <div style={{ marginTop: "20px", fontSize: "13px", color: "#666" }}>
+                <span>Didn&apos;t receive email? </span>
+                <button
+                  type="button"
+                  disabled={resendTimer > 0 || loading}
+                  onClick={handleSendOtp}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: resendTimer > 0 ? "#999" : "#8C6D58",
+                    fontWeight: "600",
+                    cursor: resendTimer > 0 ? "not-allowed" : "pointer",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {resendTimer > 0 ? `Resend link in ${resendTimer}s` : "Resend Link"}
+                </button>
+              </div>
+            </div>
           )}
 
           {/* Bottom Security Note */}

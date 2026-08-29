@@ -6,6 +6,7 @@ import { AuthModalProvider } from "@/context/AuthModalContext";
 import FlashSaleBanner from "@/components/FlashSaleBanner";
 import CartDrawer from "@/components/CartDrawer";
 import QuickAuthModal from "@/components/QuickAuthModal";
+import AuthHashHandler from "@/components/AuthHashHandler";
 
 export const metadata: Metadata = {
   title: "Sandline — Resort & Beach Dresses, Made in India",
@@ -36,6 +37,7 @@ export default function RootLayout({
         <CartProvider>
           <WishlistProvider>
             <AuthModalProvider>
+              <AuthHashHandler />
               {children}
               <CartDrawer />
               <QuickAuthModal />

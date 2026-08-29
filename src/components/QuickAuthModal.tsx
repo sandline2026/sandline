@@ -110,22 +110,27 @@ export default function QuickAuthModal() {
           return;
         }
 
-        const res = await fetch("/api/auth/send-email-otp", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.trim() }),
+        // 1. Send direct Supabase 1-Click Magic Link
+        const { error: sbError } = await supabase.auth.signInWithOtp({
+          email: email.trim().toLowerCase(),
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=/account`,
+            shouldCreateUser: true,
+          },
         });
 
-        const data = await res.json();
-        if (!res.ok || data.error) {
-          throw new Error(data.error || "Failed to send code.");
-        }
+        // 2. Also trigger luxury access code email in parallel
+        fetch("/api/auth/send-email-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.trim().toLowerCase() }),
+        }).catch(() => {});
 
         setOtpSent(true);
-        setSuccessMsg(`Access code sent to ${email}! Check your inbox.`);
+        setSuccessMsg(`Magic Link sent to ${email}! Click "Sign In" in your email to login.`);
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Failed to send code";
+      const message = err instanceof Error ? err.message : "Failed to send link";
       setErrorMsg(message);
     } finally {
       setLoading(false);
@@ -420,50 +425,97 @@ export default function QuickAuthModal() {
               </button>
             </form>
           ) : (
-            /* Step 2: OTP Verification */
-            <form onSubmit={handleVerifyOtp} className="auth-otp-form">
-              <div className="otp-head">
-                <h4>Enter Verification Code</h4>
-                <p>
-                  We've sent a 6-digit code to{" "}
-                  <strong>{authMethod === "phone" ? `${countryCode} ${phoneNumber}` : email}</strong>
+            /* Step 2: Verification / Magic Link View */
+            authMethod === "email" ? (
+              <div style={{ textAlign: "center", padding: "10px 0 10px" }}>
+                <div style={{ fontSize: "44px", marginBottom: "12px" }}>✉️</div>
+                <h4 style={{ fontSize: "19px", fontWeight: "600", color: "#111827", marginBottom: "8px", fontFamily: "Georgia, serif" }}>
+                  Sign-In Link Sent!
+                </h4>
+                <p style={{ fontSize: "14px", color: "#4B5563", lineHeight: "1.6", marginBottom: "24px" }}>
+                  We sent a 1-click magic link to <strong>{email}</strong>.<br/>
+                  Open your email and click <strong>&quot;Sign in&quot;</strong> to login instantly without entering any code!
                 </p>
-              </div>
 
-              <input
-                type="text"
-                maxLength={6}
-                placeholder="• • • • • •"
-                value={otpCode}
-                onChange={(e) => setOtpCode(e.target.value)}
-                className="otp-code-input"
-                autoFocus
-                required
-              />
-
-              {errorMsg && <p className="auth-error-msg">{errorMsg}</p>}
-              {successMsg && <p className="auth-success-msg">{successMsg}</p>}
-
-              <button
-                type="submit"
-                className="btn-auth-submit"
-                disabled={loading}
-              >
-                {loading ? "Verifying..." : "Verify & Sign In"}
-              </button>
-
-              <div className="otp-resend-row">
-                <span>Didn't receive code?</span>
-                <button
-                  type="button"
-                  onClick={handleSendOtp}
-                  disabled={loading}
-                  className="resend-otp-btn"
+                <a
+                  href="https://mail.google.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-auth-submit"
+                  style={{
+                    display: "inline-block",
+                    textDecoration: "none",
+                    padding: "14px 28px",
+                    background: "#111827",
+                    color: "white",
+                    borderRadius: "30px",
+                    fontWeight: "600",
+                    fontSize: "14px",
+                    marginBottom: "20px",
+                  }}
                 >
-                  Resend OTP
-                </button>
+                  Open Gmail Inbox →
+                </a>
+
+                {errorMsg && <p className="auth-error-msg">{errorMsg}</p>}
+                {successMsg && <p className="auth-success-msg">{successMsg}</p>}
+
+                <div className="otp-resend-row" style={{ marginTop: "16px" }}>
+                  <span>Didn&apos;t receive link?</span>
+                  <button
+                    type="button"
+                    onClick={handleSendOtp}
+                    disabled={loading}
+                    className="resend-otp-btn"
+                  >
+                    Resend Email Link
+                  </button>
+                </div>
               </div>
-            </form>
+            ) : (
+              <form onSubmit={handleVerifyOtp} className="auth-otp-form">
+                <div className="otp-head">
+                  <h4>Enter Verification Code</h4>
+                  <p>
+                    We&apos;ve sent a code to <strong>{countryCode} {phoneNumber}</strong>
+                  </p>
+                </div>
+
+                <input
+                  type="text"
+                  maxLength={6}
+                  placeholder="• • • • • •"
+                  value={otpCode}
+                  onChange={(e) => setOtpCode(e.target.value)}
+                  className="otp-code-input"
+                  autoFocus
+                  required
+                />
+
+                {errorMsg && <p className="auth-error-msg">{errorMsg}</p>}
+                {successMsg && <p className="auth-success-msg">{successMsg}</p>}
+
+                <button
+                  type="submit"
+                  className="btn-auth-submit"
+                  disabled={loading}
+                >
+                  {loading ? "Verifying..." : "Verify & Sign In"}
+                </button>
+
+                <div className="otp-resend-row">
+                  <span>Didn&apos;t receive code?</span>
+                  <button
+                    type="button"
+                    onClick={handleSendOtp}
+                    disabled={loading}
+                    className="resend-otp-btn"
+                  >
+                    Resend OTP
+                  </button>
+                </div>
+              </form>
+            )
           )}
 
           {/* Secure Badge */}
