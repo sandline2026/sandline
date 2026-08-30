@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/../utils/supabase/server";
 import { cookies } from "next/headers";
 import { sendOrderConfirmationEmail } from "@/lib/email";
+import MetaPurchaseTracker from "@/components/MetaPurchaseTracker";
 import "../../sandline.css";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -155,6 +156,7 @@ export default async function CheckoutSuccess({
 
   return (
     <div className="sandline-page">
+      <MetaPurchaseTracker orderNumber={orderNumber} total={totalPaid} currency="USD" />
       <nav>
         <Link className="logo brand-logo-wrap" href="/"><img src="/images/logo-horizontal.png" alt="SANDLINE Resort Wear" className="site-brand-logo" /></Link>
       </nav>

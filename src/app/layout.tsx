@@ -9,6 +9,7 @@ import CartDrawer from "@/components/CartDrawer";
 import QuickAuthModal from "@/components/QuickAuthModal";
 import AuthHashHandler from "@/components/AuthHashHandler";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import MetaPixel from "@/components/MetaPixel";
 
 export const metadata: Metadata = {
   title: "Sandline — Resort & Beach Dresses, Made in India",
@@ -35,6 +36,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <MetaPixel />
         <CurrencyProvider>
           <FlashSaleBanner />
           <CartProvider>
