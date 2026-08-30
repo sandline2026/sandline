@@ -20,7 +20,7 @@ const CATEGORIES: CategoryItem[] = [
   },
   {
     id: "sets",
-    name: "Matching Sets",
+    name: "Coord Sets",
     subtitle: "Linen & Silk Co-ords",
     image: "/images/products/maldives-drawstring-resort-co-ord-set.jpg",
     href: "/shop?category=sets",
