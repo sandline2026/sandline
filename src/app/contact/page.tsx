@@ -33,7 +33,7 @@ export default function ContactPage() {
               For order status, returns, and custom queries, our concierge responds within 4 business hours.
             </p>
             <a
-              href="mailto:orders@sandline.store"
+              href="mailto:sandlinestudio.in@sandline.store"
               style={{
                 display: "inline-block",
                 color: "#1A1A1A",
@@ -42,28 +42,28 @@ export default function ContactPage() {
                 textDecoration: "underline",
               }}
             >
-              orders@sandline.store
+              sandlinestudio.in@sandline.store
             </a>
           </div>
 
-          {/* WhatsApp Concierge Card */}
+          {/* Instagram Concierge Card */}
           <div style={{ background: "white", padding: "32px", borderRadius: "16px", border: "1px solid #EAE6DF" }}>
-            <div style={{ fontSize: "28px", marginBottom: "12px" }}>💬</div>
+            <div style={{ fontSize: "28px", marginBottom: "12px" }}>📸</div>
             <h3 style={{ fontFamily: "Fraunces, serif", fontSize: "20px", color: "#1A1A1A", marginBottom: "8px" }}>
-              WhatsApp Concierge
+              Instagram Concierge
             </h3>
             <p style={{ fontSize: "14px", color: "#666", lineHeight: "1.6", marginBottom: "16px" }}>
-              Instant style advice, fit questions, and expedited support via WhatsApp.
+              Direct styling consultations, sizing queries, and real-time support via our official Instagram handle.
             </p>
             <a
-              href="https://wa.me/919999999999?text=Hi%20Sandline%20Concierge,%20I%20have%20a%20question%20about%20an%20order"
+              href="https://instagram.com/sandline.store"
               target="_blank"
               rel="noopener noreferrer"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                background: "#25D366",
+                background: "linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)",
                 color: "white",
                 padding: "10px 20px",
                 borderRadius: "30px",
@@ -72,7 +72,7 @@ export default function ContactPage() {
                 textDecoration: "none",
               }}
             >
-              Chat on WhatsApp ↗
+              Message @sandline.store ↗
             </a>
           </div>
 
