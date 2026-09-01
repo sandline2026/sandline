@@ -159,6 +159,28 @@ export default function AdminOrdersTable({
     }
   }
 
+  async function handleResendConfirmation(orderId: string) {
+    setUpdating(true);
+    setUpdateMessage(null);
+    try {
+      const res = await fetch(`/api/admin/orders/${orderId}/resend-confirmation`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error || "Failed to re-send confirmation");
+      }
+      alert("✓ Order Confirmation Invoice successfully sent to customer email!");
+      setUpdateMessage("Confirmation email sent!");
+      setTimeout(() => setUpdateMessage(null), 3000);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to re-send email";
+      alert("Error: " + message);
+    } finally {
+      setUpdating(false);
+    }
+  }
+
   return (
     <div>
       {/* Toolbar: Filter Tabs & Search */}
@@ -349,7 +371,29 @@ export default function AdminOrdersTable({
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {updating ? "Sending..." : "✉️ Send Email"}
+                    {updating ? "Sending..." : "✉️ Status Email"}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleResendConfirmation(activeOrder.id)}
+                    disabled={updating}
+                    style={{
+                      background: "#059669",
+                      color: "#FFFFFF",
+                      border: "none",
+                      padding: "7px 12px",
+                      borderRadius: "8px",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      cursor: "pointer",
+                      fontFamily: "'Space Mono', monospace",
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {updating ? "Sending..." : "📄 Re-send Invoice"}
                   </button>
                 </div>
               </div>

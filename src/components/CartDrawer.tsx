@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useCurrency } from "@/context/CurrencyContext";
 
-const FREE_SHIPPING_THRESHOLD = 100;
+const FREE_SHIPPING_THRESHOLD = 50;
 
 export default function CartDrawer() {
   const { formatPrice } = useCurrency();

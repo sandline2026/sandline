@@ -229,19 +229,23 @@ export default async function ProductDetail({
             {/* Delivery Pincode Checker */}
             <PincodeCheck />
 
-            {/* Trust Assurances (Escape Style) */}
+            {/* High-Conversion Trust Badges */}
             <div className="pdp-trust-guarantees">
               <div className="trust-guarantee-item">
-                <span className="trust-icon">💳</span>
-                <span>Prepaid & Card Payments Accepted</span>
-              </div>
-              <div className="trust-guarantee-item">
                 <span className="trust-icon">🔄</span>
-                <span>7 Days Hassle-Free Return & Exchange</span>
+                <span><strong>7 Days Easy Exchange:</strong> Hassle-free doorstep size exchange</span>
               </div>
               <div className="trust-guarantee-item">
-                <span className="trust-icon">📦</span>
-                <span>Free Worldwide Shipping on Orders Above $100</span>
+                <span className="trust-icon">✈️</span>
+                <span><strong>Free Express Delivery:</strong> Dispatches in 24–48 hrs with live tracking</span>
+              </div>
+              <div className="trust-guarantee-item">
+                <span className="trust-icon">🧵</span>
+                <span><strong>Pure Atelier Fabric:</strong> Hand-inspected premium resort quality</span>
+              </div>
+              <div className="trust-guarantee-item">
+                <span className="trust-icon">🔐</span>
+                <span><strong>100% Safe Payments:</strong> Instant UPI, Cards, NetBanking &amp; Stripe</span>
               </div>
             </div>
 

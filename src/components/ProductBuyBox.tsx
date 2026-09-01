@@ -7,6 +7,7 @@ import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCurrency } from "@/context/CurrencyContext";
 import NotifyMeForm from "@/components/NotifyMeForm";
+import SizeGuideModal from "@/components/SizeGuideModal";
 
 interface ProductBuyBoxProps {
   id: string;
@@ -39,6 +40,7 @@ export default function ProductBuyBox({
   const [showPriceBreakdown, setShowPriceBreakdown] = useState<boolean>(true);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [showStickyBar, setShowStickyBar] = useState<boolean>(false);
+  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState<boolean>(false);
 
   const buyBoxRef = useRef<HTMLDivElement>(null);
   const wishlisted = isWishlisted(id);
@@ -117,9 +119,14 @@ export default function ProductBuyBox({
             <span className="buybox-option-label">
               SIZE: <strong>{selectedSize || "Select"}</strong>
             </span>
-            <Link href="/size-guide" className="buybox-find-size-pill">
-              Find your size →
-            </Link>
+            <button
+              type="button"
+              onClick={() => setIsSizeGuideOpen(true)}
+              className="buybox-find-size-pill"
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            >
+              📏 Size &amp; Fit Guide →
+            </button>
           </div>
           <div className="buybox-swatch-row">
             {sizes.map((s) => (
@@ -139,7 +146,13 @@ export default function ProductBuyBox({
             <span className="fit-indicator-dot" />
             <span>
               Not sure? <strong>80% of buyers</strong> say this fits true to size —{" "}
-              <Link href="/size-guide">see size chart</Link>
+              <button
+                type="button"
+                onClick={() => setIsSizeGuideOpen(true)}
+                style={{ background: "none", border: "none", padding: 0, textDecoration: "underline", color: "inherit", cursor: "pointer", fontWeight: 600 }}
+              >
+                view size chart
+              </button>
             </span>
           </div>
         </div>
@@ -357,6 +370,17 @@ export default function ProductBuyBox({
           </div>
         </div>
       </div>
+
+      {/* Interactive 1-Tap Size & Fit Guide Modal */}
+      <SizeGuideModal
+        isOpen={isSizeGuideOpen}
+        onClose={() => setIsSizeGuideOpen(false)}
+        selectedSize={selectedSize}
+        onSelectSize={(s) => {
+          setSelectedSize(s);
+          setIsSizeGuideOpen(false);
+        }}
+      />
     </div>
   );
 }

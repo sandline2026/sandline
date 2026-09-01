@@ -30,8 +30,12 @@ export default function MobileBottomNav() {
     return () => subscription.unsubscribe();
   }, [supabase]);
 
-  // Hide bottom bar on admin pages
-  if (pathname?.startsWith("/admin")) {
+  // Hide bottom bar on admin, checkout, and product detail pages
+  if (
+    pathname?.startsWith("/admin") ||
+    pathname?.startsWith("/checkout") ||
+    pathname?.startsWith("/product/")
+  ) {
     return null;
   }
 
