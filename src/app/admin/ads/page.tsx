@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import AdminNav from "@/components/AdminNav";
 import AdminHeader from "@/components/AdminHeader";
 import AdCampaignForm from "@/components/AdCampaignForm";
+import AdminAdsTable from "@/components/AdminAdsTable";
 import { Megaphone, PlusCircle, DollarSign, MousePointerClick, TrendingUp } from "lucide-react";
 import "../../admin.css";
 
@@ -92,58 +93,7 @@ export default async function AdsPage() {
               <span>Logged Campaigns ({campaigns?.length || 0})</span>
             </h2>
           </div>
-          {campaigns && campaigns.length > 0 ? (
-            <table className="admin-data-table">
-              <thead>
-                <tr>
-                  <th>Campaign Name</th>
-                  <th>Platform</th>
-                  <th>Spend ($)</th>
-                  <th>Reach</th>
-                  <th>Clicks</th>
-                  <th>Conversions</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {campaigns.map((c: any) => (
-                  <tr key={c.id}>
-                    <td>
-                      <strong style={{ color: "var(--ink)" }}>{c.campaign_name}</strong>
-                    </td>
-                    <td>
-                      <span
-                        style={{
-                          background: "var(--bg)",
-                          padding: "3px 8px",
-                          borderRadius: "6px",
-                          fontSize: "12px",
-                          fontWeight: 600,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        {c.platform}
-                      </span>
-                    </td>
-                    <td>
-                      <strong>${Number(c.spend_usd).toFixed(2)}</strong>
-                    </td>
-                    <td>{Number(c.reach || 0).toLocaleString()}</td>
-                    <td>{c.clicks}</td>
-                    <td>
-                      <strong style={{ color: "var(--green)" }}>{c.conversions}</strong>
-                    </td>
-                    <td suppressHydrationWarning>{new Date(c.date_recorded).toLocaleDateString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="admin-empty">
-              <Megaphone size={32} />
-              <p>No ad campaigns logged yet.</p>
-            </div>
-          )}
+          <AdminAdsTable campaigns={(campaigns as any) || []} />
         </div>
       </main>
     </div>
