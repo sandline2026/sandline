@@ -27,7 +27,7 @@ export default function WishlistPage() {
     <div className="sandline-page" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <SiteNavbar />
 
-      <div style={{ padding: "clamp(30px, 5vw, 60px) 24px 20px", maxWidth: "1280px", margin: "0 auto", width: "100%" }}>
+      <div style={{ padding: "clamp(120px, 10vw, 150px) 24px 80px", maxWidth: "1280px", margin: "0 auto", width: "100%" }}>
         <div style={{ marginBottom: "32px", borderBottom: "1px solid var(--border)", paddingBottom: "20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "var(--papaya)", fontSize: "12px", fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "6px" }}>
             <Heart size={14} fill="currentColor" />
