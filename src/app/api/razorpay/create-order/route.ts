@@ -16,16 +16,26 @@ export async function POST(req: NextRequest) {
     });
 
     const body = await req.json();
-    const { orderId, orderNumber, totalUsd, customerEmail, customerPhone, couponId } = body;
+    const { orderId, orderNumber, totalUsd, customerEmail, customerPhone, couponId, currency: requestedCurrency, country } = body;
 
-    // USD to INR conversion rate for domestic payment gateway processing
+    const isIndia = (country && country.trim().toLowerCase() === "india") || requestedCurrency === "INR";
+    const currency = isIndia ? "INR" : (requestedCurrency || "USD");
+
     const USD_TO_INR = 84.5;
-    const amountInInr = Math.round(Number(totalUsd) * USD_TO_INR);
-    const amountInPaise = Math.max(100, amountInInr * 100); // minimum ₹1.00
+    let amountInMinorUnits: number;
+    let amountInInr: number;
+
+    if (currency === "INR") {
+      amountInInr = Math.round(Number(totalUsd) * USD_TO_INR);
+      amountInMinorUnits = Math.max(100, amountInInr * 100); // 100 paise = ₹1.00
+    } else {
+      amountInInr = Math.round(Number(totalUsd) * USD_TO_INR);
+      amountInMinorUnits = Math.max(50, Math.round(Number(totalUsd) * 100)); // 100 cents = $1.00 USD
+    }
 
     const options = {
-      amount: amountInPaise,
-      currency: "INR",
+      amount: amountInMinorUnits,
+      currency,
       receipt: orderNumber || `RCPT-${Date.now()}`,
       notes: {
         order_id: orderId || "",
@@ -34,6 +44,7 @@ export async function POST(req: NextRequest) {
         customer_phone: customerPhone || "",
         coupon_id: couponId || "",
         amount_usd: String(totalUsd),
+        country: country || "",
       },
     };
 

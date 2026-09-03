@@ -10,7 +10,7 @@ import CurrencySelector from "@/components/CurrencySelector";
 import "../sandline.css";
 
 export default function CheckoutPage() {
-  const { formatPrice } = useCurrency();
+  const { formatPrice, currency } = useCurrency();
   const {
     items,
     subtotal,
@@ -34,7 +34,7 @@ export default function CheckoutPage() {
     phone: "",
     address: "",
     city: "",
-    country: "India",
+    country: "United Arab Emirates",
     postalCode: "",
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -234,6 +234,8 @@ export default function CheckoutPage() {
           customerEmail: email,
           customerPhone: phone,
           couponId: appliedCoupon?.id || null,
+          currency: country.trim().toLowerCase() === "india" ? "INR" : "USD",
+          country,
         }),
       });
 
@@ -244,11 +246,16 @@ export default function CheckoutPage() {
       const options = {
         key: rzpData.keyId,
         amount: rzpData.amount,
-        currency: rzpData.currency || "INR",
+        currency: rzpData.currency || (country.trim().toLowerCase() === "india" ? "INR" : "USD"),
         name: "SANDLINE",
         description: `Order #${orderNumber} — Sandline Resortwear`,
         image: "/images/logo-emblem-trimmed.png",
         order_id: rzpData.orderId,
+        prefill: {
+          name: fullName,
+          email,
+          contact: phone,
+        },
         handler: async function (response: any) {
           setLoading(true);
           try {
@@ -278,11 +285,6 @@ export default function CheckoutPage() {
             setError(msg);
             setLoading(false);
           }
-        },
-        prefill: {
-          name: fullName,
-          email: email,
-          contact: phone,
         },
         modal: {
           confirm_close: true,
@@ -385,14 +387,35 @@ export default function CheckoutPage() {
               />
             </label>
             <label>
-              Country
-              <input
-                type="text"
+              Country / Destination
+              <select
                 name="country"
                 required
                 value={formData.country}
                 onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-              />
+                style={{
+                  width: "100%",
+                  padding: "12px 14px",
+                  borderRadius: "10px",
+                  border: "1px solid rgba(27, 36, 32, 0.2)",
+                  fontFamily: "inherit",
+                  fontSize: "14px",
+                  background: "#FFFFFF",
+                  color: "var(--ink)",
+                  boxSizing: "border-box",
+                }}
+              >
+                <option value="United Arab Emirates">🇦🇪 United Arab Emirates (Dubai / Abu Dhabi)</option>
+                <option value="Canada">🇨🇦 Canada</option>
+                <option value="Thailand">🇹🇭 Thailand (Phuket / Samui / Bangkok)</option>
+                <option value="Indonesia">🇮🇩 Indonesia (Bali)</option>
+                <option value="United States">🇺🇸 United States</option>
+                <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                <option value="Singapore">🇸🇬 Singapore</option>
+                <option value="Australia">🇦🇺 Australia</option>
+                <option value="India">🇮🇳 India</option>
+                <option value="Other International Destination">🌍 Other International Destination</option>
+              </select>
             </label>
             <label>
               Postal / ZIP code
@@ -414,10 +437,10 @@ export default function CheckoutPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                 <span>🔒 100% Encrypted &amp; Secure Checkout</span>
                 <span>•</span>
-                <span>UPI, GPay &amp; NetBanking</span>
+                <span>Apple Pay &amp; Global Express</span>
               </div>
               <div style={{ fontSize: "10.5px", color: "rgba(27,36,32,0.55)" }}>
-                💳 Accepts all Indian &amp; International Cards (Visa, Mastercard, Amex, Diner's)
+                💳 Accepts Apple Pay, Visa, Mastercard, Amex, Diner&apos;s &amp; UPI
               </div>
             </div>
           </form>
