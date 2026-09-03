@@ -169,12 +169,19 @@ nav.sandline-site-navbar .mobile-top-actions {
 .sandline-page .hero-sub{
   margin-top:24px; max-width:520px; font-size:16.5px; line-height:1.65; color:rgba(27,36,32,0.72);
 }
-.sandline-page .hero-cta{ margin-top:36px; display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+.sandline-page .hero-content{
+  position:relative; z-index:10;
+}
+.sandline-page .hero-cta{ 
+  margin-top:36px; display:flex; gap:18px; align-items:center; flex-wrap:wrap; 
+  position:relative; z-index:15; pointer-events:auto;
+}
 .sandline-page .btn{
   font-family:'Space Mono', monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
   padding:16px 30px; border-radius:999px; border:1px solid var(--ink); background:var(--ink); color:var(--sand);
   cursor:pointer; transition:transform 0.35s cubic-bezier(.2,.8,.2,1), background 0.3s ease, color 0.3s ease;
-  display:inline-block;
+  display:inline-flex; align-items:center; justify-content:center;
+  position:relative; z-index:20; pointer-events:auto; touch-action:manipulation; text-decoration:none;
 }
 .sandline-page .btn:hover{transform:translateY(-3px); background:var(--papaya); border-color:var(--papaya);}
 .sandline-page .btn.ghost{background:transparent; color:var(--ink);}

@@ -250,6 +250,7 @@ export default async function Shop({
                           id={product.id}
                           name={product.name}
                           price={product.selling_price_usd}
+                          image={product.images?.[0] || null}
                         />
                       )}
                     </div>

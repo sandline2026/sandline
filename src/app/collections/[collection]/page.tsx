@@ -337,6 +337,7 @@ export default async function CollectionPage({
                             id={product.id}
                             name={product.name}
                             price={product.selling_price_usd}
+                            image={product.images?.[0] || null}
                           />
                         )}
                       </div>

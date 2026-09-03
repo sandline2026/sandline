@@ -56,11 +56,13 @@ export async function generateMetadata({
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: product } = await supabase
+  const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
+  const query = supabase
     .from("products")
-    .select("name, description, images, selling_price_usd, collection")
-    .eq("slug", slug)
-    .maybeSingle();
+    .select("id, name, description, images, selling_price_usd, collection");
+  const { data: product } = isUUID
+    ? await query.eq("id", slug).maybeSingle()
+    : await query.eq("slug", slug).maybeSingle();
 
   if (!product) {
     return {
@@ -113,12 +115,11 @@ export default async function ProductDetail({
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: product } = await supabase
-    .from("products")
-    .select()
-    .eq("slug", slug)
-    .eq("is_active", true)
-    .maybeSingle();
+  const isProductUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
+  const detailQuery = supabase.from("products").select();
+  const { data: product } = isProductUUID
+    ? await detailQuery.eq("id", slug).eq("is_active", true).maybeSingle()
+    : await detailQuery.eq("slug", slug).eq("is_active", true).maybeSingle();
 
   if (!product) notFound();
 
@@ -513,6 +514,7 @@ export default async function ProductDetail({
                         id={p.id}
                         name={p.name}
                         price={p.selling_price_usd}
+                        image={p.images?.[0] || null}
                         isOutOfStock={pOutOfStock}
                       />
                     </div>

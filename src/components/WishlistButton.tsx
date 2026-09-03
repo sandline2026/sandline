@@ -7,12 +7,14 @@ export default function WishlistButton({
   name,
   price,
   image,
+  slug,
   variant = "button",
 }: {
   id: string;
   name: string;
   price: number;
   image: string | null;
+  slug?: string;
   variant?: "button" | "icon";
 }) {
   const { toggleWishlist, isWishlisted } = useWishlist();
@@ -25,7 +27,7 @@ export default function WishlistButton({
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          toggleWishlist({ id, name, price, image });
+          toggleWishlist({ id, name, price, image, slug });
         }}
         type="button"
         aria-label={active ? "Remove from wishlist" : "Add to wishlist"}
@@ -44,7 +46,7 @@ export default function WishlistButton({
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        toggleWishlist({ id, name, price, image });
+        toggleWishlist({ id, name, price, image, slug });
       }}
       type="button"
     >

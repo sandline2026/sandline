@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-type WishlistItem = { id: string; name: string; price: number; image: string | null };
+type WishlistItem = { id: string; name: string; price: number; image: string | null; slug?: string };
 
 type WishlistContextType = {
   items: WishlistItem[];

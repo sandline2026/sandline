@@ -6,11 +6,13 @@ export default function AddToCartButton({
   id,
   name,
   price,
+  image = null,
   isOutOfStock = false,
 }: {
   id: string;
   name: string;
   price: number;
+  image?: string | null;
   isOutOfStock?: boolean;
 }) {
   const { addToCart } = useCart();
@@ -38,7 +40,7 @@ export default function AddToCartButton({
       className="add-to-cart-btn"
       onClick={(e) => {
         e.preventDefault();
-        addToCart({ id, name, price });
+        addToCart({ id, name, price, image });
       }}
     >
       Add to cart
