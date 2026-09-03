@@ -58,6 +58,8 @@ export interface Order {
   total_usd: number;
   traffic_source?: string | null;
   created_at: string;
+  shipping_partner?: string | null;
+  tracking_number?: string | null;
   customers?: CustomerInfo | null;
   order_items?: OrderItem[] | null;
   payments?: PaymentInfo[] | null;
@@ -86,6 +88,8 @@ export default function AdminOrdersTable({
   const [activeOrder, setActiveOrder] = useState<Order | null>(null);
   const [updating, setUpdating] = useState<boolean>(false);
   const [updateMessage, setUpdateMessage] = useState<string | null>(null);
+  const [trackingNumber, setTrackingNumber] = useState<string>("");
+  const [carrier, setCarrier] = useState<string>("DHL Express");
 
   // Filter orders by status and search query
   const filteredOrders = orders.filter((order) => {
@@ -124,14 +128,27 @@ export default function AdminOrdersTable({
     }
   });
 
-  async function handleStatusChange(orderId: string, newStatus: string) {
+  function openOrderDetail(order: Order) {
+    setActiveOrder(order);
+    setTrackingNumber(order.tracking_number || "");
+    setCarrier(order.shipping_partner || "DHL Express");
+  }
+
+  async function handleStatusChange(orderId: string, newStatus: string, customTracking?: string, customCarrier?: string) {
     setUpdating(true);
     setUpdateMessage(null);
+    const tNum = customTracking !== undefined ? customTracking : trackingNumber;
+    const carr = customCarrier !== undefined ? customCarrier : carrier;
+
     try {
       const res = await fetch(`/api/admin/orders/${orderId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus }),
+        body: JSON.stringify({
+          status: newStatus,
+          trackingNumber: tNum || undefined,
+          carrier: carr || undefined,
+        }),
       });
 
       const data = await res.json();
@@ -141,14 +158,14 @@ export default function AdminOrdersTable({
 
       // Update local state
       setOrders((prev) =>
-        prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o))
+        prev.map((o) => (o.id === orderId ? { ...o, status: newStatus, tracking_number: tNum, shipping_partner: carr } : o))
       );
 
       if (activeOrder && activeOrder.id === orderId) {
-        setActiveOrder((prev) => (prev ? { ...prev, status: newStatus } : null));
+        setActiveOrder((prev) => (prev ? { ...prev, status: newStatus, tracking_number: tNum, shipping_partner: carr } : null));
       }
 
-      setUpdateMessage("Status updated successfully!");
+      setUpdateMessage("Order updated & dispatch notification sent!");
       setTimeout(() => setUpdateMessage(null), 3000);
       router.refresh();
     } catch (err: unknown) {
@@ -157,6 +174,70 @@ export default function AdminOrdersTable({
     } finally {
       setUpdating(false);
     }
+  }
+
+  function handleExportCSV() {
+    if (!orders || orders.length === 0) {
+      alert("No orders available to export.");
+      return;
+    }
+
+    const headers = [
+      "Order Number",
+      "Date",
+      "Customer Name",
+      "Customer Email",
+      "Customer Phone",
+      "Country",
+      "City",
+      "Address",
+      "Postal Code",
+      "Items Ordered",
+      "Subtotal ($)",
+      "Discount ($)",
+      "Total Amount ($)",
+      "Order Status",
+      "Payment Status",
+      "Courier Partner",
+      "Tracking Number"
+    ];
+
+    const rows = orders.map((o) => {
+      const cust = o.customers || ({} as CustomerInfo);
+      const itemsStr = (o.order_items || [])
+        .map((i) => `${i.products?.name || "Silhouette"} (${i.size || "M"}) x${i.quantity}`)
+        .join("; ");
+      const paymentStatus = o.payments?.[0]?.status || "paid";
+
+      return [
+        `"${o.order_number}"`,
+        `"${formatOrderDate(o.created_at)}"`,
+        `"${(cust.full_name || "").replace(/"/g, '""')}"`,
+        `"${cust.email || ""}"`,
+        `"${cust.phone || ""}"`,
+        `"${cust.country || ""}"`,
+        `"${cust.city || ""}"`,
+        `"${(cust.address_line || "").replace(/"/g, '""')}"`,
+        `"${cust.postal_code || ""}"`,
+        `"${itemsStr.replace(/"/g, '""')}"`,
+        `"${Number(o.subtotal_usd || 0).toFixed(2)}"`,
+        `"${Number(o.discount_usd || 0).toFixed(2)}"`,
+        `"${Number(o.total_usd || 0).toFixed(2)}"`,
+        `"${o.status || "pending"}"`,
+        `"${paymentStatus}"`,
+        `"${o.shipping_partner || ""}"`,
+        `"${o.tracking_number || ""}"`,
+      ].join(",");
+    });
+
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `sandline_orders_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   async function handleResendConfirmation(orderId: string) {
@@ -204,15 +285,40 @@ export default function AdminOrdersTable({
           ))}
         </div>
 
-        <div className="admin-search-box">
-          <span className="admin-search-icon">🔍</span>
-          <input
-            type="text"
-            className="admin-search-input"
-            placeholder="Search order #, customer, email..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          <button
+            type="button"
+            onClick={handleExportCSV}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "9px 16px",
+              background: "#111827",
+              color: "#FFFFFF",
+              borderRadius: "10px",
+              fontSize: "12px",
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "'Space Mono', monospace",
+              textTransform: "uppercase",
+              border: "none",
+            }}
+            title="Download orders as Excel CSV spreadsheet"
+          >
+            <span>📥 Export CSV</span>
+          </button>
+
+          <div className="admin-search-box">
+            <span className="admin-search-icon">🔍</span>
+            <input
+              type="text"
+              className="admin-search-input"
+              placeholder="Search order #, customer, email..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 
@@ -282,7 +388,7 @@ export default function AdminOrdersTable({
                         className="admin-btn admin-btn-ghost admin-btn-sm"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setActiveOrder(order);
+                          openOrderDetail(order);
                         }}
                       >
                         Details →
@@ -411,6 +517,77 @@ export default function AdminOrdersTable({
                 </p>
               </div>
 
+              {/* Courier Dispatch & Live Tracking Card */}
+              <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: "12px", padding: "16px 20px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ fontSize: "16px" }}>📦</span>
+                    <h3 style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", color: "#334155", margin: 0, letterSpacing: "0.04em" }}>
+                      Courier Dispatch &amp; Live Tracking
+                    </h3>
+                  </div>
+                  {activeOrder.tracking_number && (
+                    <span style={{ fontSize: "11px", color: "#059669", background: "#ECFDF5", padding: "3px 8px", borderRadius: "12px", fontWeight: 700 }}>
+                      ✓ {activeOrder.shipping_partner || "Courier"} ({activeOrder.tracking_number})
+                    </span>
+                  )}
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr auto", gap: "10px", alignItems: "flex-end" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "11px", fontWeight: 600, color: "#64748B", marginBottom: "4px" }}>
+                      Courier Partner
+                    </label>
+                    <select
+                      value={carrier}
+                      onChange={(e) => setCarrier(e.target.value)}
+                      style={{ width: "100%", padding: "8px 10px", borderRadius: "8px", border: "1px solid #CBD5E1", fontSize: "12px", background: "#FFFFFF" }}
+                    >
+                      <option value="DHL Express">DHL Express</option>
+                      <option value="FedEx Priority">FedEx Priority</option>
+                      <option value="Aramex">Aramex</option>
+                      <option value="Shiprocket Global">Shiprocket Global</option>
+                      <option value="BlueDart">BlueDart</option>
+                      <option value="Delhivery">Delhivery</option>
+                      <option value="Other">Other Courier</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "11px", fontWeight: 600, color: "#64748B", marginBottom: "4px" }}>
+                      AWB / Tracking Number
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 7482910384"
+                      value={trackingNumber}
+                      onChange={(e) => setTrackingNumber(e.target.value)}
+                      style={{ width: "100%", padding: "8px 10px", borderRadius: "8px", border: "1px solid #CBD5E1", fontSize: "12px", background: "#FFFFFF", boxSizing: "border-box" }}
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleStatusChange(activeOrder.id, "shipped", trackingNumber, carrier)}
+                    disabled={updating || !trackingNumber.trim()}
+                    style={{
+                      background: trackingNumber.trim() ? "#2563EB" : "#94A3B8",
+                      color: "#FFFFFF",
+                      border: "none",
+                      padding: "8px 14px",
+                      borderRadius: "8px",
+                      fontSize: "11.5px",
+                      fontWeight: 700,
+                      cursor: trackingNumber.trim() ? "pointer" : "not-allowed",
+                      whiteSpace: "nowrap",
+                      height: "35px",
+                    }}
+                  >
+                    Save &amp; Mark Shipped
+                  </button>
+                </div>
+              </div>
+
               {/* Customer & Shipping Information */}
               <div className="order-info-grid">
                 <div className="order-card-box">
@@ -420,9 +597,32 @@ export default function AdminOrdersTable({
                   </p>
                   <p style={{ color: "var(--text-muted)" }}>{activeOrder.customers?.email || "—"}</p>
                   {activeOrder.customers?.phone && (
-                    <p style={{ color: "#059669", fontWeight: 600, fontSize: "13px" }}>
-                      📞 {activeOrder.customers.phone}
-                    </p>
+                    <div style={{ margin: "6px 0" }}>
+                      <p style={{ color: "#059669", fontWeight: 600, fontSize: "13px", margin: "0 0 4px" }}>
+                        📞 {activeOrder.customers.phone}
+                      </p>
+                      <a
+                        href={`https://wa.me/${(activeOrder.customers.phone || "").replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                          `Hi ${activeOrder.customers.full_name || "there"}! This is Sandline Studio regarding your Order #${activeOrder.order_number}.`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          background: "#25D366",
+                          color: "#FFFFFF",
+                          padding: "4px 10px",
+                          borderRadius: "16px",
+                          fontSize: "11px",
+                          fontWeight: 700,
+                          textDecoration: "none",
+                        }}
+                      >
+                        <span>📲 Chat on WhatsApp</span>
+                      </a>
+                    </div>
                   )}
                   <hr style={{ border: "none", borderTop: "1px solid var(--border)", margin: "10px 0" }} />
                   <p>{activeOrder.customers?.address_line || "No street address provided"}</p>

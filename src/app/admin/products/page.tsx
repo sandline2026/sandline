@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import AdminNav from "@/components/AdminNav";
 import AdminHeader from "@/components/AdminHeader";
 import { ProductCreateForm } from "@/components/ProductFormUI";
+import AdminProductsTable from "@/components/AdminProductsTable";
 import { Shirt, PlusCircle, PackageCheck, AlertTriangle, Layers } from "lucide-react";
 import "../../admin.css";
 
@@ -92,64 +93,7 @@ export default async function AdminProductsPage() {
               <span>All Products ({totalProducts})</span>
             </h2>
           </div>
-          {products && products.length > 0 ? (
-            <table className="admin-data-table">
-              <thead>
-                <tr>
-                  <th>Product Name</th>
-                  <th>Category</th>
-                  <th>Selling Price</th>
-                  <th>Stock Quantity</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((p: any) => (
-                  <tr key={p.id}>
-                    <td>
-                      <strong style={{ color: "var(--ink)" }}>{p.name}</strong>
-                      {p.collection && (
-                        <div style={{ fontSize: "12px", color: "var(--text-muted)" }}>
-                          Collection: {p.collection}
-                        </div>
-                      )}
-                    </td>
-                    <td>
-                      <span
-                        style={{
-                          background: "var(--bg)",
-                          padding: "3px 8px",
-                          borderRadius: "6px",
-                          fontSize: "12px",
-                          fontWeight: 500,
-                        }}
-                      >
-                        {p.categories?.name || "—"}
-                      </span>
-                    </td>
-                    <td>
-                      <strong>${Number(p.selling_price_usd).toFixed(2)}</strong>
-                    </td>
-                    <td>{p.stock_quantity ?? 0} units</td>
-                    <td>
-                      <span
-                        className={`pill pill-${
-                          p.stock_status === "in_stock" ? "active" : "inactive"
-                        }`}
-                      >
-                        {p.stock_status === "in_stock" ? "In Stock" : "Out of Stock"}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="admin-empty">
-              <Shirt size={32} />
-              <p>No products created yet. Add your first dress using the form above.</p>
-            </div>
-          )}
+          <AdminProductsTable products={products || []} categories={categories || []} />
         </div>
       </main>
     </div>

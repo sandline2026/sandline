@@ -19,6 +19,14 @@ export async function PATCH(
     if (body.status !== undefined) {
       updatePayload.status = body.status;
     }
+    if (body.trackingNumber !== undefined) {
+      updatePayload.tracking_number = body.trackingNumber;
+    }
+    if (body.carrier !== undefined) {
+      updatePayload.shipping_partner = body.carrier;
+    } else if (body.shippingPartner !== undefined) {
+      updatePayload.shipping_partner = body.shippingPartner;
+    }
 
     const { error } = await supabase
       .from("orders")
