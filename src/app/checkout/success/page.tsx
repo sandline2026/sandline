@@ -6,7 +6,8 @@ import { sendOrderConfirmationEmail } from "@/lib/email";
 import MetaPurchaseTracker from "@/components/MetaPurchaseTracker";
 import "../../sandline.css";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+export const dynamic = "force-dynamic";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder_key_not_configured");
 
 export default async function CheckoutSuccess({
   searchParams,
