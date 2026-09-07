@@ -15,30 +15,39 @@ interface HeroLook {
 const HERO_LOOKS: HeroLook[] = [
   {
     id: "1",
-    name: "Santorini 3D Floral Slip",
-    edit: "The Wedding Night Edit",
-    priceUsd: 78.0,
-    image: "/images/products/santorini-3d-floral-silk-slip-dress.jpg",
-    slug: "santorini-3d-floral-silk-slip-dress",
-    badge: "✦ Featured Atelier Look",
+    name: "Tulum Terracotta Laser-Cut Maxi Set",
+    edit: "The Beach Party Edit",
+    priceUsd: 34.0,
+    image: "/images/products/tulum-terracotta-laser-cut-maxi-set.jpg",
+    slug: "tulum-terracotta-laser-cut-maxi-set",
+    badge: "✦ NEW DROP • RESORT 2026",
   },
   {
     id: "2",
-    name: "Riviera Crystal Blouse",
-    edit: "The Resort Evening Edit",
-    priceUsd: 72.0,
-    image: "/images/products/riviera-crystal-pinstripe-tie-blouse.jpg",
-    slug: "riviera-crystal-pinstripe-tie-blouse",
-    badge: "✦ Hand-Embellished",
+    name: "Mykonos Scallop Crochet Maxi Set",
+    edit: "The Wedding Night Edit",
+    priceUsd: 34.0,
+    image: "/images/products/mykonos-scallop-crochet-maxi-set.jpg",
+    slug: "mykonos-scallop-crochet-maxi-set",
+    badge: "✦ HAND-CROCHETED",
   },
   {
     id: "3",
-    name: "St. Tropez Ruffle Co-ord",
+    name: "Saint-Tropez Citrus Tiered Chiffon Dress",
+    edit: "The Resort Evening Edit",
+    priceUsd: 32.0,
+    image: "/images/products/saint-tropez-citrus-tiered-chiffon-dress.jpg",
+    slug: "saint-tropez-citrus-tiered-chiffon-dress",
+    badge: "✦ SUNLIT SILHOUETTE",
+  },
+  {
+    id: "4",
+    name: "Ibiza Tassel Crochet & Sarong Set",
     edit: "The Beach Party Edit",
-    priceUsd: 64.0,
-    image: "/images/products/st-tropez-ruffle-tiered-skirt-co-ord-set.jpg",
-    slug: "st-tropez-ruffle-tiered-skirt-co-ord-set",
-    badge: "✦ Sunlit Linen",
+    priceUsd: 31.0,
+    image: "/images/products/ibiza-tassel-crochet-watercolor-sarong-set.jpg",
+    slug: "ibiza-tassel-crochet-watercolor-sarong-set",
+    badge: "✦ ISLAND BREEZE",
   },
 ];
 
@@ -103,7 +112,7 @@ export default function HeroModelShowcase() {
         <span className="star">✦</span>
         <div>
           <strong>Resort 2026 Collection</strong>
-          <span>41 Handcrafted Silhouettes Live</span>
+          <span>78 Handcrafted Silhouettes Live</span>
         </div>
       </div>
     </div>

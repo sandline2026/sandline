@@ -13,6 +13,7 @@ import MobileDestinationBar from "@/components/MobileDestinationBar";
 import MobileMenuDrawer from "@/components/MobileMenuDrawer";
 import InstagramFeed from "@/components/InstagramFeed";
 import ShopByCategory from "@/components/ShopByCategory";
+import NewArrivalsSection from "@/components/NewArrivalsSection";
 import "./sandline.css";
 
 export default function Home() {
@@ -160,6 +161,9 @@ export default function Home() {
       {/* Shop By Category 2-Column Luxury Grid */}
       <ShopByCategory />
 
+      {/* Fresh Drop 2026: All Under ₹3,000 New Arrivals Section */}
+      <NewArrivalsSection />
+
       {/* Decorative Wave Separation */}
       <svg className="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ marginTop: "-2px" }}>
         <path fill="#EAF2EF" d="M0,32 C240,80 480,0 720,24 C960,48 1200,8 1440,40 L1440,80 L0,80 Z"></path>
@@ -193,7 +197,7 @@ export default function Home() {
             <img
               src="/images/products/jaipur-blossom-embroidered-poplin-overshirt.jpg"
               alt="India Atelier Craftsmanship"
-              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }}
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", borderRadius: "20px" }}
             />
           </div>
         </div>
@@ -214,17 +218,17 @@ export default function Home() {
             className="collection-card reveal"
             style={{ display: "block", textDecoration: "none", color: "inherit" }}
           >
-            <span className="price-tag">from $36</span>
+            <span className="price-tag">from $28</span>
             <div className="art">
               <img
-                src="/images/products/santorini-3d-floral-silk-slip-dress.jpg"
+                src="/images/products/mykonos-scallop-crochet-maxi-set.jpg"
                 alt="The Wedding Night Edit"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
               />
             </div>
             <div className="label">
               <div className="eyebrow">The Wedding Night Edit</div>
-              <h3>Long Silk Slips &amp; Romantics</h3>
+              <h3>Scallop Bandeaus &amp; Crochet Maxis</h3>
             </div>
           </Link>
 
@@ -234,17 +238,17 @@ export default function Home() {
             className="collection-card reveal"
             style={{ display: "block", textDecoration: "none", color: "inherit" }}
           >
-            <span className="price-tag">from $38</span>
+            <span className="price-tag">from $28</span>
             <div className="art">
               <img
-                src="/images/products/st-tropez-ruffle-tiered-skirt-co-ord-set.jpg"
+                src="/images/products/tulum-terracotta-laser-cut-maxi-set.jpg"
                 alt="The Beach Party Edit"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
               />
             </div>
             <div className="label">
               <div className="eyebrow">The Beach Party Edit</div>
-              <h3>Sunlit Co-ords &amp; Tiered Ruffles</h3>
+              <h3>Laser-Cut Maxis &amp; Watercolor Sarongs</h3>
             </div>
           </Link>
 
@@ -254,17 +258,17 @@ export default function Home() {
             className="collection-card reveal"
             style={{ display: "block", textDecoration: "none", color: "inherit" }}
           >
-            <span className="price-tag">from $46</span>
+            <span className="price-tag">from $31</span>
             <div className="art">
               <img
-                src="/images/products/riviera-crystal-pinstripe-tie-blouse.jpg"
+                src="/images/products/saint-tropez-citrus-tiered-chiffon-dress.jpg"
                 alt="The Resort Evening Edit"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
               />
             </div>
             <div className="label">
               <div className="eyebrow">The Resort Evening Edit</div>
-              <h3>Crystal Blouses &amp; Wide-Leg Denims</h3>
+              <h3>Citrus Chiffons &amp; Crystal Blouses</h3>
             </div>
           </Link>
         </div>

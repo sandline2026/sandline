@@ -6,12 +6,25 @@ export default function IntroSplash() {
   const [stage, setStage] = useState<"enter" | "active" | "fly" | "hidden">("enter");
 
   useEffect(() => {
-    // Stage 1: Reveal logo animation
-    const t1 = setTimeout(() => setStage("active"), 100);
-    // Stage 2: Fly / Lift upward curtain
-    const t2 = setTimeout(() => setStage("fly"), 2400);
-    // Stage 3: Remove completely from DOM
-    const t3 = setTimeout(() => setStage("hidden"), 3300);
+    // If already seen in this session, skip entirely
+    if (typeof window !== "undefined") {
+      try {
+        if (sessionStorage.getItem("sandline_splash_seen")) {
+          setStage("hidden");
+          return;
+        }
+        sessionStorage.setItem("sandline_splash_seen", "1");
+      } catch {
+        // Fallback if sessionStorage is disabled
+      }
+    }
+
+    // Stage 1: Fast reveal
+    const t1 = setTimeout(() => setStage("active"), 50);
+    // Stage 2: Lift upward curtain in blink of an eye (400ms)
+    const t2 = setTimeout(() => setStage("fly"), 400);
+    // Stage 3: Remove completely from DOM (700ms)
+    const t3 = setTimeout(() => setStage("hidden"), 700);
 
     return () => {
       clearTimeout(t1);

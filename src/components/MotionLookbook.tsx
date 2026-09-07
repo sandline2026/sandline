@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useCurrency } from "@/context/CurrencyContext";
 
 interface LookbookItem {
   id: string;
   name: string;
   edit: string;
-  price: string;
+  priceUsd: number;
   image: string;
   slug: string;
   poseLocation: string;
@@ -17,67 +18,68 @@ interface LookbookItem {
 const LOOKBOOK_REEL: LookbookItem[] = [
   {
     id: "1",
-    name: "Santorini 3D Floral Silk Slip",
-    edit: "The Wedding Night Edit",
-    price: "$78.00",
-    image: "/images/products/santorini-3d-floral-silk-slip-dress.jpg",
-    slug: "santorini-3d-floral-silk-slip-dress",
-    poseLocation: "Santorini Coastal Villa",
-    details: "Champagne lustrous silk with sculpted 3D organza florals",
+    name: "Tulum Terracotta Laser-Cut Maxi Set",
+    edit: "The Beach Party Edit",
+    priceUsd: 34.0,
+    image: "/images/products/tulum-terracotta-laser-cut-maxi-set.jpg",
+    slug: "tulum-terracotta-laser-cut-maxi-set",
+    poseLocation: "Tulum Boutique Beach Resort",
+    details: "Terracotta scalloped crop top with diamond laser-cut maxi skirt",
   },
   {
     id: "2",
-    name: "Riviera Crystal Pinstripe Blouse",
-    edit: "The Resort Evening Edit",
-    price: "$72.00",
-    image: "/images/products/riviera-crystal-pinstripe-tie-blouse.jpg",
-    slug: "riviera-crystal-pinstripe-tie-blouse",
-    poseLocation: "Amalfi Seaside Terrace",
-    details: "Hand-embellished rhinestones on tailored sky-blue poplin",
+    name: "Mykonos Scallop Crochet Maxi Set",
+    edit: "The Wedding Night Edit",
+    priceUsd: 34.0,
+    image: "/images/products/mykonos-scallop-crochet-maxi-set.jpg",
+    slug: "mykonos-scallop-crochet-maxi-set",
+    poseLocation: "Mykonos Seaside Villa",
+    details: "Olive green scalloped bandeau with openwork crochet maxi skirt",
   },
   {
     id: "3",
-    name: "Artisan Blossom Cutwork Overshirt",
-    edit: "The Beach Party Edit",
-    price: "$58.00",
-    image: "/images/products/jaipur-blossom-embroidered-poplin-overshirt.jpg",
-    slug: "jaipur-blossom-embroidered-poplin-overshirt",
-    poseLocation: "Golden Hour Oceanfront",
-    details: "Pink striped poplin with vibrant floral cutwork embroidery",
+    name: "Saint-Tropez Citrus Tiered Chiffon Dress",
+    edit: "The Resort Evening Edit",
+    priceUsd: 32.0,
+    image: "/images/products/saint-tropez-citrus-tiered-chiffon-dress.jpg",
+    slug: "saint-tropez-citrus-tiered-chiffon-dress",
+    poseLocation: "French Riviera Sunlit Terrace",
+    details: "Citrus floral printed airy chiffon with tiered ruffle mini hem",
   },
   {
     id: "4",
-    name: "St. Tropez Ruffle Tiered Skirt Co-ord",
+    name: "Ibiza Tassel Crochet & Sarong Set",
     edit: "The Beach Party Edit",
-    price: "$64.00",
-    image: "/images/products/st-tropez-ruffle-tiered-skirt-co-ord-set.jpg",
-    slug: "st-tropez-ruffle-tiered-skirt-co-ord-set",
-    poseLocation: "Mediterranean Sunlit Studio",
-    details: "Pastel vanilla tiered ruffles with smocked bodice top",
+    priceUsd: 31.0,
+    image: "/images/products/ibiza-tassel-crochet-watercolor-sarong-set.jpg",
+    slug: "ibiza-tassel-crochet-watercolor-sarong-set",
+    poseLocation: "Ibiza Sunset Beach Club",
+    details: "Handcrafted knit halter with pastel watercolor side-slit sarong",
   },
   {
     id: "5",
-    name: "Monaco Hand-Embroidered Co-ord",
-    edit: "The Wedding Night Edit",
-    price: "$76.00",
-    image: "/images/products/monaco-hand-embroidered-co-ord-set.jpg",
-    slug: "monaco-hand-embroidered-co-ord-set",
-    poseLocation: "Riviera Private Suite",
-    details: "Cream pearl scalloped embroidery on pure linen",
+    name: "Maldives Sunset Cutout Swimsuit & Sarong Set",
+    edit: "The Beach Party Edit",
+    priceUsd: 29.0,
+    image: "/images/products/maldives-sunset-cutout-swimsuit-sarong-set.jpg",
+    slug: "maldives-sunset-cutout-swimsuit-sarong-set",
+    poseLocation: "Maldives Private Atoll",
+    details: "Sunset gradient one-piece with asymmetric cutout and printed sarong",
   },
   {
     id: "6",
-    name: "Tulum Crossed Wrap Halter Co-ord",
-    edit: "The Beach Party Edit",
-    price: "$68.00",
-    image: "/images/products/tulum-crossed-wrap-halter-co-ord-set.jpg",
-    slug: "tulum-crossed-wrap-halter-co-ord-set",
-    poseLocation: "Boutique Resort Studio",
-    details: "Terracotta ribbed knit cross-wrap with side-slit skirt",
+    name: "Santorini Daisy Cutout Halter Swimsuit",
+    edit: "The Wedding Night Edit",
+    priceUsd: 28.0,
+    image: "/images/products/santorini-daisy-cutout-halter-swimsuit.jpg",
+    slug: "santorini-daisy-cutout-halter-swimsuit",
+    poseLocation: "Santorini Infinity Pool",
+    details: "Classic noir swimsuit with embroidered floral cutout detailing",
   },
 ];
 
 export default function MotionLookbook() {
+  const { formatPrice } = useCurrency();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
@@ -153,6 +155,8 @@ export default function MotionLookbook() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              objectPosition: "top center",
+              transformOrigin: "top center",
               animation: "kenburns 4.5s ease-out infinite alternate",
             }}
           />
@@ -191,7 +195,7 @@ export default function MotionLookbook() {
           </div>
 
           <div style={{ position: "absolute", top: "20px", right: "20px", background: "rgba(255,255,255,0.92)", color: "#1A1A1A", padding: "6px 14px", borderRadius: "20px", fontSize: "12px", fontFamily: "'Space Mono', monospace", fontWeight: "700" }}>
-            {current.price}
+            {formatPrice(current.priceUsd)}
           </div>
 
           <div style={{ position: "absolute", bottom: "24px", left: "24px", right: "24px" }}>
@@ -262,7 +266,7 @@ export default function MotionLookbook() {
                 <img
                   src={item.image}
                   alt={item.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
                 />
                 <div style={{ position: "absolute", inset: 0, background: activeIndex === idx ? "transparent" : "rgba(0,0,0,0.35)" }} />
                 <div style={{ position: "absolute", bottom: "6px", left: "8px", right: "8px", fontSize: "10px", color: "white", fontFamily: "'Space Mono', monospace", fontWeight: "600", textShadow: "0 1px 4px rgba(0,0,0,0.8)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
@@ -285,7 +289,7 @@ export default function MotionLookbook() {
                 textDecoration: "none",
               }}
             >
-              Explore All 41 Silhouettes →
+              Explore All 78 Silhouettes →
             </Link>
             <Link
               href="/collections/honeymoon"
