@@ -74,7 +74,7 @@ const INSTAGRAM_LOOKS: LookItem[] = [
     productName: "Santorini Daisy Cutout Halter Swimsuit",
     productSlug: "santorini-daisy-cutout-halter-swimsuit",
     priceUsd: 28,
-    collection: "The Wedding Night Edit",
+    collection: "The Beach Party Edit",
   },
 ];
 

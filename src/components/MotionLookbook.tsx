@@ -69,7 +69,7 @@ const LOOKBOOK_REEL: LookbookItem[] = [
   {
     id: "6",
     name: "Santorini Daisy Cutout Halter Swimsuit",
-    edit: "The Wedding Night Edit",
+    edit: "The Beach Party Edit",
     priceUsd: 28.0,
     image: "/images/products/santorini-daisy-cutout-halter-swimsuit.jpg",
     slug: "santorini-daisy-cutout-halter-swimsuit",

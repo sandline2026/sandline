@@ -72,9 +72,9 @@ const NEW_OUTFITS: NewOutfit[] = [
     slug: "santorini-daisy-cutout-halter-swimsuit",
     priceUsd: 28,
     image: "/images/products/santorini-daisy-cutout-halter-swimsuit.jpg",
-    category: "The Wedding Night Edit",
+    category: "The Beach Party Edit",
     sizes: ["XS", "S", "M", "L"],
-    badge: "✦ NOIR LUXE",
+    badge: "✦ RESORT SWIM",
   },
 ];
 
