@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCurrency } from "@/context/CurrencyContext";
+import { createClient } from "@/../utils/supabase/client";
 
 interface HeroLook {
   id: string;
@@ -17,7 +18,7 @@ const HERO_LOOKS: HeroLook[] = [
     id: "1",
     name: "Tulum Terracotta Laser-Cut Maxi Set",
     edit: "The Beach Party Edit",
-    priceUsd: 34.0,
+    priceUsd: 49.7,
     image: "/images/products/tulum-terracotta-laser-cut-maxi-set.jpg",
     slug: "tulum-terracotta-laser-cut-maxi-set",
     badge: "✦ NEW DROP • RESORT 2026",
@@ -53,7 +54,37 @@ const HERO_LOOKS: HeroLook[] = [
 
 export default function HeroModelShowcase() {
   const { formatPrice } = useCurrency();
-  const [selectedLook, setSelectedLook] = useState<HeroLook>(HERO_LOOKS[0]);
+  const [looks, setLooks] = useState<HeroLook[]>(HERO_LOOKS);
+  const [selectedId, setSelectedId] = useState<string>(HERO_LOOKS[0].id);
+
+  useEffect(() => {
+    async function syncLivePrices() {
+      try {
+        const supabase = createClient();
+        const slugs = HERO_LOOKS.map((l) => l.slug);
+        const { data } = await supabase
+          .from("products")
+          .select("slug, selling_price_usd")
+          .in("slug", slugs);
+
+        if (data && data.length > 0) {
+          const priceMap = new Map(data.map((p: any) => [p.slug, Number(p.selling_price_usd)]));
+          setLooks((prev) =>
+            prev.map((look) =>
+              priceMap.has(look.slug)
+                ? { ...look, priceUsd: priceMap.get(look.slug)! }
+                : look
+            )
+          );
+        }
+      } catch {
+        // Fallback gracefully
+      }
+    }
+    syncLivePrices();
+  }, []);
+
+  const selectedLook = looks.find((l) => l.id === selectedId) || looks[0];
 
   return (
     <div className="hero-model-stage">
@@ -91,12 +122,12 @@ export default function HeroModelShowcase() {
 
         {/* Thumbnail Selector at Bottom */}
         <div className="hero-thumb-strip">
-          {HERO_LOOKS.map((look) => (
+          {looks.map((look) => (
             <button
               key={look.id}
               onClick={(e) => {
                 e.preventDefault();
-                setSelectedLook(look);
+                setSelectedId(look.id);
               }}
               className={`hero-thumb-btn ${selectedLook.id === look.id ? "active" : ""}`}
               aria-label={look.name}

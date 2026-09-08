@@ -33,8 +33,17 @@ export default function AdminProductsTable({
   const [filterTab, setFilterTab] = useState<"all" | "in_stock" | "out_of_stock">("all");
   const [togglingId, setTogglingId] = useState<string | null>(null);
   const [editingProduct, setEditingProduct] = useState<ProductItem | null>(null);
+  const [editPriceUsd, setEditPriceUsd] = useState<number | string>("");
+  const [editPriceInr, setEditPriceInr] = useState<number | string>("");
   const [savingEdit, setSavingEdit] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  function startEditing(product: ProductItem) {
+    setEditingProduct(product);
+    const usd = Number(product.selling_price_usd) || 0;
+    setEditPriceUsd(usd);
+    setEditPriceInr(Math.round(usd * 84.5));
+  }
 
   // Filter products by tab and search
   const filteredProducts = products.filter((p) => {
@@ -381,7 +390,7 @@ export default function AdminProductsTable({
                       <div style={{ display: "inline-flex", gap: "6px" }}>
                         <button
                           type="button"
-                          onClick={() => setEditingProduct(p)}
+                          onClick={() => startEditing(p)}
                           style={{
                             background: "#F3F4F6",
                             border: "none",
@@ -487,33 +496,66 @@ export default function AdminProductsTable({
                 />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", background: "#F9FAFB", padding: "12px", borderRadius: "10px", border: "1px solid #E5E7EB", marginBottom: "6px" }}>
                 <div>
-                  <label style={{ display: "block", fontSize: "12.5px", fontWeight: 600, color: "#374151", marginBottom: "6px" }}>
-                    Selling Price ($USD)
+                  <label style={{ display: "block", fontSize: "12.5px", fontWeight: 700, color: "#111827", marginBottom: "4px" }}>
+                    Price in INR (₹) — India Storefront
+                  </label>
+                  <input
+                    type="number"
+                    step="1"
+                    value={editPriceInr}
+                    onChange={(e) => {
+                      const inr = Number(e.target.value);
+                      setEditPriceInr(e.target.value);
+                      if (!isNaN(inr) && inr > 0) {
+                        setEditPriceUsd(Number((inr / 84.5).toFixed(2)));
+                      }
+                    }}
+                    placeholder="e.g. 4200"
+                    style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid #D1D5DB", boxSizing: "border-box", fontWeight: 700, color: "#065F46" }}
+                  />
+                  <span style={{ fontSize: "11px", color: "#6B7280", marginTop: "4px", display: "block" }}>
+                    Shown to Indian customers (e.g. ₹4,200)
+                  </span>
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "12.5px", fontWeight: 600, color: "#374151", marginBottom: "4px" }}>
+                    Selling Price ($USD) — Global
                   </label>
                   <input
                     type="number"
                     step="0.01"
                     name="selling_price_usd"
-                    defaultValue={editingProduct.selling_price_usd}
+                    value={editPriceUsd}
+                    onChange={(e) => {
+                      const usd = Number(e.target.value);
+                      setEditPriceUsd(e.target.value);
+                      if (!isNaN(usd) && usd > 0) {
+                        setEditPriceInr(Math.round(usd * 84.5));
+                      }
+                    }}
                     required
                     style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid #D1D5DB", boxSizing: "border-box" }}
                   />
+                  <span style={{ fontSize: "11px", color: "#6B7280", marginTop: "4px", display: "block" }}>
+                    Auto-converts (1 USD ≈ 84.5 INR)
+                  </span>
                 </div>
+              </div>
 
-                <div>
-                  <label style={{ display: "block", fontSize: "12.5px", fontWeight: 600, color: "#374151", marginBottom: "6px" }}>
-                    Stock Units Available
-                  </label>
-                  <input
-                    type="number"
-                    name="stock_quantity"
-                    defaultValue={editingProduct.stock_quantity}
-                    required
-                    style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid #D1D5DB", boxSizing: "border-box" }}
-                  />
-                </div>
+              <div>
+                <label style={{ display: "block", fontSize: "12.5px", fontWeight: 600, color: "#374151", marginBottom: "6px" }}>
+                  Stock Units Available
+                </label>
+                <input
+                  type="number"
+                  name="stock_quantity"
+                  defaultValue={editingProduct.stock_quantity}
+                  required
+                  style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid #D1D5DB", boxSizing: "border-box" }}
+                />
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>

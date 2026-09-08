@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCurrency } from "@/context/CurrencyContext";
+import { createClient } from "@/../utils/supabase/client";
 
 interface LookbookItem {
   id: string;
@@ -20,7 +21,7 @@ const LOOKBOOK_REEL: LookbookItem[] = [
     id: "1",
     name: "Tulum Terracotta Laser-Cut Maxi Set",
     edit: "The Beach Party Edit",
-    priceUsd: 34.0,
+    priceUsd: 49.7,
     image: "/images/products/tulum-terracotta-laser-cut-maxi-set.jpg",
     slug: "tulum-terracotta-laser-cut-maxi-set",
     poseLocation: "Tulum Boutique Beach Resort",
@@ -80,18 +81,46 @@ const LOOKBOOK_REEL: LookbookItem[] = [
 
 export default function MotionLookbook() {
   const { formatPrice } = useCurrency();
+  const [reel, setReel] = useState<LookbookItem[]>(LOOKBOOK_REEL);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
+    async function syncLivePrices() {
+      try {
+        const supabase = createClient();
+        const slugs = LOOKBOOK_REEL.map((item) => item.slug);
+        const { data } = await supabase
+          .from("products")
+          .select("slug, selling_price_usd")
+          .in("slug", slugs);
+
+        if (data && data.length > 0) {
+          const priceMap = new Map(data.map((p: any) => [p.slug, Number(p.selling_price_usd)]));
+          setReel((prev) =>
+            prev.map((item) =>
+              priceMap.has(item.slug)
+                ? { ...item, priceUsd: priceMap.get(item.slug)! }
+                : item
+            )
+          );
+        }
+      } catch {
+        // Fallback gracefully
+      }
+    }
+    syncLivePrices();
+  }, []);
+
+  useEffect(() => {
     if (!isPlaying) return;
     const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % LOOKBOOK_REEL.length);
+      setActiveIndex((prev) => (prev + 1) % reel.length);
     }, 4500);
     return () => clearInterval(timer);
-  }, [isPlaying]);
+  }, [isPlaying, reel.length]);
 
-  const current = LOOKBOOK_REEL[activeIndex];
+  const current = reel[activeIndex] || reel[0];
 
   return (
     <section className="motion-lookbook-section" style={{ padding: "80px clamp(20px, 5vw, 64px)", background: "#141C19", color: "#FAF8F5", borderRadius: "32px", margin: "40px clamp(12px, 3vw, 36px)", overflow: "hidden" }}>
@@ -122,7 +151,7 @@ export default function MotionLookbook() {
             {isPlaying ? "❚❚ Auto-Play" : "▶ Play"}
           </button>
           <div style={{ display: "flex", gap: "6px" }}>
-            {LOOKBOOK_REEL.map((_, i) => (
+            {reel.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setActiveIndex(i)}
@@ -244,7 +273,7 @@ export default function MotionLookbook() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "28px" }}>
-            {LOOKBOOK_REEL.map((item, idx) => (
+            {reel.map((item, idx) => (
               <div
                 key={item.id}
                 onClick={() => {

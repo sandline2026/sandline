@@ -1,8 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import ProductPrice from "@/components/ProductPrice";
 import WishlistButton from "@/components/WishlistButton";
+import { createClient } from "@/../utils/supabase/client";
 
 interface NewOutfit {
   id: string;
@@ -20,7 +22,7 @@ const NEW_OUTFITS: NewOutfit[] = [
     id: "outfit-tulum",
     name: "Tulum Terracotta Laser-Cut Maxi Set",
     slug: "tulum-terracotta-laser-cut-maxi-set",
-    priceUsd: 34,
+    priceUsd: 49.7,
     image: "/images/products/tulum-terracotta-laser-cut-maxi-set.jpg",
     category: "The Beach Party Edit",
     sizes: ["XS", "S", "M", "L"],
@@ -79,13 +81,42 @@ const NEW_OUTFITS: NewOutfit[] = [
 ];
 
 export default function NewArrivalsSection() {
+  const [outfits, setOutfits] = useState<NewOutfit[]>(NEW_OUTFITS);
+
+  useEffect(() => {
+    async function syncLivePrices() {
+      try {
+        const supabase = createClient();
+        const slugs = NEW_OUTFITS.map((o) => o.slug);
+        const { data } = await supabase
+          .from("products")
+          .select("slug, selling_price_usd")
+          .in("slug", slugs);
+
+        if (data && data.length > 0) {
+          const priceMap = new Map(data.map((p: any) => [p.slug, Number(p.selling_price_usd)]));
+          setOutfits((prev) =>
+            prev.map((item) =>
+              priceMap.has(item.slug)
+                ? { ...item, priceUsd: priceMap.get(item.slug)! }
+                : item
+            )
+          );
+        }
+      } catch {
+        // Fallback gracefully
+      }
+    }
+    syncLivePrices();
+  }, []);
+
   return (
     <section className="new-arrivals-showcase-section">
       <div className="new-arrivals-header reveal">
         <div className="new-arrivals-badge-row">
           <span className="dot" />
           <span className="new-arrivals-eyebrow">
-            ✦ FRESH DROP • RESORT 2026 EDIT • ALL UNDER ₹3,000
+            ✦ FRESH DROP • RESORT 2026 EDIT • HAND-FINISHED ATELIER
           </span>
         </div>
         <h2 className="new-arrivals-title">New In: Sunset &amp; Sea.</h2>
@@ -95,7 +126,7 @@ export default function NewArrivalsSection() {
       </div>
 
       <div className="new-arrivals-grid reveal">
-        {NEW_OUTFITS.map((item) => (
+        {outfits.map((item) => (
           <div key={item.id} className="new-arrival-card">
             {/* Image Box */}
             <div className="new-arrival-img-box">

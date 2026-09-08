@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import ProductPrice from "@/components/ProductPrice";
+import { createClient } from "@/../utils/supabase/client";
 
 interface LookItem {
   id: string;
@@ -23,7 +24,7 @@ const INSTAGRAM_LOOKS: LookItem[] = [
     caption: "Sun-drenched terracotta moments in handcrafted laser-cut crop & maxi drape 🌴✨",
     productName: "Tulum Terracotta Laser-Cut Maxi Set",
     productSlug: "tulum-terracotta-laser-cut-maxi-set",
-    priceUsd: 34,
+    priceUsd: 49.7,
     collection: "The Beach Party Edit",
   },
   {
@@ -79,7 +80,35 @@ const INSTAGRAM_LOOKS: LookItem[] = [
 ];
 
 export default function InstagramFeed() {
+  const [looks, setLooks] = useState<LookItem[]>(INSTAGRAM_LOOKS);
   const [selectedLook, setSelectedLook] = useState<LookItem | null>(null);
+
+  useEffect(() => {
+    async function syncLivePrices() {
+      try {
+        const supabase = createClient();
+        const slugs = INSTAGRAM_LOOKS.map((l) => l.productSlug);
+        const { data } = await supabase
+          .from("products")
+          .select("slug, selling_price_usd")
+          .in("slug", slugs);
+
+        if (data && data.length > 0) {
+          const priceMap = new Map(data.map((p: any) => [p.slug, Number(p.selling_price_usd)]));
+          setLooks((prev) =>
+            prev.map((item) =>
+              priceMap.has(item.productSlug)
+                ? { ...item, priceUsd: priceMap.get(item.productSlug)! }
+                : item
+            )
+          );
+        }
+      } catch {
+        // Fallback gracefully
+      }
+    }
+    syncLivePrices();
+  }, []);
 
   return (
     <section className="instagram-feed-section">
@@ -117,7 +146,7 @@ export default function InstagramFeed() {
 
       {/* 6-Grid Instagram Gallery */}
       <div className="instagram-grid">
-        {INSTAGRAM_LOOKS.map((look) => (
+        {looks.map((look) => (
           <div
             key={look.id}
             className="insta-grid-item"
