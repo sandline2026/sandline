@@ -17,9 +17,20 @@ export default function AccountNavButton() {
         const email = session.user.email;
         const name = session.user.user_metadata?.full_name || email.split("@")[0];
         setUser({ email, name });
-      } else {
-        setUser(null);
+        return;
       }
+
+      if (typeof document !== "undefined") {
+        const match = document.cookie.match(/(?:^|; )sandline_user_email=([^;]*)/);
+        if (match && match[1]) {
+          const email = decodeURIComponent(match[1]).toLowerCase();
+          const name = email.split("@")[0];
+          setUser({ email, name });
+          return;
+        }
+      }
+
+      setUser(null);
     }
 
     checkAuth();

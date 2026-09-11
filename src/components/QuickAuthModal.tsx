@@ -46,33 +46,25 @@ export default function QuickAuthModal() {
 
   // Auto-detect login when user clicks "Sign In" link in email
   useEffect(() => {
+    // Only poll when the user has sent the link and is waiting for link click
+    if (!isOpen || !otpSent) return;
+
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user && isOpen) {
+      if (session?.user) {
         setSuccessMsg("Logged in successfully! Welcome back.");
         setTimeout(() => {
           closeAuthModal();
+          window.location.reload();
         }, 600);
       }
     });
 
-    if (typeof window !== "undefined" && window.location.hash.includes("access_token")) {
-      supabase.auth.getSession().then(({ data }) => {
-        if (data.session) {
-          setSuccessMsg("Logged in successfully! Welcome back.");
-          setTimeout(() => {
-            closeAuthModal();
-            window.history.replaceState(null, "", window.location.pathname + window.location.search);
-          }, 600);
-        }
-      });
-    }
-
     const interval = setInterval(() => {
-      if (typeof document !== "undefined" && isOpen) {
+      if (typeof document !== "undefined") {
         const match = document.cookie.match(/(?:^|; )sandline_user_email=([^;]*)/);
-        if (match) {
+        if (match && match[1]) {
           setSuccessMsg("Logged in successfully! Welcome back.");
           setTimeout(() => {
             closeAuthModal();
@@ -86,7 +78,7 @@ export default function QuickAuthModal() {
       subscription.unsubscribe();
       clearInterval(interval);
     };
-  }, [isOpen, closeAuthModal, supabase]);
+  }, [isOpen, otpSent, closeAuthModal, supabase]);
 
   async function handleSendEmailLink(e: React.FormEvent) {
     e.preventDefault();

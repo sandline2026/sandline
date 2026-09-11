@@ -19,7 +19,12 @@ export default function MobileBottomNav() {
   useEffect(() => {
     async function checkAuth() {
       const { data: { session } } = await supabase.auth.getSession();
-      setIsLoggedIn(!!session?.user?.email);
+      let logged = !!session?.user?.email;
+      if (!logged && typeof document !== "undefined") {
+        const match = document.cookie.match(/(?:^|; )sandline_user_email=([^;]*)/);
+        if (match && match[1]) logged = true;
+      }
+      setIsLoggedIn(logged);
     }
     checkAuth();
 
