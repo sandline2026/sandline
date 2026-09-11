@@ -28,9 +28,25 @@ function LoginContent() {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         router.push(nextUrl);
+        return;
+      }
+      if (typeof document !== "undefined") {
+        const match = document.cookie.match(/(?:^|; )sandline_user_email=([^;]*)/);
+        if (match) {
+          router.push(nextUrl);
+        }
       }
     }
     checkSession();
+
+    const cookieInterval = setInterval(() => {
+      if (typeof document !== "undefined") {
+        const match = document.cookie.match(/(?:^|; )sandline_user_email=([^;]*)/);
+        if (match) {
+          router.push(nextUrl);
+        }
+      }
+    }, 1500);
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
@@ -38,7 +54,10 @@ function LoginContent() {
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+      clearInterval(cookieInterval);
+    };
   }, [nextUrl, router, supabase.auth]);
 
   useEffect(() => {
@@ -63,24 +82,33 @@ function LoginContent() {
     setMessage("");
 
     try {
-      // 1. Send direct Supabase 1-Click Magic Link
-      await supabase.auth.signInWithOtp({
-        email: email.trim().toLowerCase(),
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`,
-          shouldCreateUser: true,
-        },
-      });
-
-      // 2. Also trigger luxury email in parallel
-      fetch("/api/auth/send-email-otp", {
+      // 1. Send luxury 1-Click Magic Link email via Resend
+      const res = await fetch("/api/auth/send-email-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim().toLowerCase() }),
-      }).catch(() => {});
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to send login link");
+      }
+
+      // 2. Also attempt Supabase background signInWithOtp
+      try {
+        await supabase.auth.signInWithOtp({
+          email: email.trim().toLowerCase(),
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextUrl)}`,
+            shouldCreateUser: true,
+          },
+        });
+      } catch {
+        // Handled gracefully if Supabase rate limits
+      }
 
       setStep("otp");
-      setMessage(`Magic Sign-In link sent to ${email.trim().toLowerCase()}!`);
+      setMessage(`1-Click Magic Link sent to ${email.trim().toLowerCase()}!`);
       setResendTimer(60);
     } catch (err: any) {
       setError(err.message || "Failed to send link. Please try again.");

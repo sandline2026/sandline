@@ -32,10 +32,16 @@ export async function POST(req: NextRequest) {
     const hash = crypto.createHmac("sha256", OTP_SECRET).update(payload).digest("hex");
     const token = `${expiresAt}:${hash}`;
 
-    // 3. Send high-fashion luxury email via Resend
+    const host = req.headers.get("x-forwarded-host") || req.headers.get("host") || "sandline.store";
+    const proto = req.headers.get("x-forwarded-proto") || "https";
+    const baseUrl = `${proto}://${host}`;
+    const magicLink = `${baseUrl}/auth/callback?email=${encodeURIComponent(cleanEmail)}&otp=${otp}&token=${encodeURIComponent(token)}&next=/account`;
+
+    // 3. Send high-fashion luxury email via Resend with 1-Click Magic Link
     await sendOtpVerificationEmail({
       email: cleanEmail,
       otp,
+      magicLink,
     });
 
     // 4. Also trigger Supabase Auth in parallel

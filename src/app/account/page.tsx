@@ -76,13 +76,18 @@ export default function CustomerAccountPage() {
     async function loadAccountData() {
       setLoading(true);
       const { data: { session } } = await supabase.auth.getSession();
+      let email = session?.user?.email ? session.user.email.toLowerCase() : "";
 
-      if (!session || !session.user || !session.user.email) {
+      if (!email && typeof document !== "undefined") {
+        const match = document.cookie.match(/(?:^|; )sandline_user_email=([^;]*)/);
+        if (match) email = decodeURIComponent(match[1]).toLowerCase();
+      }
+
+      if (!email) {
         router.push("/account/login?next=/account");
         return;
       }
 
-      const email = session.user.email.toLowerCase();
       setUserEmail(email);
 
       // 1. Fetch customer profile
@@ -186,6 +191,9 @@ export default function CustomerAccountPage() {
 
   async function handleSignOut() {
     await supabase.auth.signOut();
+    if (typeof document !== "undefined") {
+      document.cookie = "sandline_user_email=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    }
     router.push("/");
     router.refresh();
   }

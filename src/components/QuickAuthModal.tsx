@@ -69,7 +69,23 @@ export default function QuickAuthModal() {
       });
     }
 
-    return () => subscription.unsubscribe();
+    const interval = setInterval(() => {
+      if (typeof document !== "undefined" && isOpen) {
+        const match = document.cookie.match(/(?:^|; )sandline_user_email=([^;]*)/);
+        if (match) {
+          setSuccessMsg("Logged in successfully! Welcome back.");
+          setTimeout(() => {
+            closeAuthModal();
+            window.location.reload();
+          }, 600);
+        }
+      }
+    }, 1500);
+
+    return () => {
+      subscription.unsubscribe();
+      clearInterval(interval);
+    };
   }, [isOpen, closeAuthModal, supabase]);
 
   async function handleSendEmailLink(e: React.FormEvent) {
@@ -84,24 +100,33 @@ export default function QuickAuthModal() {
     setLoading(true);
 
     try {
-      // 1. Send direct Supabase 1-Click Magic Link
-      await supabase.auth.signInWithOtp({
-        email: email.trim().toLowerCase(),
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=/account`,
-          shouldCreateUser: true,
-        },
-      });
-
-      // 2. Trigger luxury email code via Resend in parallel
-      fetch("/api/auth/send-email-otp", {
+      // 1. Send luxury 1-Click Magic Link email via Resend
+      const res = await fetch("/api/auth/send-email-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim().toLowerCase() }),
-      }).catch(() => {});
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to send magic link");
+      }
+
+      // 2. Also attempt Supabase background signInWithOtp
+      try {
+        await supabase.auth.signInWithOtp({
+          email: email.trim().toLowerCase(),
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=/account`,
+            shouldCreateUser: true,
+          },
+        });
+      } catch {
+        // Handled gracefully if Supabase rate limits
+      }
 
       setOtpSent(true);
-      setSuccessMsg(`Magic Link sent to ${email.trim().toLowerCase()}!`);
+      setSuccessMsg(`1-Click Magic Link sent to ${email.trim().toLowerCase()}!`);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Failed to send link";
       setErrorMsg(message);
