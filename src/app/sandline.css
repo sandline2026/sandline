@@ -1001,6 +1001,62 @@ nav.sandline-site-navbar .mobile-top-actions {
   border-color: var(--papaya);
 }
 
+.sandline-page .buybox-secondary-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.sandline-page .buybox-share-toggle {
+  width: 100%;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--sand);
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+.sandline-page .buybox-share-toggle:hover {
+  border-color: var(--ink);
+  background: #FFFFFF;
+}
+
+.sandline-page .gallery-share-floating-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+.sandline-page .gallery-share-floating-btn:hover {
+  background: #FFFFFF;
+  transform: scale(1.06);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+
 .sandline-page .buybox-out-of-stock-box{
   background: var(--sand);
   border: 1px solid var(--line);

@@ -8,6 +8,8 @@ import { useWishlist } from "@/context/WishlistContext";
 import { useCurrency } from "@/context/CurrencyContext";
 import NotifyMeForm from "@/components/NotifyMeForm";
 import SizeGuideModal from "@/components/SizeGuideModal";
+import ShareModal from "@/components/ShareModal";
+import { Share2 } from "lucide-react";
 
 interface ProductBuyBoxProps {
   id: string;
@@ -41,6 +43,7 @@ export default function ProductBuyBox({
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [showStickyBar, setShowStickyBar] = useState<boolean>(false);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState<boolean>(false);
+  const [isShareOpen, setIsShareOpen] = useState<boolean>(false);
 
   const buyBoxRef = useRef<HTMLDivElement>(null);
   const wishlisted = isWishlisted(id);
@@ -313,14 +316,24 @@ export default function ProductBuyBox({
             BUY NOW
           </button>
 
-          {/* Wishlist Button */}
-          <button
-            type="button"
-            className={`buybox-wishlist-toggle ${wishlisted ? "active" : ""}`}
-            onClick={() => toggleWishlist({ id, name, price, image })}
-          >
-            <span>{wishlisted ? "♥ Saved to Wishlist" : "♡ Add to Wishlist"}</span>
-          </button>
+          {/* Secondary Actions: Wishlist & Share Row */}
+          <div className="buybox-secondary-actions-row">
+            <button
+              type="button"
+              className={`buybox-wishlist-toggle ${wishlisted ? "active" : ""}`}
+              onClick={() => toggleWishlist({ id, name, price, image })}
+            >
+              <span>{wishlisted ? "♥ Saved" : "♡ Save to Wishlist"}</span>
+            </button>
+            <button
+              type="button"
+              className="buybox-share-toggle"
+              onClick={() => setIsShareOpen(true)}
+            >
+              <Share2 size={13} />
+              <span>Share Design</span>
+            </button>
+          </div>
         </div>
       ) : (
         <div className="buybox-out-of-stock-box">
@@ -329,14 +342,23 @@ export default function ProductBuyBox({
             Enter your email to receive an instant notification when this piece is restocked.
           </p>
           <NotifyMeForm productId={id} />
-          <button
-            type="button"
-            className={`buybox-wishlist-toggle ${wishlisted ? "active" : ""}`}
-            style={{ marginTop: "12px" }}
-            onClick={() => toggleWishlist({ id, name, price, image })}
-          >
-            <span>{wishlisted ? "♥ Saved to Wishlist" : "♡ Save to Wishlist for Later"}</span>
-          </button>
+          <div className="buybox-secondary-actions-row" style={{ marginTop: "12px" }}>
+            <button
+              type="button"
+              className={`buybox-wishlist-toggle ${wishlisted ? "active" : ""}`}
+              onClick={() => toggleWishlist({ id, name, price, image })}
+            >
+              <span>{wishlisted ? "♥ Saved" : "♡ Wishlist"}</span>
+            </button>
+            <button
+              type="button"
+              className="buybox-share-toggle"
+              onClick={() => setIsShareOpen(true)}
+            >
+              <Share2 size={13} />
+              <span>Share Design</span>
+            </button>
+          </div>
         </div>
       )}
 
@@ -360,13 +382,35 @@ export default function ProductBuyBox({
               </div>
             </div>
 
-            <button
-              type="button"
-              className="sticky-bar-add-btn"
-              onClick={handleAddToCart}
-            >
-              Add To Bag →
-            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <button
+                type="button"
+                onClick={() => setIsShareOpen(true)}
+                style={{
+                  background: "#FAF8F5",
+                  border: "1px solid var(--line)",
+                  borderRadius: "50%",
+                  width: "42px",
+                  height: "42px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: "var(--ink)",
+                  flexShrink: 0,
+                }}
+                aria-label="Share Design"
+              >
+                <Share2 size={16} />
+              </button>
+              <button
+                type="button"
+                className="sticky-bar-add-btn"
+                onClick={handleAddToCart}
+              >
+                Add To Bag →
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -379,6 +423,17 @@ export default function ProductBuyBox({
         onSelectSize={(s) => {
           setSelectedSize(s);
           setIsSizeGuideOpen(false);
+        }}
+      />
+
+      {/* Luxury Share Modal */}
+      <ShareModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        product={{
+          name,
+          price,
+          image,
         }}
       />
     </div>

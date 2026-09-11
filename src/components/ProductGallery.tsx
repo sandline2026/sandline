@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Share2 } from "lucide-react";
+import ShareModal from "@/components/ShareModal";
 
 interface ProductGalleryProps {
   images: string[];
@@ -14,6 +16,7 @@ export default function ProductGallery({
   fallbackArt,
 }: ProductGalleryProps) {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const validImages = Array.isArray(images) ? images.filter(Boolean) : [];
 
@@ -50,6 +53,15 @@ export default function ProductGallery({
         {/* Main Image Stage */}
         <div className="product-gallery-main">
           <span className="gallery-sale-pill">RESORT EDIT</span>
+          <button
+            type="button"
+            className="gallery-share-floating-btn"
+            onClick={() => setIsShareOpen(true)}
+            title="Share this design"
+            aria-label="Share this design"
+          >
+            <Share2 size={16} />
+          </button>
           <img
             src={validImages[activeIdx] || validImages[0]}
             alt={name}
@@ -57,6 +69,16 @@ export default function ProductGallery({
           />
         </div>
       </div>
+
+      {/* Luxury Share Modal */}
+      <ShareModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        product={{
+          name,
+          image: validImages[0] || null,
+        }}
+      />
     </div>
   );
 }
