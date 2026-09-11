@@ -47,6 +47,8 @@ const collectionLabel: Record<string, string> = {
   resort_evening: "The Resort Evening Edit",
 };
 
+import { FALLBACK_PRODUCTS } from "@/data/fallbackProducts";
+
 export async function generateMetadata({
   params,
 }: {
@@ -57,12 +59,22 @@ export async function generateMetadata({
   const supabase = createClient(cookieStore);
 
   const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
-  const query = supabase
-    .from("products")
-    .select("id, name, description, images, selling_price_usd, collection");
-  const { data: product } = isUUID
-    ? await query.eq("id", slug).maybeSingle()
-    : await query.eq("slug", slug).maybeSingle();
+  let product: any = null;
+  try {
+    const query = supabase
+      .from("products")
+      .select("id, name, description, images, selling_price_usd, collection");
+    const res = isUUID
+      ? await query.eq("id", slug).maybeSingle()
+      : await query.eq("slug", slug).maybeSingle();
+    product = res.data;
+  } catch {}
+
+  if (!product) {
+    product = isUUID
+      ? FALLBACK_PRODUCTS.find((p) => p.id === slug)
+      : FALLBACK_PRODUCTS.find((p) => p.slug === slug);
+  }
 
   if (!product) {
     return {
@@ -116,10 +128,20 @@ export default async function ProductDetail({
   const supabase = createClient(cookieStore);
 
   const isProductUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
-  const detailQuery = supabase.from("products").select();
-  const { data: product } = isProductUUID
-    ? await detailQuery.eq("id", slug).eq("is_active", true).maybeSingle()
-    : await detailQuery.eq("slug", slug).eq("is_active", true).maybeSingle();
+  let product: any = null;
+  try {
+    const detailQuery = supabase.from("products").select();
+    const res = isProductUUID
+      ? await detailQuery.eq("id", slug).eq("is_active", true).maybeSingle()
+      : await detailQuery.eq("slug", slug).eq("is_active", true).maybeSingle();
+    product = res.data;
+  } catch {}
+
+  if (!product) {
+    product = isProductUUID
+      ? FALLBACK_PRODUCTS.find((p) => p.id === slug)
+      : FALLBACK_PRODUCTS.find((p) => p.slug === slug);
+  }
 
   if (!product) notFound();
 

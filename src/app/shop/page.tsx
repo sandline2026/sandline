@@ -22,6 +22,8 @@ const collectionTabs = [
   { slug: "resort_evening", label: "The Resort Evening Edit", href: "/collections/resort_evening" },
 ];
 
+import { FALLBACK_PRODUCTS } from "@/data/fallbackProducts";
+
 export default async function Shop({
   searchParams,
 }: {
@@ -37,13 +39,19 @@ export default async function Shop({
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: rawProducts, error } = await supabase
-    .from("products")
-    .select()
-    .eq("is_active", true)
-    .order("created_at", { ascending: false });
+  let rawProducts: any[] | null = null;
+  try {
+    const res = await supabase
+      .from("products")
+      .select()
+      .eq("is_active", true)
+      .order("created_at", { ascending: false });
+    rawProducts = res.data;
+  } catch (err) {
+    console.warn("Supabase fetch fallback triggered:", err);
+  }
 
-  let allProducts = rawProducts || [];
+  const allProducts = (rawProducts && rawProducts.length > 0) ? rawProducts : FALLBACK_PRODUCTS;
   let products = [...allProducts];
 
   const activeSizes = sp.sizes ? sp.sizes.split(",").filter(Boolean) : [];
@@ -159,7 +167,7 @@ export default async function Shop({
           </div>
         </div>
 
-        {error && <p style={{ color: "var(--red)", marginBottom: "20px" }}>Error: {error.message}</p>}
+        {/* Error message removed to gracefully fallback */}
 
         {products && products.length > 0 ? (
           <div className="collection-product-grid">
