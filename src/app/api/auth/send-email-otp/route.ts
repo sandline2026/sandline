@@ -6,8 +6,8 @@ import { createClient } from "@supabase/supabase-js";
 const OTP_SECRET = process.env.ADMIN_PASSWORD || "sandline_secret_otp_key_2026";
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://cviwdzcgadfkolvvobal.supabase.co",
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_d5yolyCcJMQ_lhnmk0QTCQ_M4iMiedI"
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://rstczvqfjiqoshlaabgy.supabase.co",
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_Fnm-5bXoTSnhzJnfUMzaYw_pCXPvY7_"
 );
 
 export async function POST(req: NextRequest) {
