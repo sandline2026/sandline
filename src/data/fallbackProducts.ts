@@ -266,7 +266,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/9161364674cf48b399fda184592ac5c1_w540_h720_q85_lg_fcover"
+      "/images/products/positano-ruffle-tiered-resort-blouse.jpg"
     ],
     "description": "Delicate cascading ruffles and romantic bell sleeves make this airy blouse an essential for sunset cocktails and candlelit dinners by the coast.",
     "is_active": true,
@@ -295,7 +295,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/da7bb8c52daa445fa0924c0d45c7b999_w540_h720_q85_lg_fcover"
+      "/images/products/riviera-lace-up-placket-cotton-blouse.jpg"
     ],
     "description": "Relaxed resort silhouette featuring a lace-up grommet neckline and breathable weave tailored for warm golden days.",
     "is_active": true,
@@ -324,7 +324,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/3fe8b7f200e84aaab3385c547494fa6a_w540_h720_q85_lg_fcover"
+      "/images/products/capri-tie-up-linen-placket-blouse.jpg"
     ],
     "description": "Clean resort elegance featuring front tassel ties, gathered cuffs, and an easy relaxed drape.",
     "is_active": true,
@@ -353,7 +353,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/4384ada175854d44b6657f64e1158a07_w540_h720_q85_lg_fcover"
+      "/images/products/milan-plaid-cropped-resort-overshirt.jpg"
     ],
     "description": "Modern cropped silhouette in classic heritage plaid. Features tailored flap pockets and premium horn buttons.",
     "is_active": true,
@@ -382,7 +382,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/dfebff0a308e49ed8b7fb77918191848_w540_h720_q85_lg_fcover"
+      "/images/products/arezzo-front-twist-striped-blouse.jpg"
     ],
     "description": "Figure-flattering twist-front accent with vertical pinstripes designed to elongate the silhouette.",
     "is_active": true,
@@ -411,7 +411,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/866308911ee44ca7a1e776290e4c0933_w540_h720_q85_lg_fcover"
+      "/images/products/elysian-tie-up-a-line-resort-dress.jpg"
     ],
     "description": "Romantic A-line midi dress with adjustable tie-up shoulder ribbons and a graceful flared skirt hem.",
     "is_active": true,
@@ -440,7 +440,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/7c3f0bf8d8504bb0b93a6b457fa9b279_w540_h720_q85_lg_fcover"
+      "/images/products/amalfi-contrast-trim-silk-a-line-dress.jpg"
     ],
     "description": "Striking contrast piped edges highlight this timeless A-line silhouette, finished with a subtle side slit.",
     "is_active": true,
@@ -469,7 +469,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/3528b1e2ca8c49079f03cf704b316b3f_w540_h720_q85_lg_fcover"
+      "/images/products/santorini-3d-floral-silk-slip-dress.jpg"
     ],
     "description": "An artisan showstopper featuring sculpted 3D floral petals cascading along the cowl neckline and backless drape.",
     "is_active": true,
@@ -498,7 +498,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/7cfb5070788a4a95ae26e98112fb4d13_w540_h720_q85_lg_fcover"
+      "/images/products/ibiza-backless-halter-linen-top.jpg"
     ],
     "description": "Minimalist open-back halter top with self-tie neck cords, crafted for warm beach parties and tropical getaways.",
     "is_active": true,
@@ -527,7 +527,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/9ff1949fe053474597b2d2266d484103_w540_h720_q85_lg_fcover"
+      "/images/products/kyoto-sheer-organza-cami-top.jpg"
     ],
     "description": "Ethereal sheer texture with delicate spaghetti straps and a subtle flared peplum hem.",
     "is_active": true,
@@ -556,7 +556,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/bce6968a22d8404a989dddb094dec20e_w540_h720_q85_lg_fcover"
+      "/images/products/mykonos-smocked-linen-co-ord-set.jpg"
     ],
     "description": "Two-piece matching set featuring a smocked bodice crop top paired with high-waisted flowing wide-leg trousers.",
     "is_active": true,
@@ -585,7 +585,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/8d4433abf68342e5b8673aad88059389_w540_h720_q85_lg_fcover"
+      "/images/products/st-tropez-ruffle-tiered-skirt-co-ord-set.jpg"
     ],
     "description": "Flirty ruffled crop top matched with a playful tiered mini skirt. Finished with elasticated comfort waist.",
     "is_active": true,
@@ -614,7 +614,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/d0353cc435c64e1d8ab5d1b746686be9_w540_h720_q85_lg_fcover"
+      "/images/products/bali-contrast-trim-resort-co-ord-set.jpg"
     ],
     "description": "Tailored resort co-ord set with contrasting nautical binding on collar, pockets, and trouser hems.",
     "is_active": true,
@@ -643,7 +643,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/b2a4f9d1652842bda95b16e25c7707b6_w540_h720_q85_lg_fcover"
+      "/images/products/tulum-crossed-wrap-halter-co-ord-set.jpg"
     ],
     "description": "Cross-front wrap top with matching high-rise midi skirt, engineered for beach clubs and sunset lounges.",
     "is_active": true,
@@ -672,7 +672,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/d7e141bfa6764e4ca985c6ba9593c539_w540_h720_q85_lg_fcover"
+      "/images/products/maui-relaxed-linen-lounge-co-ord-set.jpg"
     ],
     "description": "Ultra-comfortable relaxed resort shirt and matching tailored shorts with deep slip pockets.",
     "is_active": true,
@@ -701,7 +701,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/ec2cb44934354d63886b74faf69082d8_w540_h720_q85_lg_fcover"
+      "/images/products/monaco-hand-embroidered-co-ord-set.jpg"
     ],
     "description": "Delicate tonal floral embroidery across the scalloped collar and sleeves. An heirloom luxury co-ord set.",
     "is_active": true,
@@ -730,7 +730,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/03f9e97d85ff46e987597091bf4bac57_w540_h720_q85_lg_fcover"
+      "/images/products/paloma-gathered-waist-co-ord-set.jpg"
     ],
     "description": "Cinched gathered waistline top paired with fluid wide trousers, offering both shape and effortless ease.",
     "is_active": true,
@@ -759,7 +759,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/6a229c505212434dbf071a73eaaff4fd_w540_h720_q85_lg_fcover"
+      "/images/products/cabo-elastic-linen-shorts-co-ord-set.jpg"
     ],
     "description": "Relaxed button-down shirt with drawstring pull-on shorts. The ultimate packing staple for sunny holidays.",
     "is_active": true,
@@ -788,7 +788,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/c3702c2e72134ca98d0a0a7f093d3126_w540_h720_q85_lg_fcover"
+      "/images/products/maldives-drawstring-resort-co-ord-set.jpg"
     ],
     "description": "Airy lightweight gauze fabric with adjustable ruched drawstring ties on the bodice and trousers.",
     "is_active": true,
@@ -817,7 +817,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/1ae3322b2faf4fff8ec0e76da224c351_w540_h720_q85_lg_fcover"
+      "/images/products/sunset-hooded-knit-resort-co-ord-set.jpg"
     ],
     "description": "Beachside crochet hoodie paired with relaxed pull-on shorts for breezy boat rides and cool evening strolls.",
     "is_active": true,
@@ -846,7 +846,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/e5d57a2ff7bf4747bba5625bd7813fbd_w540_h720_q85_lg_fcover"
+      "/images/products/riviera-safari-pocket-co-ord-set.jpg"
     ],
     "description": "Utility-inspired cargo pockets meet luxury resort tailoring in this sharp two-piece set.",
     "is_active": true,
@@ -875,7 +875,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/09dfb0c5bd834f7e9af62e173f2f8ff3_w540_h720_q85_lg_fcover"
+      "/images/products/bora-bora-tiered-beach-maxi-dress.jpg"
     ],
     "description": "Voluminous tiered maxi dress that sways gracefully with every ocean breeze. Features an adjustable back tie.",
     "is_active": true,
@@ -904,7 +904,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/de4b69a25b4640739933d3fa1df7d69f_w540_h720_q85_lg_fcover"
+      "/images/products/venice-hand-beaded-straight-leg-denim.jpg"
     ],
     "description": "High-waist straight leg jeans hand-embellished with luminous pearls and metallic beading along the front panels.",
     "is_active": true,
@@ -933,7 +933,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/5f5cdefbf6d645f29e395aea58881e8f_w540_h720_q85_lg_fcover"
+      "/images/products/santorini-embroidered-denim-wide-leg-shorts.jpg"
     ],
     "description": "Wide A-line denim shorts embellished with delicate white floral embroidery along the side seams.",
     "is_active": true,
@@ -962,7 +962,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/65776bc7d1084f27b4b8dbf07e8316ca_w720_h720_q85_lg_fcover"
+      "/images/products/portofino-vintage-button-denim-culotte-shorts.jpg"
     ],
     "description": "High-waisted maritime sailor button closure on structured culotte denim shorts.",
     "is_active": true,
@@ -991,7 +991,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/b09c6902608d42ef8fae61bfddd39498_w540_h720_q85_lg_fcover"
+      "/images/products/florence-vintage-embroidered-flare-jeans.jpg"
     ],
     "description": "Dramatic 70s-inspired bell bottom flare jeans with intricate artisan chain-stitch embroidery down the leg.",
     "is_active": true,
@@ -1020,7 +1020,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/cf951b506d734bc1bd5bdf50bd8d9f0e_w720_h720_q85_lg_fcover"
+      "/images/products/verona-pintuck-seam-raw-hem-wide-leg-jeans.jpg"
     ],
     "description": "Sharp front pintuck tailored crease with an unhemmed raw edge. Elongates the legs effortlessly.",
     "is_active": true,
@@ -1049,7 +1049,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/0fa62864c1b64a8882d6401c0ce9e73f_w540_h720_q85_lg_fcover"
+      "/images/products/cherry-blossom-embroidered-wide-leg-jeans.jpg"
     ],
     "description": "Playful crimson cherry embroidery scattered over high-waisted relaxed wide-leg trousers.",
     "is_active": true,
@@ -1078,7 +1078,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/d481d4c363564df89b0bc421b018e169_w540_h720_q85_lg_fcover"
+      "/images/products/parisian-bow-detail-wide-leg-denim.jpg"
     ],
     "description": "Charming denim bow accents at the waistline, paired with an ultra-flattering wide leg silhouette.",
     "is_active": true,
@@ -1107,7 +1107,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/734fc4b0190a40bf960787d68fc7ca9d_w720_h720_q85_lg_fcover"
+      "/images/products/riviera-atelier-decorative-pocket-wide-leg-jeans.jpg"
     ],
     "description": "Sculpted decorative tailored front pockets with contrast gold topstitching and wide fluid drape.",
     "is_active": true,
@@ -1136,7 +1136,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://img201.savana.com/goods-pic/12a2835e39154bc1a535e1b0c9e9ff08_w540_h720_q85_lg_fcover"
+      "/images/products/corfu-distressed-denim-bermuda-shorts.jpg"
     ],
     "description": "Relaxed Bermuda length with artisanal raw distressing and frayed hem. Perfect for coastal getaways.",
     "is_active": true,
