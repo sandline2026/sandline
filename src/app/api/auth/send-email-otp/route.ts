@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
     const response = NextResponse.json({
       success: true,
-      message: `Access code sent to ${cleanEmail}! Please check your inbox.`,
+      message: `1-Click Sign-In link sent to ${cleanEmail}! Please check your inbox.`,
     });
 
     // Set signed HTTP-only cookie for OTP verification
