@@ -7,8 +7,8 @@ export const dynamic = "force-dynamic";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder_key_not_configured");
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://cviwdzcgadfkolvvobal.supabase.co",
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_d5yolyCcJMQ_lhnmk0QTCQ_M4iMiedI"
 );
 
 export async function POST(req: NextRequest) {

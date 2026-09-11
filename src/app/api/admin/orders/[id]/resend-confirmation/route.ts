@@ -3,8 +3,8 @@ import { createClient } from "@supabase/supabase-js";
 import { sendOrderConfirmationEmail } from "@/lib/email";
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://cviwdzcgadfkolvvobal.supabase.co",
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_d5yolyCcJMQ_lhnmk0QTCQ_M4iMiedI"
 );
 
 export async function POST(
