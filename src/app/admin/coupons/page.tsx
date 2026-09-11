@@ -2,7 +2,7 @@ import { createClient } from "@/../utils/supabase/server";
 import { cookies } from "next/headers";
 import AdminNav from "@/components/AdminNav";
 import AdminHeader from "@/components/AdminHeader";
-import { CouponCreateForm, ToggleCouponButton } from "@/components/CouponFormUI";
+import { CouponCreateForm, ToggleCouponButton, DeleteCouponButton } from "@/components/CouponFormUI";
 import { Tag, PlusCircle, Percent, CheckCircle2 } from "lucide-react";
 import "../../admin.css";
 
@@ -100,6 +100,7 @@ export default async function CouponsPage() {
                   <th>Redemptions</th>
                   <th>Max Limit</th>
                   <th>Status</th>
+                  <th style={{ textAlign: "right" }}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -135,6 +136,9 @@ export default async function CouponsPage() {
                     <td>{c.max_uses ? `${c.max_uses} max` : <span style={{ color: "var(--text-muted)" }}>Unlimited</span>}</td>
                     <td>
                       <ToggleCouponButton id={c.id} isActive={c.is_active} />
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <DeleteCouponButton id={c.id} />
                     </td>
                   </tr>
                 ))}
