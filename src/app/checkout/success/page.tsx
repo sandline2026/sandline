@@ -47,7 +47,7 @@ export default async function CheckoutSuccess({
         .select(`
           *,
           customers (full_name, email, address_line, city, postal_code, country),
-          order_items (quantity, unit_price_usd, size, color, products (name))
+          order_items (product_id, quantity, unit_price_usd, size, color)
         `)
         .eq("id", order_id)
         .single();
@@ -112,7 +112,7 @@ export default async function CheckoutSuccess({
             .select(`
               *,
               customers (full_name, email, address_line, city, postal_code, country),
-              order_items (quantity, unit_price_usd, size, color, products (name))
+              order_items (product_id, quantity, unit_price_usd, size, color)
             `)
             .eq("id", orderId)
             .single();
@@ -126,8 +126,12 @@ export default async function CheckoutSuccess({
             customerEmail = customer.email;
             customerName = customer.full_name || "Valued Customer";
 
+            const productIds = (orderDetails.order_items || []).map((oi: any) => oi.product_id);
+            const { data: prods } = await supabase.from("products").select("id, name").in("id", productIds);
+            const prodMap = new Map((prods || []).map((p: any) => [p.id, p.name]));
+
             const itemsSummary = (orderDetails.order_items || []).map((oi: any) => ({
-              name: oi.products?.name || "Sandline Garment",
+              name: prodMap.get(oi.product_id) || "Sandline Garment",
               quantity: oi.quantity || 1,
               price: Number(oi.unit_price_usd) || 0,
               size: oi.size,

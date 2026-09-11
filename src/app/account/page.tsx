@@ -110,18 +110,34 @@ export default function CustomerAccountPage() {
             *,
             order_items (
               id,
+              product_id,
               quantity,
               unit_price_usd,
               size,
-              color,
-              products (name, images, slug)
+              color
             )
           `)
           .eq("customer_id", customerData.id)
           .order("created_at", { ascending: false });
 
         if (!ordersError && ordersData) {
-          setOrders(ordersData as Order[]);
+          const allProductIds = (ordersData as any[]).flatMap((o) => (o.order_items || []).map((i: any) => i.product_id));
+          const { data: prods } = await supabase.from("products").select("id, name, images, slug").in("id", allProductIds);
+          const prodMap = new Map((prods || []).map((p: any) => [p.id, p]));
+
+          const enriched = (ordersData as any[]).map((order) => ({
+            ...order,
+            order_items: (order.order_items || []).map((item: any) => ({
+              ...item,
+              products: prodMap.get(item.product_id) || {
+                name: item.product_id || "Handcrafted Garment",
+                images: [],
+                slug: "",
+              },
+            })),
+          }));
+
+          setOrders(enriched as Order[]);
         }
       }
 

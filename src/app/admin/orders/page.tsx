@@ -10,17 +10,31 @@ export default async function AdminOrdersPage() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: rawOrders } = await supabase
-    .from("orders")
-    .select(`
-      *,
-      customers (id, full_name, email, phone, address_line, city, country, postal_code),
-      order_items (id, quantity, unit_price_usd, unit_cost_inr, size, color, products (name, slug)),
-      payments (id, gateway, gateway_transaction_id, amount_usd, gateway_fee_usd, status)
-    `)
-    .order("created_at", { ascending: false });
+  const [{ data: rawOrders }, { data: allProducts }] = await Promise.all([
+    supabase
+      .from("orders")
+      .select(`
+        *,
+        customers (id, full_name, email, phone, address_line, city, country, postal_code),
+        order_items (id, product_id, quantity, unit_price_usd, unit_cost_inr, size, color),
+        payments (id, gateway, gateway_transaction_id, amount_usd, gateway_fee_usd, status)
+      `)
+      .order("created_at", { ascending: false }),
+    supabase.from("products").select("id, name, slug"),
+  ]);
 
-  const orders: Order[] = (rawOrders as unknown as Order[]) || [];
+  const productMap = new Map((allProducts || []).map((p: any) => [p.id, p]));
+
+  const orders: Order[] = ((rawOrders as any[]) || []).map((order) => ({
+    ...order,
+    order_items: (order.order_items || []).map((item: any) => ({
+      ...item,
+      products: productMap.get(item.product_id) || {
+        name: item.product_id || "Handcrafted Resortwear",
+        slug: "",
+      },
+    })),
+  }));
 
   const totalOrders = orders.length;
   const pendingOrders = orders.filter(

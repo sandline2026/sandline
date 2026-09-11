@@ -82,14 +82,18 @@ export async function POST(req: NextRequest) {
             .select(`
               *,
               customers (full_name, email, address_line, city, postal_code, country),
-              order_items (quantity, unit_price_usd, size, color, products (name))
+              order_items (product_id, quantity, unit_price_usd, size, color)
             `)
             .eq("id", orderId)
             .single();
 
           if (orderDetails && orderDetails.customers?.email) {
+            const productIds = (orderDetails.order_items || []).map((item: any) => item.product_id);
+            const { data: prods } = await supabase.from("products").select("id, name").in("id", productIds);
+            const prodMap = new Map((prods || []).map((p: any) => [p.id, p.name]));
+
             const items = (orderDetails.order_items || []).map((item: any) => ({
-              name: item.products?.name || "Handcrafted Garment",
+              name: prodMap.get(item.product_id) || "Handcrafted Garment",
               quantity: item.quantity || 1,
               price: item.unit_price_usd || 0,
               size: item.size || null,
