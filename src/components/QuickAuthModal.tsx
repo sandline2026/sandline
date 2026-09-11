@@ -382,49 +382,15 @@ export default function QuickAuthModal() {
                 Open Gmail Inbox ↗
               </a>
 
-              {/* Optional 6-digit access code verify box */}
-              <div style={{ background: "#FAF8F5", border: "1px solid #EAE6DF", borderRadius: "14px", padding: "16px", marginTop: "10px" }}>
-                <p style={{ fontSize: "12px", color: "#666", margin: "0 0 10px" }}>
-                  Or enter your 6-digit access code:
+              {/* Auto-detect status indicator */}
+              <div style={{ background: "#FAF8F5", border: "1px solid #EAE6DF", borderRadius: "14px", padding: "18px 16px", marginTop: "10px" }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#059669", fontWeight: "600", fontSize: "13px", marginBottom: "6px" }}>
+                  <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", background: "#059669" }}></span>
+                  Waiting for link click...
+                </div>
+                <p style={{ fontSize: "12.5px", color: "#666", margin: "0", lineHeight: "1.5" }}>
+                  Click the <strong>&quot;Sign In&quot;</strong> button in your email and this page will automatically log you in!
                 </p>
-                <form onSubmit={handleVerifyOtp} style={{ display: "flex", gap: "8px" }}>
-                  <input
-                    type="text"
-                    maxLength={6}
-                    placeholder="• • • • • •"
-                    value={otpCode}
-                    onChange={(e) => setOtpCode(e.target.value.replace(/\s+/g, ""))}
-                    style={{
-                      flex: 1,
-                      padding: "10px 12px",
-                      borderRadius: "10px",
-                      border: "1px solid #D5D1CA",
-                      fontSize: "16px",
-                      letterSpacing: "3px",
-                      textAlign: "center",
-                      fontFamily: "'Space Mono', monospace",
-                      background: "#FFFFFF",
-                      color: "#111827",
-                    }}
-                  />
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    style={{
-                      background: "#111827",
-                      color: "#FFFFFF",
-                      padding: "10px 18px",
-                      borderRadius: "10px",
-                      border: "none",
-                      fontSize: "12px",
-                      fontWeight: "700",
-                      cursor: "pointer",
-                      fontFamily: "'Space Mono', monospace",
-                    }}
-                  >
-                    {loading ? "..." : "Verify"}
-                  </button>
-                </form>
               </div>
 
               {errorMsg && <p className="auth-error-msg" style={{ marginTop: "12px" }}>{errorMsg}</p>}
@@ -439,7 +405,7 @@ export default function QuickAuthModal() {
                   className="resend-otp-btn"
                   style={{ background: "none", border: "none", color: "#D97706", fontWeight: "700", cursor: "pointer", textDecoration: "underline" }}
                 >
-                  Resend Email
+                  Resend Magic Link
                 </button>
               </div>
             </div>

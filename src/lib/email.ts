@@ -506,8 +506,8 @@ export async function sendOtpVerificationEmail({
                       magicLink
                         ? `
                     <!-- 1-Click Magic Link Button -->
-                    <div style="margin: 0 auto 28px; text-align: center;">
-                      <a href="${magicLink}" style="display: inline-block; background-color: #111827; color: #FFFFFF; padding: 18px 42px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 4px 14px rgba(0,0,0,0.15);">
+                    <div style="margin: 0 auto 32px; text-align: center;">
+                      <a href="${magicLink}" style="display: inline-block; background-color: #111827; color: #FFFFFF; padding: 18px 46px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 4px 14px rgba(0,0,0,0.15);">
                         ✦ Sign In to Sandline Studio →
                       </a>
                     </div>
@@ -515,21 +515,8 @@ export async function sendOtpVerificationEmail({
                         : ""
                     }
 
-                    <div style="border-top: 1px solid #EAE6DF; margin: 24px 0 20px; position: relative;">
-                      <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #FFFFFF; padding: 0 12px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #9CA3AF;">
-                        Or use 6-digit access code
-                      </span>
-                    </div>
-
-                    <!-- 6-Digit Code Box -->
-                    <div style="background: linear-gradient(180deg, #FAF8F5 0%, #F5F1EB 100%); border: 1px dashed #111827; border-radius: 12px; padding: 14px 24px; margin: 0 auto 20px; display: inline-block;">
-                      <div style="font-family: 'Courier New', Courier, monospace; font-size: 30px; font-weight: 800; letter-spacing: 8px; color: #111827; margin-right: -8px;">
-                        ${otp}
-                      </div>
-                    </div>
-
                     <div style="font-size: 12px; color: #6B7280; margin-bottom: 20px;">
-                      ⏱️ This link and code are valid for <strong>10 minutes</strong>.
+                      ⏱️ This login link is valid for <strong>10 minutes</strong>.
                     </div>
 
                     <div style="border-top: 1px solid #EAE6DF; padding-top: 20px; font-size: 12px; color: #9CA3AF; line-height: 1.5;">

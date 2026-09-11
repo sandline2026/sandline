@@ -383,47 +383,15 @@ function LoginContent() {
                 Open Gmail Inbox →
               </a>
 
-              <div style={{ background: "#FAF8F5", border: "1px solid #EAE6DF", borderRadius: "14px", padding: "18px", marginTop: "10px" }}>
-                <p style={{ fontSize: "12.5px", color: "#666", margin: "0 0 12px" }}>
-                  Or enter your 6-digit access code below:
+              {/* Auto-detect status indicator */}
+              <div style={{ background: "#FAF8F5", border: "1px solid #EAE6DF", borderRadius: "14px", padding: "20px", marginTop: "10px" }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#059669", fontWeight: "600", fontSize: "14px", marginBottom: "8px" }}>
+                  <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", background: "#059669" }}></span>
+                  Waiting for link click...
+                </div>
+                <p style={{ fontSize: "13px", color: "#666", margin: "0", lineHeight: "1.5" }}>
+                  Click the <strong>&quot;Sign In&quot;</strong> button in your email and you will be logged in automatically!
                 </p>
-                <form onSubmit={handleVerifyOtp} style={{ display: "flex", gap: "10px" }}>
-                  <input
-                    type="text"
-                    maxLength={8}
-                    placeholder="• • • • • •"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/\s+/g, ""))}
-                    style={{
-                      flex: 1,
-                      padding: "12px 14px",
-                      borderRadius: "10px",
-                      border: "1px solid #D5D1CA",
-                      fontSize: "18px",
-                      letterSpacing: "4px",
-                      textAlign: "center",
-                      fontFamily: "'Space Mono', monospace",
-                      outline: "none",
-                      background: "white",
-                    }}
-                  />
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    style={{
-                      background: "#111827",
-                      color: "white",
-                      padding: "12px 20px",
-                      borderRadius: "10px",
-                      border: "none",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {loading ? "..." : "Verify"}
-                  </button>
-                </form>
               </div>
 
               <div style={{ marginTop: "20px", fontSize: "13px", color: "#666" }}>
