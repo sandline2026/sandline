@@ -122,11 +122,18 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // 2. Instant fast local detection (<1ms)
+    // 2. Check if already cached in localStorage from previous visit
+    const cachedCurrency = localStorage.getItem("sandline_currency") as CurrencyCode | null;
+    if (cachedCurrency && CURRENCIES[cachedCurrency]) {
+      setCurrencyState(cachedCurrency);
+      return;
+    }
+
+    // 3. Instant fast local detection (<1ms)
     const fastDetected = detectClientTzCurrency();
     setCurrencyState(fastDetected);
 
-    // 3. Real-time Live IP Geo-Detection in background
+    // 4. Real-time Live IP Geo-Detection in background (first-time only)
     async function fetchLiveLocation() {
       try {
         const res = await fetch("/api/geo");
