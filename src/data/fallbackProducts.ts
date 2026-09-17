@@ -1639,23 +1639,23 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Maldives Open-Knit Crochet Trousers Set",
     "slug": "maldives-open-knit-crochet-trousers-set",
     "collection": "honeymoon",
-    "selling_price_usd": 82,
-    "cost_price": 30,
-    "dropship_fee": 250,
+    "selling_price_usd": 53.25,
+    "cost_price": 3000,
+    "dropship_fee": 1000,
     "stock_quantity": 12,
     "fabric": "Fine Cotton Open-Knit Crochet",
     "colors": [
       "Sand Nude"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
       "L"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/maldives-open-knit-crochet-trousers-set-1.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/maldives-open-knit-crochet-trousers-set-v2-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/maldives-open-knit-crochet-trousers-set-v2-2.jpg"
     ],
     "description": "The ultimate overwater villa uniform. Made from breathable open-knit crochet featuring a triangle bralette and high-rise flared beach trousers.",
     "is_active": true,
