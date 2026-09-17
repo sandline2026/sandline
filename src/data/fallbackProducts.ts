@@ -2259,5 +2259,37 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Dreamy Riviera romance. An ethereal halter-neck cocktail and party dress crafted from multi-tiered cascading georgette chiffon, featuring an open back, high collar neck with trailing bow ties, and a playful tiered flounce hemline.",
     "is_active": true,
     "created_at": "2026-09-17T08:50:00.000Z"
+  },
+  {
+    "id": "prod-80",
+    "name": "Palermo Asymmetric Sheer Floral Mini Dress",
+    "slug": "palermo-asymmetric-sheer-floral-mini-dress",
+    "collection": "resort_evening",
+    "selling_price_usd": 31.95,
+    "cost_price": 1100,
+    "dropship_fee": 1000,
+    "stock_quantity": 35,
+    "fabric": "Sheer Stretch Mesh with Full Breathable Lining and Fluted Raw Hem",
+    "colors": [
+      "Burgundy Rose",
+      "Noir Amber"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/palermo-asymmetric-sheer-floral-mini-dress-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/palermo-asymmetric-sheer-floral-mini-dress-2.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/palermo-asymmetric-sheer-floral-mini-dress-3.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/palermo-asymmetric-sheer-floral-mini-dress-4.jpg"
+    ],
+    "description": "An alluring evening statement silhouette featuring an asymmetric off-the-shoulder neckline, sheer stretch mesh long sleeves, and an evocative watercolor floral blossom print. Finished with a flattering body-skimming bodice and a playful flounce mini hemline.",
+    "is_active": true,
+    "created_at": "2026-09-17T08:57:00.000Z"
   }
 ];
+
