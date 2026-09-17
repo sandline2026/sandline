@@ -2290,6 +2290,35 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "An alluring evening statement silhouette featuring an asymmetric off-the-shoulder neckline, sheer stretch mesh long sleeves, and an evocative watercolor floral blossom print. Finished with a flattering body-skimming bodice and a playful flounce mini hemline.",
     "is_active": true,
     "created_at": "2026-09-17T08:57:00.000Z"
+  },
+  {
+    "id": "prod-81",
+    "name": "Marbella Botanical Palm Shirt & Wide-Leg Trouser Set",
+    "slug": "marbella-botanical-palm-shirt-trouser-set",
+    "collection": "beach_party",
+    "selling_price_usd": 56.80,
+    "cost_price": 2000,
+    "dropship_fee": 1000,
+    "stock_quantity": 35,
+    "fabric": "Soft Drape Breathable Linen-Viscose Blend with Custom Botanical Palm Screen Print",
+    "colors": [
+      "Ivory & Terracotta Palm"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/marbella-botanical-palm-shirt-trouser-set-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/marbella-botanical-palm-shirt-trouser-set-2.jpg"
+    ],
+    "description": "Effortless Mediterranean resort sophistication. A relaxed two-piece luxury vacation co-ord set featuring an oversized button-down camp shirt and coordinating high-waisted wide-leg trousers, both accented with warm terracotta palm and botanical motifs on an ivory silhouette.",
+    "is_active": true,
+    "created_at": "2026-09-17T09:10:00.000Z"
   }
 ];
+
 
