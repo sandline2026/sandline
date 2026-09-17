@@ -2165,5 +2165,38 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Retro Italian athletic luxury. A statement monochrome two-piece track and lounge ensemble featuring a mock-neck zip-front jacket and matching high-rise wide-leg trousers, both accented with timeless black polka dots and athletic side-striping.",
     "is_active": true,
     "created_at": "2026-09-17T08:25:00.000Z"
+  },
+  {
+    "id": "prod-77",
+    "name": "Capri 3D Rosette Crepe Halter Maxi Dress",
+    "slug": "capri-3d-rosette-halter-maxi-dress",
+    "collection": "beach_party",
+    "selling_price_usd": 37.87,
+    "cost_price": 1400,
+    "dropship_fee": 1000,
+    "stock_quantity": 45,
+    "fabric": "Textured Crinkle Summer Crepe with Sculpted 3D Petal Rosette Appliqué",
+    "colors": [
+      "Ivory Cream",
+      "Pastel Yellow",
+      "Classic White"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-2.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-3.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-4.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-5.jpg"
+    ],
+    "description": "Sensational Mediterranean glamour. A textured crinkle crepe halter maxi dress adorned with an artisanal oversized 3D sculpted floral rosette at the neckline, an alluring backless tie fastening, and a fluid floor-sweeping column silhouette.",
+    "is_active": true,
+    "created_at": "2026-09-17T08:35:00.000Z"
   }
 ];
