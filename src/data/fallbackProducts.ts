@@ -2318,7 +2318,36 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Effortless Mediterranean resort sophistication. A relaxed two-piece luxury vacation co-ord set featuring an oversized button-down camp shirt and coordinating high-waisted wide-leg trousers, both accented with warm terracotta palm and botanical motifs on an ivory silhouette.",
     "is_active": true,
     "created_at": "2026-09-17T09:10:00.000Z"
+  },
+  {
+    "id": "prod-82",
+    "name": "Geneva Contoured Colorblock Zip Tracksuit Set",
+    "slug": "geneva-contoured-colorblock-zip-tracksuit-set",
+    "collection": "beach_party",
+    "selling_price_usd": 47.34,
+    "cost_price": 2500,
+    "dropship_fee": 1000,
+    "stock_quantity": 35,
+    "fabric": "Heavyweight Sculpting Scuba-Knit & Soft French Terry Blend",
+    "colors": [
+      "Black & Sand Beige"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/geneva-contoured-colorblock-zip-tracksuit-set-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/geneva-contoured-colorblock-zip-tracksuit-set-2.jpg"
+    ],
+    "description": "High-fashion luxury airport and lounge dressing. A tailored two-piece colorblocked tracksuit set featuring an architectural zip-front track jacket with ergonomic sand-beige side contouring, paired with coordinating high-waisted wide-leg track trousers finished with vertical contrast side panels.",
+    "is_active": true,
+    "created_at": "2026-09-17T09:17:00.000Z"
   }
 ];
+
 
 
