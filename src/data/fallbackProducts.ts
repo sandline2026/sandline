@@ -2199,5 +2199,36 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Sensational Mediterranean glamour. A textured crinkle crepe halter maxi dress adorned with an artisanal oversized 3D sculpted floral rosette at the neckline, an alluring backless tie fastening, and a fluid floor-sweeping column silhouette.",
     "is_active": true,
     "created_at": "2026-09-17T08:35:00.000Z"
+  },
+  {
+    "id": "prod-78",
+    "name": "Santorini Bohemian Paisley Tiered Maxi Dress",
+    "slug": "santorini-bohemian-paisley-tiered-maxi-dress",
+    "collection": "beach_party",
+    "selling_price_usd": 46.15,
+    "cost_price": 1400,
+    "dropship_fee": 1000,
+    "stock_quantity": 40,
+    "fabric": "Airy Crinkle Silk-Blend Chiffon in Vibrant Mediterranean Paisley Print",
+    "colors": [
+      "Azure Paisley",
+      "Rose Berry Paisley"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/santorini-bohemian-paisley-tiered-maxi-dress-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/santorini-bohemian-paisley-tiered-maxi-dress-2.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/santorini-bohemian-paisley-tiered-maxi-dress-3.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/santorini-bohemian-paisley-tiered-maxi-dress-4.jpg"
+    ],
+    "description": "Breathtaking Grecian bohemian elegance. An ethereal floor-skimming maxi dress featuring an intricate Mediterranean paisley print, a plunging V-neckline with delicate front tie, low-cut scoop back, and a voluminous ruffled tiered skirt.",
+    "is_active": true,
+    "created_at": "2026-09-17T08:45:00.000Z"
   }
 ];
