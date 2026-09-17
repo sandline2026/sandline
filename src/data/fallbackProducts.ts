@@ -1341,21 +1341,23 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Bohemian Handcrafted Crochet Hexagon Pullover",
     "slug": "bohemian-handcrafted-crochet-hexagon-pullover",
     "collection": "beach_party",
-    "selling_price_usd": 72,
-    "cost_price": 28,
-    "dropship_fee": 250,
+    "selling_price_usd": 30.77,
+    "cost_price": 900,
+    "dropship_fee": 1000,
     "stock_quantity": 12,
     "fabric": "100% Organic Cotton Crochet Yarn",
     "colors": [
       "Ecru Multi"
     ],
     "sizes": [
-      "S/M",
-      "L/XL"
+      "XS",
+      "S",
+      "M"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/bohemian-crochet-hexagon-knit-pullover-1.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/bohemian-handcrafted-crochet-hexagon-pullover-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/bohemian-handcrafted-crochet-hexagon-pullover-2.jpg"
     ],
     "description": "Hand-knit artisanal crochet openwork pullover with vibrant sunburst hexagon motifs, scalloped V-neck, and breezy bell sleeves.",
     "is_active": true,
