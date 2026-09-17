@@ -2136,5 +2136,34 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Effortless French Riviera chic. A tailored two-piece resort co-ord set crafted from breathable khaki pinstripe linen, featuring a deep V-neck sleeveless peplum top with an adjustable drawstring waist and matching high-waisted tailored resort shorts.",
     "is_active": true,
     "created_at": "2026-09-17T08:20:00.000Z"
+  },
+  {
+    "id": "prod-76",
+    "name": "Milan Polka Dot Side-Stripe Zip Jacket & Trouser Set",
+    "slug": "milan-polka-dot-side-stripe-trouser-set",
+    "collection": "resort_evening",
+    "selling_price_usd": 53.25,
+    "cost_price": 2000,
+    "dropship_fee": 1000,
+    "stock_quantity": 35,
+    "fabric": "Luxury High-Density Double-Knit Cotton Interlock with Athletic Side-Stripe Ribbing",
+    "colors": [
+      "Ivory & Onyx Polka Dot",
+      "Monochrome Dot"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/milan-polka-dot-side-stripe-trouser-set-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/milan-polka-dot-side-stripe-trouser-set-2.jpg"
+    ],
+    "description": "Retro Italian athletic luxury. A statement monochrome two-piece track and lounge ensemble featuring a mock-neck zip-front jacket and matching high-rise wide-leg trousers, both accented with timeless black polka dots and athletic side-striping.",
+    "is_active": true,
+    "created_at": "2026-09-17T08:25:00.000Z"
   }
 ];
