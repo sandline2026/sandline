@@ -1423,23 +1423,24 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Solstice Sun & Moon Ruched Halter Cami",
     "slug": "solstice-sun-and-moon-ruched-halter-cami",
     "collection": "beach_party",
-    "selling_price_usd": 42,
-    "cost_price": 16,
-    "dropship_fee": 250,
+    "selling_price_usd": 29.59,
+    "cost_price": 500,
+    "dropship_fee": 1000,
     "stock_quantity": 20,
     "fabric": "Double-Layered Mesh & Beaded Straps",
     "colors": [
       "Sunburst Tan / Aqua"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
-      "L"
+      "L",
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/solstice-paisley-sun-moon-halter-top-1.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/solstice-sun-and-moon-ruched-halter-cami-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/solstice-sun-and-moon-ruched-halter-cami-2.jpg"
     ],
     "description": "Handkerchief hem halter top featuring celestial sun and moon vintage woodblock print, center front ruching, and beaded neck ties.",
     "is_active": true,
