@@ -1849,9 +1849,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Capri Horizon Striped Linen Shirt & Trouser Set",
     "slug": "capri-horizon-striped-linen-trouser-set",
     "collection": "beach_party",
-    "selling_price_usd": 71,
-    "cost_price": 1000,
-    "dropship_fee": 250,
+    "selling_price_usd": 42.60,
+    "cost_price": 1800,
+    "dropship_fee": 1000,
     "stock_quantity": 50,
     "fabric": "100% Breathable Pure Linen Weave",
     "colors": [
@@ -1863,13 +1863,13 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/capri-horizon-striped-linen-trouser-set-1.jpg",
-      "/images/products/capri-horizon-striped-linen-trouser-set-2.jpg",
-      "/images/products/capri-horizon-striped-linen-trouser-set-3.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-horizon-striped-linen-trouser-set-v2-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-horizon-striped-linen-trouser-set-v2-2.jpg"
     ],
     "description": "Inspired by breezy afternoons on the Amalfi cliffs. A relaxed boyfriend-cut button-down shirt in crisp azure pinstripes with matching high-waisted wide-leg lounge trousers for effortless coastal living.",
     "is_active": true,
