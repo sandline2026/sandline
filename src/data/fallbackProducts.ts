@@ -1476,23 +1476,23 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Ibiza Horizon Striped Crochet Bralette & Shorts Set",
     "slug": "ibiza-horizon-striped-crochet-bralette-shorts-set",
     "collection": "beach_party",
-    "selling_price_usd": 62,
-    "cost_price": 24,
-    "dropship_fee": 250,
+    "selling_price_usd": 34.32,
+    "cost_price": 1000,
+    "dropship_fee": 1000,
     "stock_quantity": 18,
     "fabric": "Cotton Knit Crochet",
     "colors": [
       "Candy Pink / Ocean Blue / White"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
       "L"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/ibiza-striped-crochet-bralette-shorts-set-1.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/ibiza-horizon-striped-crochet-bralette-shorts-set-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/ibiza-horizon-striped-crochet-bralette-shorts-set-2.jpg"
     ],
     "description": "Vibrant coastal striped two-piece set featuring scalloped floral crochet borders, halter triangle bralette, and matching high-waisted shorts.",
     "is_active": true,
