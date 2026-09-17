@@ -2078,5 +2078,34 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Sun-drenched coastal elegance. Flowing high-rise resort trousers crafted from breathable ivory linen blend, detailed with sheer floral cutwork lace side inserts, an elasticated drawstring waistband, and relaxed wide legs.",
     "is_active": true,
     "created_at": "2026-09-17T07:30:00.000Z"
+  },
+  {
+    "id": "prod-74",
+    "name": "Monaco Butterfly Cutout Satin Maxi Gown",
+    "slug": "monaco-butterfly-cutout-satin-maxi-gown",
+    "collection": "honeymoon",
+    "selling_price_usd": 35.5,
+    "cost_price": 1200,
+    "dropship_fee": 1000,
+    "stock_quantity": 30,
+    "fabric": "Luminous Heavyweight Liquid Silk Satin with Structural Bodice Lining",
+    "colors": [
+      "Bridal Ivory",
+      "Pearl White"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/monaco-butterfly-cutout-satin-maxi-gown-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/monaco-butterfly-cutout-satin-maxi-gown-2.jpg"
+    ],
+    "description": "Pure Riviera romance. An ethereal floor-length A-line gown crafted from lustrous ivory silk satin, featuring a flattering V-neckline, slender spaghetti straps, and an enchanting architectural butterfly cutout caged back.",
+    "is_active": true,
+    "created_at": "2026-09-17T07:45:00.000Z"
   }
 ];
