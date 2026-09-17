@@ -278,11 +278,15 @@ export default async function ProductDetail({
                   priceUsd={Number(product.selling_price_usd)}
                   className="product-price-amount"
                 />
-                <ProductPrice
-                  priceUsd={Number(product.selling_price_usd) * 1.3}
-                  className="product-original-price"
-                />
-                <span className="product-discount-pill">-30%</span>
+                {product.id !== "prod-73" && !product.slug?.includes("sheer") && (
+                  <>
+                    <ProductPrice
+                      priceUsd={Number(product.selling_price_usd) * 1.3}
+                      className="product-original-price"
+                    />
+                    <span className="product-discount-pill">-30%</span>
+                  </>
+                )}
               </div>
               <span className="product-shipping-tag">
                 {inStock ? "In Stock • Ships Worldwide" : "Sold Out"}
@@ -326,6 +330,7 @@ export default async function ProductDetail({
               colors={product.colors || []}
               inStock={inStock}
               image={hasPhoto ? product.images[0] : null}
+              allowCoupon={product.id !== "prod-73" && !product.slug?.includes("sheer")}
             />
 
             {/* Delivery Pincode Checker */}

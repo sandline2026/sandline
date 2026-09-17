@@ -19,6 +19,7 @@ interface ProductBuyBoxProps {
   colors?: string[];
   inStock: boolean;
   image: string | null;
+  allowCoupon?: boolean;
 }
 
 export default function ProductBuyBox({
@@ -29,6 +30,7 @@ export default function ProductBuyBox({
   colors = [],
   inStock,
   image,
+  allowCoupon = true,
 }: ProductBuyBoxProps) {
   const router = useRouter();
   const { addToCart, applyCoupon } = useCart();
@@ -49,7 +51,8 @@ export default function ProductBuyBox({
   const wishlisted = isWishlisted(id);
 
   // Calculate pricing
-  const couponDiscountVal = Math.round(price * 0.1 * 100) / 100;
+  const hasCouponDiscount = allowCoupon !== false;
+  const couponDiscountVal = hasCouponDiscount ? Math.round(price * 0.1 * 100) / 100 : 0;
   const afterCoupon = price - couponDiscountVal;
   const prepaidDiscountVal = Math.round(afterCoupon * 0.05 * 100) / 100;
   const finalPrice = Math.round((afterCoupon - prepaidDiscountVal) * 100) / 100;
@@ -209,12 +212,14 @@ export default function ProductBuyBox({
               <span>Listed price</span>
               <span>{formatPrice(price)}</span>
             </div>
-            <div className="breakdown-row discount-text">
-              <span>
-                <code className="coupon-inline-tag">NEW10</code> — 10% off
-              </span>
-              <span>-{formatPrice(couponDiscountVal)}</span>
-            </div>
+            {hasCouponDiscount && (
+              <div className="breakdown-row discount-text">
+                <span>
+                  <code className="coupon-inline-tag">NEW10</code> — 10% off
+                </span>
+                <span>-{formatPrice(couponDiscountVal)}</span>
+              </div>
+            )}
             <div className="breakdown-row discount-text">
               <span>Prepaid — extra 5% off</span>
               <span>-{formatPrice(prepaidDiscountVal)}</span>
@@ -225,55 +230,66 @@ export default function ProductBuyBox({
               <strong>{formatPrice(finalPrice)}</strong>
             </div>
             <div className="breakdown-explainer">
-              • <code>NEW10</code> gives 10% off on your first order.<br />
-              • Extra 5% is automatic for prepaid orders and stacks with codes.
+              {hasCouponDiscount ? (
+                <>
+                  • <code>NEW10</code> gives 10% off on your first order.<br />
+                  • Extra 5% is automatic for prepaid orders and stacks with codes.
+                </>
+              ) : (
+                <>
+                  • Exclusive artisanal edition at direct atelier pricing.<br />
+                  • Extra 5% is applied automatically for prepaid orders.
+                </>
+              )}
             </div>
           </div>
         )}
       </div>
 
       {/* "Offers For You" Card */}
-      <div className="buybox-offers-card">
-        <div className="offers-card-header">
-          <span>🎁</span>
-          <strong>OFFERS FOR YOU</strong>
-        </div>
-        <div className="offers-list">
-          <div className="offer-item">
-            <div className="offer-item-content">
-              <span className="offer-code-chip">NEW10</span>
-              <div className="offer-details">
-                <strong>10% OFF your first order</strong>
-                <span>Apply at checkout</span>
-              </div>
-            </div>
-            <button
-              type="button"
-              className={`offer-copy-btn ${copiedCode === "NEW10" ? "copied" : ""}`}
-              onClick={() => copyCoupon("NEW10")}
-            >
-              {copiedCode === "NEW10" ? "✓ COPIED" : "TAP TO COPY"}
-            </button>
+      {hasCouponDiscount && (
+        <div className="buybox-offers-card">
+          <div className="offers-card-header">
+            <span>🎁</span>
+            <strong>OFFERS FOR YOU</strong>
           </div>
+          <div className="offers-list">
+            <div className="offer-item">
+              <div className="offer-item-content">
+                <span className="offer-code-chip">NEW10</span>
+                <div className="offer-details">
+                  <strong>10% OFF your first order</strong>
+                  <span>Apply at checkout</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                className={`offer-copy-btn ${copiedCode === "NEW10" ? "copied" : ""}`}
+                onClick={() => copyCoupon("NEW10")}
+              >
+                {copiedCode === "NEW10" ? "✓ COPIED" : "TAP TO COPY"}
+              </button>
+            </div>
 
-          <div className="offer-item">
-            <div className="offer-item-content">
-              <span className="offer-code-chip">SANDLINE5</span>
-              <div className="offer-details">
-                <strong>5% OFF entire order</strong>
-                <span>Special resort edit discount</span>
+            <div className="offer-item">
+              <div className="offer-item-content">
+                <span className="offer-code-chip">SANDLINE5</span>
+                <div className="offer-details">
+                  <strong>5% OFF entire order</strong>
+                  <span>Special resort edit discount</span>
+                </div>
               </div>
+              <button
+                type="button"
+                className={`offer-copy-btn ${copiedCode === "SANDLINE5" ? "copied" : ""}`}
+                onClick={() => copyCoupon("SANDLINE5")}
+              >
+                {copiedCode === "SANDLINE5" ? "✓ COPIED" : "TAP TO COPY"}
+              </button>
             </div>
-            <button
-              type="button"
-              className={`offer-copy-btn ${copiedCode === "SANDLINE5" ? "copied" : ""}`}
-              onClick={() => copyCoupon("SANDLINE5")}
-            >
-              {copiedCode === "SANDLINE5" ? "✓ COPIED" : "TAP TO COPY"}
-            </button>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Main Action Buttons */}
       {inStock ? (

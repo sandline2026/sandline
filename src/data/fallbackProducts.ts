@@ -2050,5 +2050,33 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Chic Mediterranean resort glamour. A breezy strapless bandeau playsuit adorned with an abstract monochrome botanical leaf silhouette print, finished with a comfortable smocked bustier and an elasticated cinched waist with relaxed resort shorts.",
     "is_active": true,
     "created_at": "2026-09-17T07:20:00.000Z"
+  },
+  {
+    "id": "prod-73",
+    "name": "Amalfi Sheer Floral Lace Wide-Leg Resort Pants",
+    "slug": "amalfi-sheer-floral-lace-wide-leg-pants",
+    "collection": "beach_party",
+    "selling_price_usd": 35.5,
+    "cost_price": 1100,
+    "dropship_fee": 1000,
+    "stock_quantity": 35,
+    "fabric": "Pure Breathable Cotton-Linen with Sheer Floral Guipure Lace Inserts",
+    "colors": [
+      "Natural Ivory",
+      "Soft Cream"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/amalfi-sheer-floral-lace-wide-leg-pants-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/amalfi-sheer-floral-lace-wide-leg-pants-2.jpg"
+    ],
+    "description": "Sun-drenched coastal elegance. Flowing high-rise resort trousers crafted from breathable ivory linen blend, detailed with sheer floral cutwork lace side inserts, an elasticated drawstring waistband, and relaxed wide legs.",
+    "is_active": true,
+    "created_at": "2026-09-17T07:30:00.000Z"
   }
 ];
