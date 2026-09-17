@@ -414,7 +414,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "/images/products/elysian-tie-up-a-line-resort-dress.jpg"
     ],
     "description": "Romantic A-line midi dress with adjustable tie-up shoulder ribbons and a graceful flared skirt hem.",
-    "is_active": true,
+    "is_active": false,
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
@@ -443,7 +443,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "/images/products/amalfi-contrast-trim-silk-a-line-dress.jpg"
     ],
     "description": "Striking contrast piped edges highlight this timeless A-line silhouette, finished with a subtle side slit.",
-    "is_active": true,
+    "is_active": false,
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
@@ -472,7 +472,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "/images/products/santorini-3d-floral-silk-slip-dress.jpg"
     ],
     "description": "An artisan showstopper featuring sculpted 3D floral petals cascading along the cowl neckline and backless drape.",
-    "is_active": true,
+    "is_active": false,
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
@@ -1754,7 +1754,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "/images/products/amalfi-lace-up-wide-brim-straw-hat-1.jpg"
     ],
     "description": "Dramatic wide-brim resort sun hat crafted from finely braided straw with a grosgrain ribbon band and tie ribbon closure.",
-    "is_active": true,
+    "is_active": false,
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {

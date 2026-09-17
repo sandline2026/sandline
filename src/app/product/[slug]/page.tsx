@@ -65,15 +65,15 @@ export async function generateMetadata({
       .from("products")
       .select("id, name, description, images, selling_price_usd, collection");
     const res = isUUID
-      ? await query.eq("id", slug).maybeSingle()
-      : await query.eq("slug", slug).maybeSingle();
+      ? await query.eq("id", slug).eq("is_active", true).maybeSingle()
+      : await query.eq("slug", slug).eq("is_active", true).maybeSingle();
     product = res.data;
   } catch {}
 
   if (!product) {
     product = isUUID
-      ? FALLBACK_PRODUCTS.find((p) => p.id === slug)
-      : FALLBACK_PRODUCTS.find((p) => p.slug === slug);
+      ? FALLBACK_PRODUCTS.find((p) => p.id === slug && p.is_active !== false)
+      : FALLBACK_PRODUCTS.find((p) => p.slug === slug && p.is_active !== false);
   }
 
   if (!product) {
@@ -139,8 +139,8 @@ export default async function ProductDetail({
 
   if (!product) {
     product = isProductUUID
-      ? FALLBACK_PRODUCTS.find((p) => p.id === slug)
-      : FALLBACK_PRODUCTS.find((p) => p.slug === slug);
+      ? FALLBACK_PRODUCTS.find((p) => p.id === slug && p.is_active !== false)
+      : FALLBACK_PRODUCTS.find((p) => p.slug === slug && p.is_active !== false);
   }
 
   if (!product) notFound();

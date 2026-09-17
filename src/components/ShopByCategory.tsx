@@ -15,7 +15,7 @@ const CATEGORIES: CategoryItem[] = [
     id: "dresses",
     name: "Dresses",
     subtitle: "Flowy Slips & Maxi Gowns",
-    image: "/images/products/santorini-3d-floral-silk-slip-dress.jpg",
+    image: "/images/products/saint-tropez-citrus-tiered-chiffon-dress.jpg",
     href: "/shop?category=dresses",
   },
   {

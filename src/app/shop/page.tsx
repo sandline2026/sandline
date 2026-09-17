@@ -51,7 +51,9 @@ export default async function Shop({
     console.warn("Supabase fetch fallback triggered:", err);
   }
 
-  const allProducts = (rawProducts && rawProducts.length > 0) ? rawProducts : FALLBACK_PRODUCTS;
+  const allProducts = ((rawProducts && rawProducts.length > 0) ? rawProducts : FALLBACK_PRODUCTS).filter(
+    (p: any) => p.is_active !== false
+  );
   let products = [...allProducts];
 
   const activeSizes = sp.sizes ? sp.sizes.split(",").filter(Boolean) : [];
