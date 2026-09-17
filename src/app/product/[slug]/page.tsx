@@ -83,7 +83,7 @@ export async function generateMetadata({
   }
 
   const imageUrl = product.images?.[0]
-    ? `https://sandline.store${product.images[0]}`
+    ? (product.images[0].startsWith("http") ? product.images[0] : `https://sandline.store${product.images[0]}`)
     : "https://sandline.store/images/logo-horizontal.png";
 
   const title = `${product.name} | Sandline Resortwear`;

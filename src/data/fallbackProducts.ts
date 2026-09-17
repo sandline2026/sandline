@@ -2015,8 +2015,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/capri-open-knit-crochet-shorts-set-1.jpg",
-      "/images/products/capri-open-knit-crochet-shorts-set-2.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-open-knit-crochet-shorts-set-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-open-knit-crochet-shorts-set-2.jpg"
     ],
     "description": "Effortless seaside luxury. A handcrafted open-knit crochet co-ord set featuring a relaxed boxy short-sleeve top and matching high-waisted drawstring resort shorts with delicate scalloped hemline.",
     "is_active": true,
