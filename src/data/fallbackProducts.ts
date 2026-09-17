@@ -2179,7 +2179,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "colors": [
       "Ivory Cream",
       "Pastel Yellow",
-      "Classic White"
+      "Sky Blue"
     ],
     "sizes": [
       "S",
@@ -2193,7 +2193,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-2.jpg",
       "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-3.jpg",
       "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-4.jpg",
-      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-5.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-5.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-3d-rosette-halter-maxi-dress-6.jpg"
     ],
     "description": "Sensational Mediterranean glamour. A textured crinkle crepe halter maxi dress adorned with an artisanal oversized 3D sculpted floral rosette at the neckline, an alluring backless tie fastening, and a fluid floor-sweeping column silhouette.",
     "is_active": true,
