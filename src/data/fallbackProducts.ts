@@ -1987,8 +1987,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/mediterranean-ruffle-halter-silk-dress-1.jpg",
-      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/mediterranean-ruffle-halter-silk-dress-2.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/mediterranean-ruffle-halter-silk-dress-v2-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/mediterranean-ruffle-halter-silk-dress-v2-2.jpg"
     ],
     "description": "An ethereal coastal evening silhouette. Designed with a ruched halter neckline, sculpted floral brooch accent, open back, and cascading high-low ruffle hemline that flutters with the sea breeze.",
     "is_active": true,
