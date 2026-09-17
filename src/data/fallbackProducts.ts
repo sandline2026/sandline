@@ -1868,8 +1868,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-horizon-striped-linen-trouser-set-v2-1.jpg",
-      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/capri-horizon-striped-linen-trouser-set-v2-2.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@ab257f3/public/images/products/capri-horizon-striped-linen-trouser-set-v2-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@ab257f3/public/images/products/capri-horizon-striped-linen-trouser-set-v2-2.jpg"
     ],
     "description": "Inspired by breezy afternoons on the Amalfi cliffs. A relaxed boyfriend-cut button-down shirt in crisp azure pinstripes with matching high-waisted wide-leg lounge trousers for effortless coastal living.",
     "is_active": true,
