@@ -1781,7 +1781,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "/images/products/portofino-metal-buckle-straw-hat-1.jpg"
     ],
     "description": "Classic structured fedora woven in fine cream straw, accented with a slim tan leather belt and polished gold-tone buckle.",
-    "is_active": true,
+    "is_active": false,
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
