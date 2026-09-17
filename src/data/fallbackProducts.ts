@@ -2230,5 +2230,34 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Breathtaking Grecian bohemian elegance. An ethereal floor-skimming maxi dress featuring an intricate Mediterranean paisley print, a plunging V-neckline with delicate front tie, low-cut scoop back, and a voluminous ruffled tiered skirt.",
     "is_active": true,
     "created_at": "2026-09-17T08:45:00.000Z"
+  },
+  {
+    "id": "prod-79",
+    "name": "Portofino Cascading Tiered Ruffle Halter Dress",
+    "slug": "portofino-cascading-tiered-ruffle-halter-dress",
+    "collection": "honeymoon",
+    "selling_price_usd": 36.69,
+    "cost_price": 1400,
+    "dropship_fee": 900,
+    "stock_quantity": 35,
+    "fabric": "Airy Cascading Multi-Layer Georgette Chiffon with Soft Silk Lining",
+    "colors": [
+      "Pure Ivory",
+      "Soft Cream"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/portofino-cascading-tiered-ruffle-halter-dress-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/portofino-cascading-tiered-ruffle-halter-dress-2.jpg"
+    ],
+    "description": "Dreamy Riviera romance. An ethereal halter-neck cocktail and party dress crafted from multi-tiered cascading georgette chiffon, featuring an open back, high collar neck with trailing bow ties, and a playful tiered flounce hemline.",
+    "is_active": true,
+    "created_at": "2026-09-17T08:50:00.000Z"
   }
 ];
