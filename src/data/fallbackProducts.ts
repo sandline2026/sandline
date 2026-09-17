@@ -1654,8 +1654,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/maldives-open-knit-crochet-trousers-set-v2-1.jpg",
-      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/maldives-open-knit-crochet-trousers-set-v2-2.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@6232d6f/public/images/products/maldives-open-knit-crochet-trousers-set-v2-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@6232d6f/public/images/products/maldives-open-knit-crochet-trousers-set-v2-2.jpg"
     ],
     "description": "The ultimate overwater villa uniform. Made from breathable open-knit crochet featuring a triangle bralette and high-rise flared beach trousers.",
     "is_active": true,
