@@ -1992,5 +1992,34 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "An ethereal coastal evening silhouette. Designed with a ruched halter neckline, sculpted floral brooch accent, open back, and cascading high-low ruffle hemline that flutters with the sea breeze.",
     "is_active": true,
     "created_at": "2026-09-11T04:39:19.059Z"
+  },
+  {
+    "id": "prod-71",
+    "name": "Capri Open-Knit Crochet Shorts Set",
+    "slug": "capri-open-knit-crochet-shorts-set",
+    "collection": "beach_party",
+    "selling_price_usd": 43.79,
+    "cost_price": 1500,
+    "dropship_fee": 1000,
+    "stock_quantity": 40,
+    "fabric": "100% Breathable Open-Weave Cotton Crochet",
+    "colors": [
+      "Natural Ivory",
+      "Cream"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "/images/products/capri-open-knit-crochet-shorts-set-1.jpg",
+      "/images/products/capri-open-knit-crochet-shorts-set-2.jpg"
+    ],
+    "description": "Effortless seaside luxury. A handcrafted open-knit crochet co-ord set featuring a relaxed boxy short-sleeve top and matching high-waisted drawstring resort shorts with delicate scalloped hemline.",
+    "is_active": true,
+    "created_at": "2026-09-17T05:56:40.653Z"
   }
 ];
