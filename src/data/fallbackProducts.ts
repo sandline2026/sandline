@@ -2107,5 +2107,34 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Pure Riviera romance. An ethereal floor-length A-line gown crafted from lustrous ivory silk satin, featuring a flattering V-neckline, slender spaghetti straps, and an enchanting architectural butterfly cutout caged back.",
     "is_active": true,
     "created_at": "2026-09-17T07:45:00.000Z"
+  },
+  {
+    "id": "prod-75",
+    "name": "Saint-Tropez Pinstripe Peplum Linen Shorts Set",
+    "slug": "saint-tropez-pinstripe-peplum-linen-shorts-set",
+    "collection": "beach_party",
+    "selling_price_usd": 34.32,
+    "cost_price": 1200,
+    "dropship_fee": 1000,
+    "stock_quantity": 40,
+    "fabric": "100% Breathable Pure Washed Linen in Tailored Khaki Pinstripe",
+    "colors": [
+      "Khaki Pinstripe",
+      "Sandstone Tan"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/saint-tropez-pinstripe-peplum-linen-shorts-set-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/saint-tropez-pinstripe-peplum-linen-shorts-set-2.jpg"
+    ],
+    "description": "Effortless French Riviera chic. A tailored two-piece resort co-ord set crafted from breathable khaki pinstripe linen, featuring a deep V-neck sleeveless peplum top with an adjustable drawstring waist and matching high-waisted tailored resort shorts.",
+    "is_active": true,
+    "created_at": "2026-09-17T08:20:00.000Z"
   }
 ];
