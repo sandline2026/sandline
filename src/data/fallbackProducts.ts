@@ -1877,25 +1877,25 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Saint-Germain Pinstripe Ribbed Knit Co-ord Set",
     "slug": "saint-germain-pinstripe-ribbed-knit-coord-set",
     "collection": "resort_evening",
-    "selling_price_usd": 71,
-    "cost_price": 1000,
-    "dropship_fee": 250,
+    "selling_price_usd": 37.87,
+    "cost_price": 1500,
+    "dropship_fee": 1000,
     "stock_quantity": 50,
     "fabric": "Pure Ribbed Viscose Knit",
     "colors": [
       "Vanilla Pinstripe"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/saint-germain-pinstripe-ribbed-knit-coord-set-1.jpg",
-      "/images/products/saint-germain-pinstripe-ribbed-knit-coord-set-2.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/saint-germain-pinstripe-ribbed-knit-coord-set-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/saint-germain-pinstripe-ribbed-knit-coord-set-2.jpg"
     ],
     "description": "Parisian chic for twilight aperitifs and rooftop gatherings. Features a sweetheart-neck long-sleeve knit top with delicate center ruching and keyhole tie, paired with fluid ribbed flare trousers in fine cream pinstripes.",
     "is_active": true,
