@@ -2021,5 +2021,34 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "Effortless seaside luxury. A handcrafted open-knit crochet co-ord set featuring a relaxed boxy short-sleeve top and matching high-waisted drawstring resort shorts with delicate scalloped hemline.",
     "is_active": true,
     "created_at": "2026-09-17T05:56:40.653Z"
+  },
+  {
+    "id": "prod-72",
+    "name": "Positano Monochrome Botanical Strapless Romper",
+    "slug": "positano-monochrome-botanical-strapless-romper",
+    "collection": "beach_party",
+    "selling_price_usd": 39.05,
+    "cost_price": 1000,
+    "dropship_fee": 1000,
+    "stock_quantity": 40,
+    "fabric": "Breathable Lightweight Rayon-Linen Blend with Silk-Touch Finish",
+    "colors": [
+      "Monochrome Ivory & Black",
+      "Ivory Floral"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/positano-monochrome-botanical-strapless-romper-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/positano-monochrome-botanical-strapless-romper-2.jpg"
+    ],
+    "description": "Chic Mediterranean resort glamour. A breezy strapless bandeau playsuit adorned with an abstract monochrome botanical leaf silhouette print, finished with a comfortable smocked bustier and an elasticated cinched waist with relaxed resort shorts.",
+    "is_active": true,
+    "created_at": "2026-09-17T07:20:00.000Z"
   }
 ];
