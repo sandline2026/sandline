@@ -1582,23 +1582,22 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Positano Sunset Floral Halter & Skirt Set",
     "slug": "positano-sunset-floral-halter-skirt-set",
     "collection": "beach_party",
-    "selling_price_usd": 58,
-    "cost_price": 22,
-    "dropship_fee": 250,
+    "selling_price_usd": 23.67,
+    "cost_price": 500,
+    "dropship_fee": 1000,
     "stock_quantity": 18,
     "fabric": "Stretch Mesh Bodycon",
     "colors": [
       "Sunset Pink / Coral"
     ],
     "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L"
+      "L",
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/positano-sunset-floral-halter-skirt-set-1.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/positano-sunset-floral-halter-skirt-set-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/positano-sunset-floral-halter-skirt-set-2.jpg"
     ],
     "description": "Watercolour floral abstract print two-piece set featuring a cowl halter crop and side-ruched asymmetric drawstring mini skirt.",
     "is_active": true,
