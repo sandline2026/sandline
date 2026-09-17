@@ -1313,24 +1313,25 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Champagne Silk Satin Lapel Blouse",
     "slug": "champagne-silk-satin-lapel-blouse",
     "collection": "resort_evening",
-    "selling_price_usd": 64,
-    "cost_price": 24,
-    "dropship_fee": 250,
+    "selling_price_usd": 23.67,
+    "cost_price": 1000,
+    "dropship_fee": 500,
     "stock_quantity": 22,
     "fabric": "Ultra-Fine Silk Charmeuse",
     "colors": [
       "Champagne Gold"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
-      "L"
+      "L",
+      "XL",
+      "XXL"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/champagne-silk-satin-lapel-blouse-1.jpg",
-      "/images/products/champagne-silk-satin-lapel-blouse-2.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/champagne-silk-satin-lapel-blouse-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/champagne-silk-satin-lapel-blouse-2.jpg"
     ],
     "description": "Timeless luxury crafted in high-luster champagne silk charmeuse with deep notched lapels, mother-of-pearl buttons, and draped balloon sleeves.",
     "is_active": true,
