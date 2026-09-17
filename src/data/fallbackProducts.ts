@@ -1971,16 +1971,15 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Mediterranean Ruffle Halter Silk Dress in Sky Blue",
     "slug": "mediterranean-ruffle-halter-silk-dress",
     "collection": "honeymoon",
-    "selling_price_usd": 71,
-    "cost_price": 1000,
-    "dropship_fee": 250,
+    "selling_price_usd": 35.50,
+    "cost_price": 1300,
+    "dropship_fee": 700,
     "stock_quantity": 50,
     "fabric": "100% Lightweight Silk Georgette",
     "colors": [
       "Sky Blue"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
       "L",
@@ -1988,9 +1987,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/mediterranean-ruffle-halter-silk-dress-1.jpg",
-      "/images/products/mediterranean-ruffle-halter-silk-dress-2.jpg",
-      "/images/products/mediterranean-ruffle-halter-silk-dress-3.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/mediterranean-ruffle-halter-silk-dress-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/mediterranean-ruffle-halter-silk-dress-2.jpg"
     ],
     "description": "An ethereal coastal evening silhouette. Designed with a ruched halter neckline, sculpted floral brooch accent, open back, and cascading high-low ruffle hemline that flutters with the sea breeze.",
     "is_active": true,
