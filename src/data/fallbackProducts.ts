@@ -814,8 +814,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/sunset-hooded-knit-resort-co-ord-set-v2-1.jpg",
-      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/sunset-hooded-knit-resort-co-ord-set-v2-2.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@2334082/public/images/products/sunset-hooded-knit-resort-co-ord-set-v2-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@2334082/public/images/products/sunset-hooded-knit-resort-co-ord-set-v2-2.jpg"
     ],
     "description": "Luxury resort marina tracksuit set crafted from ultra-soft heather grey cotton fleece, featuring a zip-front hooded jacket with plush faux-fur trim and coordinating relaxed wide-leg lounge sweatpants.",
     "is_active": true,
