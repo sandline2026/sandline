@@ -799,27 +799,25 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Sunset Hooded Knit Resort Co-ord Set",
     "slug": "sunset-hooded-knit-resort-co-ord-set",
     "collection": "beach_party",
-    "selling_price_usd": 68,
-    "cost_price": 1450,
-    "dropship_fee": 250,
+    "selling_price_usd": 62.72,
+    "cost_price": 2800,
+    "dropship_fee": 1000,
     "stock_quantity": 25,
-    "fabric": "Lightweight Open-Weave Crochet Knit",
+    "fabric": "Plush Cotton Fleece & Faux-Fur Hood Trim",
     "colors": [
-      "Dune Beige",
-      "Sand"
+      "Heather Grey"
     ],
     "sizes": [
       "XS",
       "S",
-      "M",
-      "L",
-      "XL"
+      "M"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/sunset-hooded-knit-resort-co-ord-set.jpg"
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/sunset-hooded-knit-resort-co-ord-set-v2-1.jpg",
+      "https://cdn.jsdelivr.net/gh/sandline2026/sandline@main/public/images/products/sunset-hooded-knit-resort-co-ord-set-v2-2.jpg"
     ],
-    "description": "Beachside crochet hoodie paired with relaxed pull-on shorts for breezy boat rides and cool evening strolls.",
+    "description": "Luxury resort marina tracksuit set crafted from ultra-soft heather grey cotton fleece, featuring a zip-front hooded jacket with plush faux-fur trim and coordinating relaxed wide-leg lounge sweatpants.",
     "is_active": true,
     "created_at": "2026-09-11T04:39:19.056Z"
   },
