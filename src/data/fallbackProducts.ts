@@ -162,9 +162,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Santorini Daisy Cutout Halter Swimsuit",
     "slug": "santorini-daisy-cutout-halter-swimsuit",
     "collection": "beach_party",
-    "selling_price_usd": 28,
-    "cost_price": 1000,
-    "dropship_fee": 250,
+    "selling_price_usd": 44.38,
+    "cost_price": 1750,
+    "dropship_fee": 1000,
     "stock_quantity": 50,
     "fabric": "Textured Daisy Jacquard Swim Spandex",
     "colors": [
@@ -172,10 +172,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "Chalk White"
     ],
     "sizes": [
-      "XS",
-      "S",
       "M",
-      "L"
+      "L",
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [
