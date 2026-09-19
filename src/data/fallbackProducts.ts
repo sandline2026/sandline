@@ -51,19 +51,18 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Mykonos Scallop Crochet Maxi Set",
     "slug": "mykonos-scallop-crochet-maxi-set",
     "collection": "beach_party",
-    "selling_price_usd": 34,
-    "cost_price": 1000,
-    "dropship_fee": 250,
+    "selling_price_usd": 61.54,
+    "cost_price": 3700,
+    "dropship_fee": 1000,
     "stock_quantity": 50,
     "fabric": "Artisanal Open-Weave Cotton Crochet",
     "colors": [
       "Natural Ivory"
     ],
     "sizes": [
-      "XS",
-      "S",
       "M",
-      "L"
+      "L",
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [

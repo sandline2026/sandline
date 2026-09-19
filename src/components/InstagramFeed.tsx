@@ -34,7 +34,7 @@ const INSTAGRAM_LOOKS: LookItem[] = [
     caption: "Olive crochet scalloped silhouettes dancing along Aegean sea breezes 🐚🫒",
     productName: "Mykonos Scallop Crochet Maxi Set",
     productSlug: "mykonos-scallop-crochet-maxi-set",
-    priceUsd: 34,
+    priceUsd: 61.54,
     collection: "The Wedding Night Edit",
   },
   {

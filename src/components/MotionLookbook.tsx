@@ -31,7 +31,7 @@ const LOOKBOOK_REEL: LookbookItem[] = [
     id: "2",
     name: "Mykonos Scallop Crochet Maxi Set",
     edit: "The Wedding Night Edit",
-    priceUsd: 34.0,
+    priceUsd: 61.54,
     image: "/images/products/mykonos-scallop-crochet-maxi-set.jpg",
     slug: "mykonos-scallop-crochet-maxi-set",
     poseLocation: "Mykonos Seaside Villa",

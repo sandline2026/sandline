@@ -32,10 +32,10 @@ const NEW_OUTFITS: NewOutfit[] = [
     id: "outfit-mykonos",
     name: "Mykonos Scallop Crochet Maxi Set",
     slug: "mykonos-scallop-crochet-maxi-set",
-    priceUsd: 34,
+    priceUsd: 61.54,
     image: "/images/products/mykonos-scallop-crochet-maxi-set.jpg",
     category: "The Wedding Night Edit",
-    sizes: ["XS", "S", "M", "L"],
+    sizes: ["M", "L", "XL"],
     badge: "✦ HAND-CROCHETED",
   },
   {
