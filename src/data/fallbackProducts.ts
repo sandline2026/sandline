@@ -1684,30 +1684,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-60",
-    "name": "Riviera Woven Button Sun Visor Hat",
-    "slug": "riviera-woven-button-sun-visor-hat",
-    "collection": "beach_party",
-    "selling_price_usd": 28,
-    "cost_price": 10,
-    "dropship_fee": 250,
-    "stock_quantity": 30,
-    "fabric": "Natural Straw & Cotton Ribbed Trim",
-    "colors": [
-      "Natural / Black Trim"
-    ],
-    "sizes": [
-      "One Size"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/riviera-button-visor-hat-1.jpg"
-    ],
-    "description": "Chic coastal sun protection featuring natural open-weave straw crown, wide dark bill, and signature stripe accent band.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-61",
     "name": "St. Tropez Pearl Embellished Straw Hat",
     "slug": "st-tropez-pearl-embellished-straw-hat",
