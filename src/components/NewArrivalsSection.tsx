@@ -62,10 +62,10 @@ const NEW_OUTFITS: NewOutfit[] = [
     id: "outfit-maldives",
     name: "Maldives Sunset Cutout Swimsuit & Sarong Set",
     slug: "maldives-sunset-cutout-swimsuit-sarong-set",
-    priceUsd: 29,
+    priceUsd: 43.79,
     image: "/images/products/maldives-sunset-cutout-swimsuit-sarong-set.jpg",
     category: "The Beach Party Edit",
-    sizes: ["XS", "S", "M", "L"],
+    sizes: ["M", "L", "XL"],
     badge: "✦ RESORT SWIM",
   },
   {

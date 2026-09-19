@@ -134,9 +134,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Maldives Sunset Cutout Swimsuit & Sarong Set",
     "slug": "maldives-sunset-cutout-swimsuit-sarong-set",
     "collection": "beach_party",
-    "selling_price_usd": 29,
-    "cost_price": 1000,
-    "dropship_fee": 250,
+    "selling_price_usd": 43.79,
+    "cost_price": 2700,
+    "dropship_fee": 500,
     "stock_quantity": 50,
     "fabric": "Premium Ribbed Swim Fabric & Sheer Voile Sarong",
     "colors": [
@@ -144,10 +144,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "Warm Amber"
     ],
     "sizes": [
-      "XS",
-      "S",
       "M",
-      "L"
+      "L",
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [

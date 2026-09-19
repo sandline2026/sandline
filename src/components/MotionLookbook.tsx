@@ -61,7 +61,7 @@ const LOOKBOOK_REEL: LookbookItem[] = [
     id: "5",
     name: "Maldives Sunset Cutout Swimsuit & Sarong Set",
     edit: "The Beach Party Edit",
-    priceUsd: 29.0,
+    priceUsd: 43.79,
     image: "/images/products/maldives-sunset-cutout-swimsuit-sarong-set.jpg",
     slug: "maldives-sunset-cutout-swimsuit-sarong-set",
     poseLocation: "Maldives Private Atoll",

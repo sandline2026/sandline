@@ -64,7 +64,7 @@ const INSTAGRAM_LOOKS: LookItem[] = [
     caption: "Sunset ombré tones and fluid sarong wraps by crystal turquoise lagoons 🌅✨",
     productName: "Maldives Sunset Cutout Swimsuit & Sarong Set",
     productSlug: "maldives-sunset-cutout-swimsuit-sarong-set",
-    priceUsd: 29,
+    priceUsd: 43.79,
     collection: "The Beach Party Edit",
   },
   {
@@ -74,7 +74,7 @@ const INSTAGRAM_LOOKS: LookItem[] = [
     caption: "Classic noir swimsuit with artisanal floral cutout details overlooking the caldera 🤍🖤",
     productName: "Santorini Daisy Cutout Halter Swimsuit",
     productSlug: "santorini-daisy-cutout-halter-swimsuit",
-    priceUsd: 28,
+    priceUsd: 44.38,
     collection: "The Beach Party Edit",
   },
 ];
