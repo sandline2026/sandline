@@ -2318,6 +2318,34 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "description": "High-fashion luxury airport and lounge dressing. A tailored two-piece colorblocked tracksuit set featuring an architectural zip-front track jacket with ergonomic sand-beige side contouring, paired with coordinating high-waisted wide-leg track trousers finished with vertical contrast side panels.",
     "is_active": true,
     "created_at": "2026-09-17T09:17:00.000Z"
+  },
+  {
+    "id": "prod-83",
+    "name": "Noir Shimmer Balloon-Sleeve Jumpsuit",
+    "slug": "noir-shimmer-balloon-sleeve-jumpsuit",
+    "collection": "resort_evening",
+    "selling_price_usd": 44.97,
+    "cost_price": 1800,
+    "dropship_fee": 1000,
+    "stock_quantity": 40,
+    "fabric": "Lurex Shimmer Sparkle Mesh & Structured Crepe",
+    "colors": [
+      "Midnight Noir"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock_status": "in_stock",
+    "images": [
+      "/images/products/noir-shimmer-jumpsuit-1.jpg",
+      "/images/products/noir-shimmer-jumpsuit-2.jpg"
+    ],
+    "description": "Sophisticated cocktail silhouette featuring sheer sparkle balloon sleeves, plunging crossover wrap neckline, self-tie sash belt, and fluid wide-leg tailored trousers.",
+    "is_active": true,
+    "created_at": "2026-09-19T08:11:00.000Z"
   }
 ];
 
