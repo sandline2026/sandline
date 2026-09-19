@@ -47,7 +47,7 @@ const collectionLabel: Record<string, string> = {
   resort_evening: "The Resort Evening Edit",
 };
 
-import { FALLBACK_PRODUCTS } from "@/data/fallbackProducts";
+import { getCachedProductBySlug, getCachedProducts } from "@/lib/productsCache";
 
 export async function generateMetadata({
   params,
@@ -55,26 +55,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
-  let product: any = null;
-  try {
-    const query = supabase
-      .from("products")
-      .select("id, name, description, images, selling_price_usd, collection");
-    const res = isUUID
-      ? await query.eq("id", slug).eq("is_active", true).maybeSingle()
-      : await query.eq("slug", slug).eq("is_active", true).maybeSingle();
-    product = res.data;
-  } catch {}
-
-  if (!product) {
-    product = isUUID
-      ? FALLBACK_PRODUCTS.find((p) => p.id === slug && p.is_active !== false)
-      : FALLBACK_PRODUCTS.find((p) => p.slug === slug && p.is_active !== false);
-  }
+  const product = await getCachedProductBySlug(slug);
 
   if (!product) {
     return {
@@ -124,26 +105,11 @@ export default async function ProductDetail({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const product = await getCachedProductBySlug(slug);
+  if (!product) notFound();
+
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
-
-  const isProductUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
-  let product: any = null;
-  try {
-    const detailQuery = supabase.from("products").select();
-    const res = isProductUUID
-      ? await detailQuery.eq("id", slug).eq("is_active", true).maybeSingle()
-      : await detailQuery.eq("slug", slug).eq("is_active", true).maybeSingle();
-    product = res.data;
-  } catch {}
-
-  if (!product) {
-    product = isProductUUID
-      ? FALLBACK_PRODUCTS.find((p) => p.id === slug && p.is_active !== false)
-      : FALLBACK_PRODUCTS.find((p) => p.slug === slug && p.is_active !== false);
-  }
-
-  if (!product) notFound();
 
   const hasPhoto = product.images && product.images.length > 0;
   const inStock = product.stock_status === "in_stock";
@@ -156,13 +122,10 @@ export default async function ProductDetail({
     .eq("is_approved", true)
     .order("created_at", { ascending: false });
 
-  const { data: similarProducts } = await supabase
-    .from("products")
-    .select()
-    .eq("collection", product.collection)
-    .neq("id", product.id)
-    .eq("is_active", true)
-    .limit(3);
+  const allProducts = await getCachedProducts();
+  const similarProducts = allProducts
+    .filter((p) => p.collection === product.collection && p.id !== product.id && p.is_active !== false)
+    .slice(0, 3);
 
   // Fetch Smart Pairings for "Complete The Look"
   const isHat = /hat|straw|fedora/i.test(product.name);
@@ -171,41 +134,21 @@ export default async function ProductDetail({
 
   let pairings: any[] = [];
   if (isHat) {
-    const { data: dressPairings } = await supabase
-      .from("products")
-      .select("id, name, slug, selling_price_usd, images, sizes, collection")
-      .neq("id", product.id)
-      .eq("is_active", true)
-      .ilike("name", "%dress%")
-      .limit(2);
-    pairings = dressPairings || [];
+    pairings = allProducts
+      .filter((p) => p.id !== product.id && p.is_active !== false && /dress/i.test(p.name))
+      .slice(0, 2);
   } else if (isBottom) {
-    const { data: topPairings } = await supabase
-      .from("products")
-      .select("id, name, slug, selling_price_usd, images, sizes, collection")
-      .neq("id", product.id)
-      .eq("is_active", true)
-      .or("name.ilike.%top%,name.ilike.%hat%,name.ilike.%blouse%")
-      .limit(2);
-    pairings = topPairings || [];
+    pairings = allProducts
+      .filter((p) => p.id !== product.id && p.is_active !== false && /top|hat|blouse/i.test(p.name))
+      .slice(0, 2);
   } else if (isTop) {
-    const { data: bottomPairings } = await supabase
-      .from("products")
-      .select("id, name, slug, selling_price_usd, images, sizes, collection")
-      .neq("id", product.id)
-      .eq("is_active", true)
-      .or("name.ilike.%jeans%,name.ilike.%skirt%,name.ilike.%shorts%")
-      .limit(2);
-    pairings = bottomPairings || [];
+    pairings = allProducts
+      .filter((p) => p.id !== product.id && p.is_active !== false && /jeans|skirt|shorts|pant|trouser/i.test(p.name))
+      .slice(0, 2);
   } else {
-    const { data: defaultPairings } = await supabase
-      .from("products")
-      .select("id, name, slug, selling_price_usd, images, sizes, collection")
-      .neq("id", product.id)
-      .eq("is_active", true)
-      .or("name.ilike.%hat%,name.ilike.%straw%,name.ilike.%jacket%,name.ilike.%top%")
-      .limit(2);
-    pairings = defaultPairings || [];
+    pairings = allProducts
+      .filter((p) => p.id !== product.id && p.is_active !== false && /hat|straw|jacket|top/i.test(p.name))
+      .slice(0, 2);
   }
 
   const completeLookItems = (pairings || []).map((p: any) => ({

@@ -22,7 +22,7 @@ const collectionTabs = [
   { slug: "resort_evening", label: "The Resort Evening Edit", href: "/collections/resort_evening" },
 ];
 
-import { FALLBACK_PRODUCTS } from "@/data/fallbackProducts";
+import { getCachedProducts } from "@/lib/productsCache";
 
 export default async function Shop({
   searchParams,
@@ -36,24 +36,7 @@ export default async function Shop({
   }>;
 }) {
   const sp = (await searchParams) || {};
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  let rawProducts: any[] | null = null;
-  try {
-    const res = await supabase
-      .from("products")
-      .select()
-      .eq("is_active", true)
-      .order("created_at", { ascending: false });
-    rawProducts = res.data;
-  } catch (err) {
-    console.warn("Supabase fetch fallback triggered:", err);
-  }
-
-  const allProducts = ((rawProducts && rawProducts.length > 0) ? rawProducts : FALLBACK_PRODUCTS).filter(
-    (p: any) => p.is_active !== false
-  );
+  const allProducts = await getCachedProducts();
   let products = [...allProducts];
 
   const activeSizes = sp.sizes ? sp.sizes.split(",").filter(Boolean) : [];

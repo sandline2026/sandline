@@ -7,7 +7,7 @@ import SortSelect from "@/components/SortSelect";
 import ProductPrice from "@/components/ProductPrice";
 import SiteNavbar from "@/components/SiteNavbar";
 import MobileFilterDrawer from "@/components/MobileFilterDrawer";
-import { FALLBACK_PRODUCTS } from "@/data/fallbackProducts";
+import { getCachedProducts } from "@/lib/productsCache";
 import "../../sandline.css";
 
 const collectionsMeta: Record<
@@ -50,24 +50,8 @@ export default async function CollectionPage({
   const { collection } = await params;
   const sp = await searchParams;
 
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  let allProducts: any[] | null = null;
-  try {
-    const res = await supabase
-      .from("products")
-      .select()
-      .eq("collection", collection)
-      .eq("is_active", true);
-    allProducts = res.data;
-  } catch (err) {
-    console.warn("Collections fetch fallback triggered:", err);
-  }
-
-  let products = (allProducts && allProducts.length > 0)
-    ? allProducts
-    : FALLBACK_PRODUCTS.filter((p) => p.collection === collection && p.is_active);
+  const allProducts = await getCachedProducts();
+  let products = allProducts.filter((p) => p.collection === collection && p.is_active !== false);
 
   const activeSizes = sp.sizes ? sp.sizes.split(",") : [];
   const activeColors = sp.colors ? sp.colors.split(",") : [];
