@@ -473,35 +473,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-17",
-    "name": "Ibiza Backless Halter Linen Top",
-    "slug": "ibiza-backless-halter-linen-top",
-    "collection": "beach_party",
-    "selling_price_usd": 38,
-    "cost_price": 700,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "100% Pure Organic Linen",
-    "colors": [
-      "Terracotta Sunset",
-      "Rust"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/ibiza-backless-halter-linen-top.jpg"
-    ],
-    "description": "Minimalist open-back halter top with self-tie neck cords, crafted for warm beach parties and tropical getaways.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-18",
     "name": "Kyoto Sheer Organza Cami Top",
     "slug": "kyoto-sheer-organza-cami-top",
