@@ -1789,9 +1789,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Positano Buckled Linen Vest & Wide-Leg Trouser Set",
     "slug": "positano-buckled-linen-vest-trouser-set",
     "collection": "resort_evening",
-    "selling_price_usd": 71,
-    "cost_price": 1000,
-    "dropship_fee": 250,
+    "selling_price_usd": 41.42,
+    "cost_price": 1800,
+    "dropship_fee": 1000,
     "stock_quantity": 50,
     "fabric": "100% Organic Crinkle Linen",
     "colors": [
@@ -1799,11 +1799,10 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "Mocha"
     ],
     "sizes": [
-      "XS",
-      "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "stock_status": "in_stock",
     "images": [
