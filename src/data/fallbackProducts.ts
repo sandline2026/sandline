@@ -473,35 +473,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-18",
-    "name": "Kyoto Sheer Organza Cami Top",
-    "slug": "kyoto-sheer-organza-cami-top",
-    "collection": "honeymoon",
-    "selling_price_usd": 36,
-    "cost_price": 680,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "Double-Layered Sheer Organza",
-    "colors": [
-      "Midnight Noir",
-      "Black"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/kyoto-sheer-organza-cami-top.jpg"
-    ],
-    "description": "Ethereal sheer texture with delicate spaghetti straps and a subtle flared peplum hem.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-19",
     "name": "Mykonos Smocked Linen Co-ord Set",
     "slug": "mykonos-smocked-linen-co-ord-set",
