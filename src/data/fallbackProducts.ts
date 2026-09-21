@@ -1632,19 +1632,16 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Capri Pink Wave Halter Kerchief Top",
     "slug": "capri-pink-wave-halter-kerchief-top",
     "collection": "beach_party",
-    "selling_price_usd": 36,
-    "cost_price": 14,
-    "dropship_fee": 250,
+    "selling_price_usd": 20.12,
+    "cost_price": 500,
+    "dropship_fee": 1000,
     "stock_quantity": 25,
     "fabric": "Lightweight Printed Stretch Mesh",
     "colors": [
       "Fuschia Swirl"
     ],
     "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L"
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [
