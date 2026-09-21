@@ -245,7 +245,7 @@ export default function QuickAuthModal() {
                 <span>🎁</span> <span>10% OFF First Order (`NEW10`)</span>
               </div>
               <div className="brand-perk-pill">
-                <span>🏷️</span> <span>Extra 5% OFF on Prepaid Orders</span>
+                <span>🔄</span> <span>7 Days Hassle-Free Exchange</span>
               </div>
               <div className="brand-perk-pill">
                 <span>✈️</span> <span>Express Tracked Worldwide Delivery</span>

@@ -160,8 +160,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     discount = Math.round(discount * 100) / 100;
   }
 
-  // 5% extra prepaid savings
-  const prepaidDiscount = Math.round((subtotal - discount) * 0.05 * 100) / 100;
+  // Prepaid discount removed
+  const prepaidDiscount = 0;
   const total = Math.max(0, subtotal - discount);
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 

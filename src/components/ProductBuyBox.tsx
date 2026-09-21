@@ -53,9 +53,7 @@ export default function ProductBuyBox({
   // Calculate pricing
   const hasCouponDiscount = allowCoupon !== false;
   const couponDiscountVal = hasCouponDiscount ? Math.round(price * 0.1 * 100) / 100 : 0;
-  const afterCoupon = price - couponDiscountVal;
-  const prepaidDiscountVal = Math.round(afterCoupon * 0.05 * 100) / 100;
-  const finalPrice = Math.round((afterCoupon - prepaidDiscountVal) * 100) / 100;
+  const finalPrice = Math.round((price - couponDiscountVal) * 100) / 100;
   const totalSavings = Math.round((price - finalPrice) * 100) / 100;
 
   // Track scroll for sticky bottom bar
@@ -110,13 +108,6 @@ export default function ProductBuyBox({
 
   return (
     <div className="product-buybox" ref={buyBoxRef}>
-      {/* Prepaid Offer Alert */}
-      <div className="buybox-prepaid-banner">
-        <span className="banner-icon">🏷️</span>
-        <span className="banner-text">
-          Extra <strong>5% OFF</strong> on prepaid orders — applied automatically at checkout.
-        </span>
-      </div>
 
       {/* Size Selector */}
       {sizes.length > 0 && (
@@ -188,63 +179,51 @@ export default function ProductBuyBox({
       )}
 
       {/* "You Actually Pay" Smart Pricing Breakdown */}
-      <div className="buybox-actual-pay-card">
-        <div
-          className="actual-pay-header"
-          onClick={() => setShowPriceBreakdown((prev) => !prev)}
-        >
-          <div className="actual-pay-title-group">
-            <span className="actual-pay-label">You actually pay</span>
-            <div className="actual-pay-prices">
-              <span className="final-price-bold">{formatPrice(finalPrice)}</span>
-              <span className="original-strike">{formatPrice(price)}</span>
-              <span className="savings-green-pill">Save {formatPrice(totalSavings)}</span>
-            </div>
-          </div>
-          <button type="button" className="actual-pay-toggle-link">
-            {showPriceBreakdown ? "See it how? ⌃" : "See it how? ⌄"}
-          </button>
-        </div>
-
-        {showPriceBreakdown && (
-          <div className="actual-pay-breakdown">
-            <div className="breakdown-row">
-              <span>Listed price</span>
-              <span>{formatPrice(price)}</span>
-            </div>
-            {hasCouponDiscount && (
-              <div className="breakdown-row discount-text">
-                <span>
-                  <code className="coupon-inline-tag">NEW10</code> — 10% off
-                </span>
-                <span>-{formatPrice(couponDiscountVal)}</span>
+      {totalSavings > 0 && (
+        <div className="buybox-actual-pay-card">
+          <div
+            className="actual-pay-header"
+            onClick={() => setShowPriceBreakdown((prev) => !prev)}
+          >
+            <div className="actual-pay-title-group">
+              <span className="actual-pay-label">You actually pay</span>
+              <div className="actual-pay-prices">
+                <span className="final-price-bold">{formatPrice(finalPrice)}</span>
+                <span className="original-strike">{formatPrice(price)}</span>
+                <span className="savings-green-pill">Save {formatPrice(totalSavings)}</span>
               </div>
-            )}
-            <div className="breakdown-row discount-text">
-              <span>Prepaid — extra 5% off</span>
-              <span>-{formatPrice(prepaidDiscountVal)}</span>
             </div>
-            <div className="breakdown-divider" />
-            <div className="breakdown-row breakdown-final-row">
-              <strong>Your final price</strong>
-              <strong>{formatPrice(finalPrice)}</strong>
-            </div>
-            <div className="breakdown-explainer">
-              {hasCouponDiscount ? (
-                <>
-                  • <code>NEW10</code> gives 10% off on your first order.<br />
-                  • Extra 5% is automatic for prepaid orders and stacks with codes.
-                </>
-              ) : (
-                <>
-                  • Exclusive artisanal edition at direct atelier pricing.<br />
-                  • Extra 5% is applied automatically for prepaid orders.
-                </>
-              )}
-            </div>
+            <button type="button" className="actual-pay-toggle-link">
+              {showPriceBreakdown ? "See it how? ⌃" : "See it how? ⌄"}
+            </button>
           </div>
-        )}
-      </div>
+
+          {showPriceBreakdown && (
+            <div className="actual-pay-breakdown">
+              <div className="breakdown-row">
+                <span>Listed price</span>
+                <span>{formatPrice(price)}</span>
+              </div>
+              {hasCouponDiscount && (
+                <div className="breakdown-row discount-text">
+                  <span>
+                    <code className="coupon-inline-tag">NEW10</code> — 10% off
+                  </span>
+                  <span>-{formatPrice(couponDiscountVal)}</span>
+                </div>
+              )}
+              <div className="breakdown-divider" />
+              <div className="breakdown-row breakdown-final-row">
+                <strong>Your final price</strong>
+                <strong>{formatPrice(finalPrice)}</strong>
+              </div>
+              <div className="breakdown-explainer">
+                • <code>NEW10</code> gives 10% off on your first order.
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* "Offers For You" Card */}
       {hasCouponDiscount && (

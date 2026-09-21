@@ -15,7 +15,6 @@ export default function CartDrawer() {
     updateQuantity,
     subtotal,
     discount,
-    prepaidDiscount,
     total,
     itemCount,
     appliedCoupon,
@@ -132,13 +131,6 @@ export default function CartDrawer() {
           </div>
         </div>
 
-        {/* Prepaid Offer Alert */}
-        <div className="cart-prepaid-alert">
-          <span>🏷️</span>
-          <span>
-            <strong>Extra 5% OFF</strong> on prepaid orders — applied automatically at checkout
-          </span>
-        </div>
 
         {/* Drawer Body (Items List or Empty State) */}
         <div className="cart-drawer-body">
@@ -291,14 +283,10 @@ export default function CartDrawer() {
                   <span>-{formatPrice(discount)}</span>
                 </div>
               )}
-              <div className="drawer-price-row">
-                <span>Prepaid Savings (Extra 5%)</span>
-                <span className="prepaid-green">-{formatPrice(prepaidDiscount)}</span>
-              </div>
               <div className="drawer-price-row total-row">
                 <span>Estimated Total</span>
                 <div className="total-amount-box">
-                  <span className="final-total">{formatPrice(total - prepaidDiscount)}</span>
+                  <span className="final-total">{formatPrice(total)}</span>
                   <span className="total-note">Incl. all taxes</span>
                 </div>
               </div>
