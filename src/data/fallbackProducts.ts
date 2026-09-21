@@ -1818,16 +1818,15 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Riviera Embroidered Tassel Tunic & Palazzo Set",
     "slug": "riviera-embroidered-tassel-tunic-palazzo-set",
     "collection": "beach_party",
-    "selling_price_usd": 71,
-    "cost_price": 1000,
-    "dropship_fee": 250,
+    "selling_price_usd": 47.34,
+    "cost_price": 2200,
+    "dropship_fee": 1000,
     "stock_quantity": 50,
     "fabric": "100% Handloom Cotton with Silk Floss Embroidery",
     "colors": [
       "Ivory & Azure Blue"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
       "L",
