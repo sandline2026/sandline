@@ -1364,33 +1364,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-51",
-    "name": "Mykonos Ivory Geometric Crochet Halter Top",
-    "slug": "mykonos-ivory-geometric-crochet-halter-top",
-    "collection": "beach_party",
-    "selling_price_usd": 39,
-    "cost_price": 15,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "Handmade Cotton Crochet",
-    "colors": [
-      "Ivory White"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/mykonos-ivory-crochet-halter-top-1.jpg"
-    ],
-    "description": "Artisan high-neck crochet bralette with geometric sunburst ladder openwork, designed to pair effortlessly with vintage denim and beach sarongs.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-52",
     "name": "Ibiza Horizon Striped Crochet Bralette & Shorts Set",
     "slug": "ibiza-horizon-striped-crochet-bralette-shorts-set",
