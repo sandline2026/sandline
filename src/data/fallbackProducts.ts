@@ -1034,9 +1034,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Corfu Distressed Denim Bermuda Shorts",
     "slug": "corfu-distressed-denim-bermuda-shorts",
     "collection": "beach_party",
-    "selling_price_usd": 48,
-    "cost_price": 980,
-    "dropship_fee": 250,
+    "selling_price_usd": 30.77,
+    "cost_price": 1100,
+    "dropship_fee": 1000,
     "stock_quantity": 25,
     "fabric": "Distressed 100% Cotton Denim",
     "colors": [
@@ -1048,7 +1048,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "S",
       "M",
       "L",
-      "XL"
+      "XL",
+      "XXL"
     ],
     "stock_status": "in_stock",
     "images": [
