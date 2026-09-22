@@ -357,35 +357,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-13",
-    "name": "Arezzo Front-Twist Striped Blouse",
-    "slug": "arezzo-front-twist-striped-blouse",
-    "collection": "resort_evening",
-    "selling_price_usd": 46,
-    "cost_price": 880,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "Cotton Silk Poplin",
-    "colors": [
-      "Azure Blue",
-      "White"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/arezzo-front-twist-striped-blouse.jpg"
-    ],
-    "description": "Figure-flattering twist-front accent with vertical pinstripes designed to elongate the silhouette.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-14",
     "name": "Elysian Tie-Up A-Line Resort Dress",
     "slug": "elysian-tie-up-a-line-resort-dress",
