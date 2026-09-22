@@ -10,6 +10,7 @@ export interface Product {
   fabric?: string;
   colors?: string[];
   sizes?: string[];
+  size_prices?: Record<string, number>;
   stock_status?: string;
   images: string[];
   description?: string;
@@ -303,9 +304,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Capri Tie-Up Linen Placket Blouse",
     "slug": "capri-tie-up-linen-placket-blouse",
     "collection": "honeymoon",
-    "selling_price_usd": 48,
-    "cost_price": 950,
-    "dropship_fee": 250,
+    "selling_price_usd": 31.95,
+    "cost_price": 1100,
+    "dropship_fee": 1000,
     "stock_quantity": 25,
     "fabric": "Linen Cotton Blend",
     "colors": [
@@ -313,12 +314,19 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "Natural Oatmeal"
     ],
     "sizes": [
-      "XS",
-      "S",
-      "M",
       "L",
-      "XL"
+      "XL",
+      "2XL",
+      "3XL",
+      "4XL"
     ],
+    "size_prices": {
+      "L": 31.95,
+      "XL": 31.95,
+      "2XL": 31.95,
+      "3XL": 33.14,
+      "4XL": 33.14
+    },
     "stock_status": "in_stock",
     "images": [
       "/images/products/capri-tie-up-linen-placket-blouse.jpg"

@@ -270,6 +270,7 @@ export default async function ProductDetail({
               name={product.name}
               price={product.selling_price_usd}
               sizes={product.sizes || []}
+              sizePrices={product.size_prices}
               colors={product.colors || []}
               inStock={inStock}
               image={hasPhoto ? product.images[0] : null}

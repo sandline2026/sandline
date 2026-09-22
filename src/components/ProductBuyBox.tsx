@@ -16,6 +16,7 @@ interface ProductBuyBoxProps {
   name: string;
   price: number;
   sizes?: string[];
+  sizePrices?: Record<string, number>;
   colors?: string[];
   inStock: boolean;
   image: string | null;
@@ -27,6 +28,7 @@ export default function ProductBuyBox({
   name,
   price,
   sizes = [],
+  sizePrices,
   colors = [],
   inStock,
   image,
@@ -50,11 +52,14 @@ export default function ProductBuyBox({
   const buyBoxRef = useRef<HTMLDivElement>(null);
   const wishlisted = isWishlisted(id);
 
+  // Dynamic price based on selected size
+  const currentPrice = (sizePrices && selectedSize && sizePrices[selectedSize]) ? sizePrices[selectedSize] : price;
+
   // Calculate pricing
   const hasCouponDiscount = allowCoupon !== false;
-  const couponDiscountVal = hasCouponDiscount ? Math.round(price * 0.1 * 100) / 100 : 0;
-  const finalPrice = Math.round((price - couponDiscountVal) * 100) / 100;
-  const totalSavings = Math.round((price - finalPrice) * 100) / 100;
+  const couponDiscountVal = hasCouponDiscount ? Math.round(currentPrice * 0.1 * 100) / 100 : 0;
+  const finalPrice = Math.round((currentPrice - couponDiscountVal) * 100) / 100;
+  const totalSavings = Math.round((currentPrice - finalPrice) * 100) / 100;
 
   // Track scroll for sticky bottom bar
   useEffect(() => {
@@ -77,7 +82,7 @@ export default function ProductBuyBox({
       addToCart({
         id,
         name,
-        price,
+        price: currentPrice,
         image,
         size: selectedSize || undefined,
         color: selectedColor || undefined,
@@ -91,7 +96,7 @@ export default function ProductBuyBox({
     addToCart({
       id,
       name,
-      price,
+      price: currentPrice,
       image,
       size: selectedSize || undefined,
       color: selectedColor || undefined,
@@ -115,6 +120,11 @@ export default function ProductBuyBox({
           <div className="buybox-option-header">
             <span className="buybox-option-label">
               SIZE: <strong>{selectedSize || "Select"}</strong>
+              {sizePrices && selectedSize && (
+                <span style={{ marginLeft: "8px", fontWeight: 700, color: "var(--ink)", opacity: 0.85 }}>
+                  ({formatPrice(currentPrice)})
+                </span>
+              )}
             </span>
             <button
               type="button"
@@ -126,16 +136,26 @@ export default function ProductBuyBox({
             </button>
           </div>
           <div className="buybox-swatch-row">
-            {sizes.map((s) => (
-              <button
-                key={s}
-                type="button"
-                className={`buybox-size-btn ${selectedSize === s ? "active" : ""}`}
-                onClick={() => setSelectedSize(s)}
-              >
-                {s}
-              </button>
-            ))}
+            {sizes.map((s) => {
+              const sPrice = sizePrices?.[s];
+              const isDiff = sPrice && sPrice > price;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  className={`buybox-size-btn ${selectedSize === s ? "active" : ""}`}
+                  onClick={() => setSelectedSize(s)}
+                  style={isDiff ? { display: "inline-flex", flexDirection: "column", alignItems: "center", minWidth: "52px", padding: "6px 8px", height: "auto" } : undefined}
+                >
+                  <span>{s}</span>
+                  {isDiff && (
+                    <span style={{ fontSize: "9.5px", opacity: 0.8, fontWeight: 600, marginTop: "2px" }}>
+                      +{formatPrice(sPrice - price)}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           {/* Social Proof Fit Badge */}
@@ -189,7 +209,7 @@ export default function ProductBuyBox({
               <span className="actual-pay-label">You actually pay</span>
               <div className="actual-pay-prices">
                 <span className="final-price-bold">{formatPrice(finalPrice)}</span>
-                <span className="original-strike">{formatPrice(price)}</span>
+                <span className="original-strike">{formatPrice(currentPrice)}</span>
                 <span className="savings-green-pill">Save {formatPrice(totalSavings)}</span>
               </div>
             </div>
@@ -202,7 +222,7 @@ export default function ProductBuyBox({
             <div className="actual-pay-breakdown">
               <div className="breakdown-row">
                 <span>Listed price</span>
-                <span>{formatPrice(price)}</span>
+                <span>{formatPrice(currentPrice)}</span>
               </div>
               {hasCouponDiscount && (
                 <div className="breakdown-row discount-text">
@@ -372,7 +392,7 @@ export default function ProductBuyBox({
               <span className="sticky-saving-text">Saving {formatPrice(totalSavings)}</span>
               <div className="sticky-prices">
                 <strong>{formatPrice(finalPrice)}</strong>
-                <span className="sticky-strike">{formatPrice(price)}</span>
+                <span className="sticky-strike">{formatPrice(currentPrice)}</span>
                 <span className="sticky-discount-badge">-15%</span>
               </div>
             </div>
@@ -427,7 +447,7 @@ export default function ProductBuyBox({
         onClose={() => setIsShareOpen(false)}
         product={{
           name,
-          price,
+          price: currentPrice,
           image,
         }}
       />

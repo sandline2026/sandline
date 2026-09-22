@@ -38,7 +38,10 @@ export async function getCachedProducts(): Promise<Product[]> {
       .order("created_at", { ascending: false });
 
     if (!error && data && data.length > 0) {
-      cachedProducts = data as Product[];
+      cachedProducts = data.map((sp) => {
+        const fallback = FALLBACK_PRODUCTS.find((fp) => fp.id === sp.id || fp.slug === sp.slug);
+        return fallback?.size_prices ? { ...sp, size_prices: fallback.size_prices } : sp;
+      }) as Product[];
       lastFetchTime = now;
     }
   } catch (err) {
@@ -77,8 +80,10 @@ export async function getCachedProductBySlug(slugOrId: string): Promise<Product 
         .maybeSingle();
 
       if (data) {
-        cachedProducts.unshift(data as Product);
-        return data as Product;
+        const fallback = FALLBACK_PRODUCTS.find((fp) => fp.id === data.id || fp.slug === data.slug);
+        const merged = fallback?.size_prices ? { ...data, size_prices: fallback.size_prices } : data;
+        cachedProducts.unshift(merged as Product);
+        return merged as Product;
       }
     } catch {
       // Ignore
