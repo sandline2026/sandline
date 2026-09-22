@@ -1594,30 +1594,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-61",
-    "name": "St. Tropez Pearl Embellished Straw Hat",
-    "slug": "st-tropez-pearl-embellished-straw-hat",
-    "collection": "beach_party",
-    "selling_price_usd": 34,
-    "cost_price": 12,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "Fine Braided Straw & Faux Pearl Drops",
-    "colors": [
-      "Honey Straw"
-    ],
-    "sizes": [
-      "One Size"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/st-tropez-pearl-straw-hat-1.jpg"
-    ],
-    "description": "Romantic scalloped brim straw hat adorned with delicate pearl drops and a back bow tie for beach club afternoons.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-62",
     "name": "Amalfi Lace-Up Wide Brim Straw Sun Hat",
     "slug": "amalfi-lace-up-wide-brim-straw-sun-hat",
