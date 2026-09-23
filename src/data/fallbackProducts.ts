@@ -1365,23 +1365,24 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Mauve Luminous Silk Cowl Halter Top",
     "slug": "mauve-luminous-silk-cowl-halter-top",
     "collection": "honeymoon",
-    "selling_price_usd": 52,
-    "cost_price": 19,
-    "dropship_fee": 250,
+    "selling_price_usd": 30.77,
+    "cost_price": 1300,
+    "dropship_fee": 1000,
     "stock_quantity": 20,
     "fabric": "Mulberry Silk Charmeuse",
     "colors": [
       "Dusty Mauve"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
-      "L"
+      "L",
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/mauve-silk-cowl-halter-top-1.jpg"
+      "/images/products/mauve-silk-cowl-halter-top-1.jpg",
+      "/images/products/mauve-silk-cowl-halter-top-2.jpg"
     ],
     "description": "An ultra-flattering draped cowl neck top in premium mauve silk charmeuse with a high collar neckband and fluid cascading drape.",
     "is_active": true,
