@@ -1473,23 +1473,23 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Santorini Mosaic Scalloped Linen Co-ord Set",
     "slug": "santorini-mosaic-scalloped-linen-co-ord-set",
     "collection": "honeymoon",
-    "selling_price_usd": 94,
-    "cost_price": 36,
-    "dropship_fee": 250,
+    "selling_price_usd": 43.79,
+    "cost_price": 2000,
+    "dropship_fee": 1000,
     "stock_quantity": 14,
     "fabric": "Pure European Linen with Scalloped Ric-Rac Trim",
     "colors": [
       "Santorini Blue / Olive Mosaic"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
       "L"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/santorini-mosaic-scalloped-linen-co-ord-1.jpg"
+      "/images/products/santorini-mosaic-scalloped-linen-co-ord-1.jpg",
+      "/images/products/santorini-mosaic-scalloped-linen-co-ord-2.jpg"
     ],
     "description": "Inspired by Aegean architectural tiles, this premium linen ensemble pairs an oversized short-sleeve shirt with a matching scalloped wrap skirt.",
     "is_active": true,
