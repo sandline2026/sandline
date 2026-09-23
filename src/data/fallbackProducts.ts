@@ -1091,9 +1091,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Venice Pearl Fringe Distressed Denim Jacket",
     "slug": "venice-pearl-fringe-distressed-denim-jacket",
     "collection": "resort_evening",
-    "selling_price_usd": 88,
-    "cost_price": 32,
-    "dropship_fee": 250,
+    "selling_price_usd": 42.60,
+    "cost_price": 2200,
+    "dropship_fee": 1000,
     "stock_quantity": 12,
     "fabric": "Distressed Cotton Denim & Pearl Fringe",
     "colors": [
