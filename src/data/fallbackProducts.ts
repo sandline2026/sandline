@@ -1117,19 +1117,18 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Milan Pearl Mesh Back Detail Silk Shirt",
     "slug": "milan-pearl-mesh-back-detail-silk-shirt",
     "collection": "resort_evening",
-    "selling_price_usd": 76,
-    "cost_price": 28,
-    "dropship_fee": 250,
+    "selling_price_usd": 35.49,
+    "cost_price": 1500,
+    "dropship_fee": 1000,
     "stock_quantity": 15,
     "fabric": "Lustrous Cotton Silk Blend",
     "colors": [
       "Noir Black"
     ],
     "sizes": [
-      "XS",
-      "S",
       "M",
-      "L"
+      "L",
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [
