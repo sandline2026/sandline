@@ -1392,23 +1392,23 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Monaco Signature Web Stripe Polo Dress",
     "slug": "monaco-signature-web-stripe-polo-dress",
     "collection": "resort_evening",
-    "selling_price_usd": 75,
-    "cost_price": 28,
-    "dropship_fee": 250,
+    "selling_price_usd": 59.16,
+    "cost_price": 1500,
+    "dropship_fee": 1000,
     "stock_quantity": 15,
     "fabric": "Structured Stretch Cotton Piqué & Monogram Trim",
     "colors": [
       "Black / Heritage Web Stripe"
     ],
     "sizes": [
-      "XS",
-      "S",
       "M",
-      "L"
+      "L",
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/monaco-signature-web-stripe-polo-dress-1.jpg"
+      "/images/products/monaco-signature-web-stripe-polo-dress-1.jpg",
+      "/images/products/monaco-signature-web-stripe-polo-dress-2.jpg"
     ],
     "description": "Heritage athletic-luxe polo shirt dress featuring iconic green-and-red web stripes, monogram printed collar & cuffs, and front patch pocket.",
     "is_active": true,
