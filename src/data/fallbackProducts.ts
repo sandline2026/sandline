@@ -242,35 +242,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-9",
-    "name": "Positano Ruffle Tiered Resort Blouse",
-    "slug": "positano-ruffle-tiered-resort-blouse",
-    "collection": "honeymoon",
-    "selling_price_usd": 44,
-    "cost_price": 850,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "Breezy Cotton Voile",
-    "colors": [
-      "Ivory White",
-      "Sand"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/positano-ruffle-tiered-resort-blouse.jpg"
-    ],
-    "description": "Delicate cascading ruffles and romantic bell sleeves make this airy blouse an essential for sunset cocktails and candlelit dinners by the coast.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-10",
     "name": "Riviera Lace-Up Placket Cotton Blouse",
     "slug": "riviera-lace-up-placket-cotton-blouse",
