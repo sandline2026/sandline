@@ -1063,16 +1063,15 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "St. Tropez 3D Floral Lace Denim Skirt",
     "slug": "st-tropez-3d-floral-lace-denim-skirt",
     "collection": "beach_party",
-    "selling_price_usd": 62,
-    "cost_price": 22,
-    "dropship_fee": 250,
+    "selling_price_usd": 36.69,
+    "cost_price": 1600,
+    "dropship_fee": 500,
     "stock_quantity": 20,
     "fabric": "Light-Wash Rigid Denim & Embroidered Lace",
     "colors": [
       "Sky Blue Denim / White"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
       "L"
