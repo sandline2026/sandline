@@ -1035,16 +1035,15 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Cognac Vegan Leather Chain Mini Skirt",
     "slug": "cognac-vegan-leather-chain-mini-skirt",
     "collection": "resort_evening",
-    "selling_price_usd": 68,
-    "cost_price": 24,
-    "dropship_fee": 250,
+    "selling_price_usd": 31.95,
+    "cost_price": 1500,
+    "dropship_fee": 1000,
     "stock_quantity": 18,
     "fabric": "Buttery Vegan Leather & Gold Hardware",
     "colors": [
       "Cognac Brown"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
       "L"
