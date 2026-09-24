@@ -217,9 +217,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Riviera Crystal Pinstripe Tie Blouse",
     "slug": "riviera-crystal-pinstripe-tie-blouse",
     "collection": "resort_evening",
-    "selling_price_usd": 72,
-    "cost_price": 1600,
-    "dropship_fee": 250,
+    "selling_price_usd": 34.31,
+    "cost_price": 1400,
+    "dropship_fee": 1000,
     "stock_quantity": 20,
     "fabric": "Fine Egyptian Cotton Poplin & Hand-Sewn Rhinestone Crystals",
     "colors": [
@@ -227,11 +227,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "Chalk White"
     ],
     "sizes": [
-      "XS",
       "S",
-      "M",
-      "L",
-      "XL"
+      "M"
     ],
     "stock_status": "in_stock",
     "images": [
