@@ -737,35 +737,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-31",
-    "name": "Venice Hand-Beaded Straight-Leg Denim",
-    "slug": "venice-hand-beaded-straight-leg-denim",
-    "collection": "resort_evening",
-    "selling_price_usd": 74,
-    "cost_price": 1750,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "Premium Rigid Indigo Denim & Glass Pearls",
-    "colors": [
-      "Vintage Medium Wash",
-      "Light Indigo"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/venice-hand-beaded-straight-leg-denim.jpg"
-    ],
-    "description": "High-waist straight leg jeans hand-embellished with luminous pearls and metallic beading along the front panels.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-32",
     "name": "Santorini Embroidered Denim Wide-Leg Shorts",
     "slug": "santorini-embroidered-denim-wide-leg-shorts",

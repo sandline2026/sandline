@@ -29,7 +29,7 @@ const CATEGORIES: CategoryItem[] = [
     id: "jeans",
     name: "Jeans & Denim",
     subtitle: "Artisan Hand-Beaded & Pintuck",
-    image: "/images/products/venice-hand-beaded-straight-leg-denim.jpg",
+    image: "/images/products/parisian-bow-detail-wide-leg-denim.jpg",
     href: "/shop?category=jeans",
   },
   {
