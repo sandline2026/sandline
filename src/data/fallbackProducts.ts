@@ -565,35 +565,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-24",
-    "name": "Monaco Hand-Embroidered Co-ord Set",
-    "slug": "monaco-hand-embroidered-co-ord-set",
-    "collection": "honeymoon",
-    "selling_price_usd": 76,
-    "cost_price": 1650,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "Fine Cotton Cambric & Resham Threadwork",
-    "colors": [
-      "Pearl Cream",
-      "Ivory"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/monaco-hand-embroidered-co-ord-set.jpg"
-    ],
-    "description": "Delicate tonal floral embroidery across the scalloped collar and sleeves. An heirloom luxury co-ord set.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-25",
     "name": "Paloma Gathered Waist Co-ord Set",
     "slug": "paloma-gathered-waist-co-ord-set",
