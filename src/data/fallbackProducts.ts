@@ -1247,33 +1247,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-48",
-    "name": "Rose Dust One-Shoulder Chiffon Palazzo Set",
-    "slug": "rose-dust-one-shoulder-chiffon-palazzo-set",
-    "collection": "honeymoon",
-    "selling_price_usd": 88,
-    "cost_price": 34,
-    "dropship_fee": 250,
-    "stock_quantity": 10,
-    "fabric": "Flowing Pure Georgette Silk",
-    "colors": [
-      "Rose Dust"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/rose-dust-embroidered-chiffon-palazzo-set-1.jpg"
-    ],
-    "description": "A breathtaking asymmetric cape-tunic adorned with pearl and zardozi floral neckline embroidery, paired with wide-leg flowing georgette palazzo trousers.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-49",
     "name": "Aegean Starfish Jewel Cutout Resort Maxi Set",
     "slug": "aegean-starfish-jewel-cutout-resort-maxi-set",
