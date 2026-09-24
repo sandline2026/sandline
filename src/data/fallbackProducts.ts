@@ -1164,33 +1164,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-45",
-    "name": "Tropical Paisley Cami & Tiered Skirt Co-ord Set",
-    "slug": "tropical-paisley-cami-tiered-skirt-co-ord-set",
-    "collection": "beach_party",
-    "selling_price_usd": 68,
-    "cost_price": 25,
-    "dropship_fee": 250,
-    "stock_quantity": 16,
-    "fabric": "Lightweight Printed Chiffon & Cotton Poplin",
-    "colors": [
-      "Emerald Paisley / Ivory"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/tropical-paisley-tiered-skirt-co-ord-1.jpg"
-    ],
-    "description": "An ethereal two-piece resort ensemble featuring an emerald paisley handkerchief camisole top paired with a tiered ruffle cotton mini skirt.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-46",
     "name": "Champagne Silk Satin Lapel Blouse",
     "slug": "champagne-silk-satin-lapel-blouse",
