@@ -1303,23 +1303,24 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Valencia Tangerine Linen 3-Piece Co-ord Set",
     "slug": "valencia-tangerine-linen-3-piece-co-ord-set",
     "collection": "beach_party",
-    "selling_price_usd": 86,
-    "cost_price": 32,
-    "dropship_fee": 250,
+    "selling_price_usd": 29.59,
+    "cost_price": 1500,
+    "dropship_fee": 1000,
     "stock_quantity": 12,
     "fabric": "Pure French Flax Linen",
     "colors": [
       "Tangerine Orange"
     ],
     "sizes": [
-      "XS",
       "S",
       "M",
-      "L"
+      "L",
+      "XL"
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/valencia-tangerine-linen-3piece-set-1.jpg"
+      "/images/products/valencia-tangerine-linen-3piece-set-1.jpg",
+      "/images/products/valencia-tangerine-linen-3piece-set-2.jpg"
     ],
     "description": "A bold sunset orange linen three-piece ensemble including an unlined relaxed blazer, halter crop top, and tailored drawstring high-rise shorts.",
     "is_active": true,
