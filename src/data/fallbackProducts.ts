@@ -737,35 +737,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-32",
-    "name": "Santorini Embroidered Denim Wide-Leg Shorts",
-    "slug": "santorini-embroidered-denim-wide-leg-shorts",
-    "collection": "beach_party",
-    "selling_price_usd": 48,
-    "cost_price": 980,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "100% Cotton Light Wash Denim",
-    "colors": [
-      "Bleach Cloud Blue",
-      "Ice Blue"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/santorini-embroidered-denim-wide-leg-shorts.jpg"
-    ],
-    "description": "Wide A-line denim shorts embellished with delicate white floral embroidery along the side seams.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-33",
     "name": "Portofino Vintage Button Denim Culotte Shorts",
     "slug": "portofino-vintage-button-denim-culotte-shorts",
