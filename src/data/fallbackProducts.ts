@@ -1166,9 +1166,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Aegean Starfish Jewel Cutout Resort Maxi Set",
     "slug": "aegean-starfish-jewel-cutout-resort-maxi-set",
     "collection": "beach_party",
-    "selling_price_usd": 78,
-    "cost_price": 29,
-    "dropship_fee": 250,
+    "selling_price_usd": 49.69,
+    "cost_price": 2600,
+    "dropship_fee": 1000,
     "stock_quantity": 14,
     "fabric": "Lurex Shimmer Jersey & Chiffon",
     "colors": [
@@ -1177,8 +1177,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "sizes": [
       "XS",
       "S",
-      "M",
-      "L"
+      "M"
     ],
     "stock_status": "in_stock",
     "images": [
