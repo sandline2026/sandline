@@ -1478,35 +1478,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-64",
-    "name": "Maldives Corduroy Multi-Purpose Co-ord Set",
-    "slug": "maldives-corduroy-multi-purpose-coord-set",
-    "collection": "honeymoon",
-    "selling_price_usd": 71,
-    "cost_price": 1000,
-    "dropship_fee": 250,
-    "stock_quantity": 50,
-    "fabric": "100% Fine Ribbed Corduroy Cotton",
-    "colors": [
-      "Oatmeal Sand",
-      "Alabaster"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/maldives-corduroy-multi-purpose-coord-set-1.jpg"
-    ],
-    "description": "An elevated travel and lounge staple crafted from fine ribbed corduroy cotton. Features an oversized tailored button-down shirt paired with relaxed wide-leg trousers, finished with an elasticated waistband and subtle crest embroidery.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-65",
     "name": "Positano Buckled Linen Vest & Wide-Leg Trouser Set",
     "slug": "positano-buckled-linen-vest-trouser-set",
