@@ -1152,7 +1152,8 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "stock_status": "in_stock",
     "images": [
-      "/images/products/aegean-starfish-jewel-maxi-resort-set-1.jpg"
+      "/images/products/aegean-starfish-jewel-maxi-resort-set-1.jpg",
+      "/images/products/aegean-starfish-jewel-maxi-resort-set-2.jpg"
     ],
     "description": "Lustrous ocean blue cutout halter crop with golden starfish jewel hardware, paired with a matching high-slit sheer chiffon maxi sarong skirt.",
     "is_active": true,
