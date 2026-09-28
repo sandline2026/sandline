@@ -308,9 +308,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Milan Plaid Cropped Resort Overshirt",
     "slug": "milan-plaid-cropped-resort-overshirt",
     "collection": "resort_evening",
-    "selling_price_usd": 52,
-    "cost_price": 1050,
-    "dropship_fee": 250,
+    "selling_price_usd": 29.59,
+    "cost_price": 1000,
+    "dropship_fee": 1000,
     "stock_quantity": 25,
     "fabric": "Structured Twill Cotton",
     "colors": [
@@ -319,10 +319,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
     ],
     "sizes": [
       "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
+      "S"
     ],
     "stock_status": "in_stock",
     "images": [
