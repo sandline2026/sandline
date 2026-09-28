@@ -884,35 +884,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-38",
-    "name": "Riviera Atelier Decorative Pocket Wide-Leg Jeans",
-    "slug": "riviera-atelier-decorative-pocket-wide-leg-jeans",
-    "collection": "resort_evening",
-    "selling_price_usd": 68,
-    "cost_price": 1580,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "100% Pure Ring-Spun Cotton Denim",
-    "colors": [
-      "Dark Indigo Wash",
-      "Raw Denim"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/riviera-atelier-decorative-pocket-wide-leg-jeans.jpg"
-    ],
-    "description": "Sculpted decorative tailored front pockets with contrast gold topstitching and wide fluid drape.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-39",
     "name": "Corfu Distressed Denim Bermuda Shorts",
     "slug": "corfu-distressed-denim-bermuda-shorts",
