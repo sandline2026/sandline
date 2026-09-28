@@ -857,9 +857,9 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "name": "Parisian Bow Detail Wide-Leg Denim",
     "slug": "parisian-bow-detail-wide-leg-denim",
     "collection": "resort_evening",
-    "selling_price_usd": 68,
-    "cost_price": 1550,
-    "dropship_fee": 250,
+    "selling_price_usd": 29.59,
+    "cost_price": 1000,
+    "dropship_fee": 1000,
     "stock_quantity": 25,
     "fabric": "Soft Washed Twill Denim",
     "colors": [
@@ -867,11 +867,13 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "Classic Denim"
     ],
     "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
+      "26",
+      "27",
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
     ],
     "stock_status": "in_stock",
     "images": [
