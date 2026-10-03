@@ -417,35 +417,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     "created_at": "2026-09-11T04:39:19.056Z"
   },
   {
-    "id": "prod-19",
-    "name": "Mykonos Smocked Linen Co-ord Set",
-    "slug": "mykonos-smocked-linen-co-ord-set",
-    "collection": "beach_party",
-    "selling_price_usd": 68,
-    "cost_price": 1400,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "Premium Crinkled Linen",
-    "colors": [
-      "Aegean Sky Blue",
-      "White"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/mykonos-smocked-linen-co-ord-set.jpg"
-    ],
-    "description": "Two-piece matching set featuring a smocked bodice crop top paired with high-waisted flowing wide-leg trousers.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
     "id": "prod-20",
     "name": "St. Tropez Ruffle Tiered Skirt Co-ord Set",
     "slug": "st-tropez-ruffle-tiered-skirt-co-ord-set",
@@ -788,35 +759,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "/images/products/florence-vintage-embroidered-flare-jeans.jpg"
     ],
     "description": "Dramatic 70s-inspired bell bottom flare jeans with intricate artisan chain-stitch embroidery down the leg.",
-    "is_active": true,
-    "created_at": "2026-09-11T04:39:19.056Z"
-  },
-  {
-    "id": "prod-35",
-    "name": "Verona Pintuck Seam Raw Hem Wide-Leg Jeans",
-    "slug": "verona-pintuck-seam-raw-hem-wide-leg-jeans",
-    "collection": "resort_evening",
-    "selling_price_usd": 68,
-    "cost_price": 1550,
-    "dropship_fee": 250,
-    "stock_quantity": 25,
-    "fabric": "Heavyweight 13oz Selvedge Denim",
-    "colors": [
-      "Dark Raw Indigo",
-      "Midnight Blue"
-    ],
-    "sizes": [
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
-    "stock_status": "in_stock",
-    "images": [
-      "/images/products/verona-pintuck-seam-raw-hem-wide-leg-jeans.jpg"
-    ],
-    "description": "Sharp front pintuck tailored crease with an unhemmed raw edge. Elongates the legs effortlessly.",
     "is_active": true,
     "created_at": "2026-09-11T04:39:19.056Z"
   },
