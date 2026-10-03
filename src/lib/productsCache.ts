@@ -13,12 +13,8 @@ export async function getCachedProducts(): Promise<Product[]> {
     return cachedProducts;
   }
 
-  const sbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const sbKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-
-  if (!sbUrl || !sbKey) {
-    return cachedProducts;
-  }
+  const sbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://rstczvqfjiqoshlaabgy.supabase.co";
+  const sbKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_Fnm-5bXoTSnhzJnfUMzaYw_pCXPvY7_";
 
   // Prevent multiple concurrent fetches during cold-start
   if (isFetching) {
@@ -65,29 +61,27 @@ export async function getCachedProductBySlug(slugOrId: string): Promise<Product 
   if (found && found.is_active !== false) return found;
 
   // Single-product direct Supabase fallback lookup
-  const sbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const sbKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  if (sbUrl && sbKey) {
-    try {
-      const supabase = createClient(sbUrl, sbKey, {
-        auth: { persistSession: false, autoRefreshToken: false },
-      });
-      const { data } = await supabase
-        .from("products")
-        .select("*")
-        .or(`slug.eq.${slugOrId},id.eq.${slugOrId}`)
-        .eq("is_active", true)
-        .maybeSingle();
+  const sbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://rstczvqfjiqoshlaabgy.supabase.co";
+  const sbKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_Fnm-5bXoTSnhzJnfUMzaYw_pCXPvY7_";
+  try {
+    const supabase = createClient(sbUrl, sbKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { data } = await supabase
+      .from("products")
+      .select("*")
+      .or(`slug.eq.${slugOrId},id.eq.${slugOrId}`)
+      .eq("is_active", true)
+      .maybeSingle();
 
-      if (data) {
-        const fallback = FALLBACK_PRODUCTS.find((fp) => fp.id === data.id || fp.slug === data.slug);
-        const merged = fallback?.size_prices ? { ...data, size_prices: fallback.size_prices } : data;
-        cachedProducts.unshift(merged as Product);
-        return merged as Product;
-      }
-    } catch {
-      // Ignore
+    if (data) {
+      const fallback = FALLBACK_PRODUCTS.find((fp) => fp.id === data.id || fp.slug === data.slug);
+      const merged = fallback?.size_prices ? { ...data, size_prices: fallback.size_prices } : data;
+      cachedProducts.unshift(merged as Product);
+      return merged as Product;
     }
+  } catch {
+    // Ignore
   }
 
   return null;
