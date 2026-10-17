@@ -51,11 +51,11 @@ export default function FlashSaleBanner() {
 
   const content = (
     <span className="flash-banner-item">
-      <strong>⚡ THE RESORT FESTIVAL</strong> — Flat 10% OFF with code <strong style={{ color: "#F59E0B", letterSpacing: "0.05em" }}>WELCOME10</strong>, ends in
+      <strong>✦ Flash Sale</strong> — 10% off sitewide, ends in
       <span className="flash-timer">
         <span>{timeLeft.h}</span>:<span>{timeLeft.m}</span>:<span>{timeLeft.s}</span>
       </span>
-      <a href="/shop">Shop the drop →</a>
+      <a href="/shop">Shop the sale →</a>
     </span>
   );
 

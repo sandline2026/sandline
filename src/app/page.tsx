@@ -14,7 +14,6 @@ import MobileMenuDrawer from "@/components/MobileMenuDrawer";
 import InstagramFeed from "@/components/InstagramFeed";
 import ShopByCategory from "@/components/ShopByCategory";
 import NewArrivalsSection from "@/components/NewArrivalsSection";
-import FestivalSaleBanner from "@/components/FestivalSaleBanner";
 import "./sandline.css";
 
 export default function Home() {
@@ -158,9 +157,6 @@ export default function Home() {
 
       {/* Editorial Destination Bar & Tabs (Escape Mobile Style) */}
       <MobileDestinationBar />
-
-      {/* The Resort Festival Sale Banner with WELCOME10 & 5 Studio Looks */}
-      <FestivalSaleBanner />
 
       {/* Shop By Category 2-Column Luxury Grid */}
       <ShopByCategory />
