@@ -290,6 +290,15 @@ export default function CheckoutPage() {
           confirm_close: true,
           ondismiss: function () {
             setLoading(false);
+            fetch("/api/checkout/cancel", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                orderId: order.id,
+                orderNumber,
+                reason: "Customer closed payment gateway modal",
+              }),
+            }).catch((e) => console.warn("Checkout cancel alert error:", e));
           },
         },
         theme: {
@@ -298,6 +307,25 @@ export default function CheckoutPage() {
       };
 
       const rzp = new (window as any).Razorpay(options);
+
+      rzp.on("payment.failed", function (response: any) {
+        setLoading(false);
+        const errObj = response.error || {};
+        setError(errObj.description || "Payment was interrupted or cancelled.");
+        fetch("/api/checkout/cancel", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            orderId: order.id,
+            orderNumber,
+            reason: errObj.reason || "payment_cancelled",
+            errorCode: errObj.code || "BAD_REQUEST_ERROR",
+            errorStep: errObj.step || "payment_authentication",
+            errorDescription: errObj.description || "Payment failed or cancelled during authentication",
+          }),
+        }).catch((e) => console.warn("Payment failed alert error:", e));
+      });
+
       rzp.open();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Something went wrong. Please try again.";

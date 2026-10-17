@@ -38,11 +38,15 @@ export async function PATCH(
     }
 
     // Trigger status update email to customer
-    if (body.status) {
+    let emailResult: { success?: boolean; id?: string; error?: string } | null = null;
+    if (body.status || body.sendEmail || body.trackingNumber) {
       const { data: rawOrder } = await supabase
         .from("orders")
         .select(`
           order_number,
+          status,
+          tracking_number,
+          shipping_partner,
           customer_id,
           customers (full_name, email)
         `)
@@ -62,19 +66,28 @@ export async function PATCH(
       }
 
       if (order && customer?.email) {
-        console.log(`[ORDER STATUS EMAIL] Dispatching to ${customer.email} for order #${order.order_number} (${body.status})`);
-        await sendOrderStatusUpdateEmail({
+        const targetStatus = body.status || order.status || "shipped";
+        const targetTracking = body.trackingNumber !== undefined ? body.trackingNumber : order.tracking_number;
+        const targetCarrier = body.carrier !== undefined ? body.carrier : (order.shipping_partner || "DHL Express");
+
+        console.log(`[ORDER STATUS EMAIL] Dispatching to ${customer.email} for order #${order.order_number} (${targetStatus})`);
+        emailResult = await sendOrderStatusUpdateEmail({
           orderNumber: order.order_number || id.slice(0, 8),
           customerName: customer.full_name || "Valued Client",
           customerEmail: customer.email,
-          newStatus: body.status,
-          trackingNumber: body.trackingNumber,
-          carrier: body.carrier,
+          newStatus: targetStatus,
+          trackingNumber: targetTracking || undefined,
+          carrier: targetCarrier || undefined,
         });
       }
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({
+      success: true,
+      emailSent: emailResult ? (emailResult.success ?? false) : false,
+      emailId: emailResult?.id,
+      emailError: emailResult?.error,
+    });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Failed to update order";
     return NextResponse.json({ error: message }, { status: 500 });

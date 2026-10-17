@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getWhatsAppShippingMessage } from "@/lib/whatsapp";
 
 export interface OrderItem {
   id: string;
@@ -60,6 +61,7 @@ export interface Order {
   created_at: string;
   shipping_partner?: string | null;
   tracking_number?: string | null;
+  notes?: string | null;
   customers?: CustomerInfo | null;
   order_items?: OrderItem[] | null;
   payments?: PaymentInfo[] | null;
@@ -165,8 +167,14 @@ export default function AdminOrdersTable({
         setActiveOrder((prev) => (prev ? { ...prev, status: newStatus, tracking_number: tNum, shipping_partner: carr } : null));
       }
 
-      setUpdateMessage("Order updated & dispatch notification sent!");
-      setTimeout(() => setUpdateMessage(null), 3000);
+      const emailStatusText = data.emailSent
+        ? `✓ Status updated & email sent to customer!`
+        : data.emailError
+        ? `✓ Status updated (Email error: ${data.emailError})`
+        : `✓ Status updated to ${newStatus}!`;
+
+      setUpdateMessage(emailStatusText);
+      setTimeout(() => setUpdateMessage(null), 5000);
       router.refresh();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Something went wrong";
@@ -566,25 +574,61 @@ export default function AdminOrdersTable({
                     />
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleStatusChange(activeOrder.id, "shipped", trackingNumber, carrier)}
-                    disabled={updating || !trackingNumber.trim()}
-                    style={{
-                      background: trackingNumber.trim() ? "#2563EB" : "#94A3B8",
-                      color: "#FFFFFF",
-                      border: "none",
-                      padding: "8px 14px",
-                      borderRadius: "8px",
-                      fontSize: "11.5px",
-                      fontWeight: 700,
-                      cursor: trackingNumber.trim() ? "pointer" : "not-allowed",
-                      whiteSpace: "nowrap",
-                      height: "35px",
-                    }}
-                  >
-                    Save &amp; Mark Shipped
-                  </button>
+                  <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                    <button
+                      type="button"
+                      onClick={() => handleStatusChange(activeOrder.id, "shipped", trackingNumber, carrier)}
+                      disabled={updating}
+                      style={{
+                        background: "#2563EB",
+                        color: "#FFFFFF",
+                        border: "none",
+                        padding: "8px 14px",
+                        borderRadius: "8px",
+                        fontSize: "11.5px",
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        whiteSpace: "nowrap",
+                        height: "35px",
+                      }}
+                      title="Saves tracking number, sets status to Shipped, and sends branded dispatch email to customer"
+                    >
+                      {updating ? "Saving..." : "📦 Save & Mark Shipped"}
+                    </button>
+
+                    {activeOrder.customers?.phone && (
+                      <a
+                        href={`https://wa.me/${(activeOrder.customers.phone || "").replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                          getWhatsAppShippingMessage({
+                            orderNumber: activeOrder.order_number,
+                            customerName: activeOrder.customers.full_name,
+                            trackingNumber: trackingNumber || activeOrder.tracking_number || "In transit from atelier",
+                            carrier: carrier || activeOrder.shipping_partner || "DHL Express",
+                          })
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          background: "#25D366",
+                          color: "#FFFFFF",
+                          padding: "8px 14px",
+                          borderRadius: "8px",
+                          fontSize: "11.5px",
+                          fontWeight: 700,
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          whiteSpace: "nowrap",
+                          height: "35px",
+                          boxSizing: "border-box",
+                        }}
+                        title="Open WhatsApp with pre-composed tracking & dispatch update message"
+                      >
+                        <span>📲 WhatsApp Update</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -621,6 +665,43 @@ export default function AdminOrdersTable({
                         }}
                       >
                         <span>📲 Chat on WhatsApp</span>
+                      </a>
+                    </div>
+                  )}
+
+                  {activeOrder.notes && (
+                    <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "8px", padding: "10px 12px", margin: "10px 0" }}>
+                      <div style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", color: "#991B1B", marginBottom: "3px" }}>
+                        ⚠️ Order / Gateway Status Note:
+                      </div>
+                      <div style={{ fontSize: "12px", color: "#7F1D1D", lineHeight: 1.4 }}>
+                        {activeOrder.notes}
+                      </div>
+                    </div>
+                  )}
+
+                  {(activeOrder.status === "cancelled" || activeOrder.status === "pending") && activeOrder.customers?.phone && (
+                    <div style={{ marginTop: "10px" }}>
+                      <a
+                        href={`https://wa.me/${(activeOrder.customers.phone || "").replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                          `Hi ${activeOrder.customers.full_name || "there"}! We noticed your checkout for Order #${activeOrder.order_number} at Sandline Studio had an issue. We have kept your pieces reserved and here is an exclusive 20% discount coupon code just for you: BEACH20. Complete your order here: https://sandline.store/shop`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          background: "#D97706",
+                          color: "#FFFFFF",
+                          padding: "6px 12px",
+                          borderRadius: "8px",
+                          fontSize: "11px",
+                          fontWeight: 700,
+                          textDecoration: "none",
+                        }}
+                      >
+                        <span>🎁 Send Recovery Offer (BEACH20)</span>
                       </a>
                     </div>
                   )}

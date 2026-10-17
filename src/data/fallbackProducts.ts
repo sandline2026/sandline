@@ -1729,9 +1729,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
       "Sky Blue"
     ],
     "sizes": [
-      "S",
       "M",
-      "L",
       "XL"
     ],
     "stock_status": "in_stock",
